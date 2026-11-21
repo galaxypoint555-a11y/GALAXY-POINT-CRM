@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Galaxy Point | CRM Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Index Page Specific Styling */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #111827; /* Dark background for portal */
+            color: #fff;
+        }
+        .portal-container {
+            text-align: center;
+            max-width: 900px;
+            padding: 20px;
+            width: 100%;
+        }
+        .portal-brand {
+            font-size: 32px;
+            font-weight: 700;
+            color: #f59e0b; /* Gold */
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .portal-sub {
+            color: #9ca3af;
+            margin-bottom: 50px;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        .portal-card {
+            background: #1f2937;
+            padding: 40px 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s ease;
+            border: 1px solid #374151;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .portal-card:hover {
+            transform: translateY(-8px);
+            border-color: #f59e0b;
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
+        }
+        .portal-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        .portal-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .portal-desc {
+            font-size: 13px;
+            color: #9ca3af;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="portal-container">
+        <div class="portal-brand">◈ GALAXY POINT</div>
+        <div class="portal-sub">ENTERPRISE CRM PORTAL</div>
+
+        <div class="portal-grid">
+            <!-- Boss Panel Link -->
+            <a href="boss-panel.html" class="portal-card">
+                <div class="portal-icon">👑</div>
+                <div class="portal-title">Boss Panel</div>
+                <div class="portal-desc">View overall analytics, staff performance, and complete business overview.</div>
+            </a>
+
+            <!-- Social Media Link -->
+            <a href="social-media.html" class="portal-card">
+                <div class="portal-icon">📱</div>
+                <div class="portal-title">Social Media</div>
+                <div class="portal-desc">Manage customer leads, track sources, and transfer them to departments.</div>
+            </a>
+
+            <!-- Service Centre Link -->
+            <a href="service-centre.html" class="portal-card">
+                <div class="portal-icon">🛠️</div>
+                <div class="portal-title">Service Centre</div>
+                <div class="portal-desc">Handle repair jobs, update statuses, and generate customer bills.</div>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
