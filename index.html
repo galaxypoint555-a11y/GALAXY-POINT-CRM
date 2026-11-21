@@ -3,104 +3,195 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Galaxy Point | CRM Portal</title>
+    <title>Galaxy Point | Command Center</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Index Page Specific Styling */
+        /* Premium Dashboard Styling */
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: #0f172a;
+            background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+            color: #fff;
             min-height: 100vh;
-            background: #111827; /* Dark background for portal */
-            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
         }
-        .portal-container {
-            text-align: center;
-            max-width: 900px;
-            padding: 20px;
+        .header {
             width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .portal-brand {
-            font-size: 32px;
-            font-weight: 700;
-            color: #f59e0b; /* Gold */
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-        .portal-sub {
-            color: #9ca3af;
-            margin-bottom: 50px;
-            font-size: 16px;
-            letter-spacing: 1px;
-        }
-        .portal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-        }
-        .portal-card {
-            background: #1f2937;
+        .header .brand { font-size: 24px; font-weight: 700; color: #f59e0b; letter-spacing: 1px; }
+        .header .status { font-size: 13px; color: #10b981; display: flex; align-items: center; gap: 5px;}
+        .status-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
             padding: 40px 20px;
-            border-radius: 16px;
-            text-decoration: none;
-            color: #fff;
-            transition: all 0.3s ease;
-            border: 1px solid #374151;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        .portal-card:hover {
-            transform: translateY(-8px);
-            border-color: #f59e0b;
-            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
+        
+        .welcome-text { text-align: center; margin-bottom: 40px; }
+        .welcome-text h1 { font-size: 32px; margin-bottom: 10px; font-weight: 600; }
+        .welcome-text p { color: #94a3b8; font-size: 15px; }
+
+        /* Live Stats Row */
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
         }
-        .portal-icon {
-            font-size: 40px;
-            margin-bottom: 20px;
+        .stat-box {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(30, 41, 59, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .portal-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
+        .stat-box h3 { color: #94a3b8; font-size: 14px; font-weight: 500; margin-bottom: 10px; }
+        .stat-box .value { font-size: 28px; font-weight: 700; color: #f59e0b; }
+        
+        /* App Grid */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
         }
-        .portal-desc {
-            font-size: 13px;
-            color: #9ca3af;
-            line-height: 1.5;
+        .app-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
+        .app-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: #f59e0b; opacity: 0; transition: 0.3s;
+        }
+        .app-card:hover {
+            transform: translateY(-5px);
+            background: rgba(30, 41, 59, 0.9);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+        .app-card:hover::before { opacity: 1; }
+        
+        .icon { font-size: 35px; margin-bottom: 15px; }
+        .app-card h2 { font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+        .app-card p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
+        
+        .badge {
+            display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-top: 15px;
+        }
+        .badge.admin { background: #fef3c7; color: #92400e; }
+        .badge.staff { background: #dbeafe; color: #1e40af; }
     </style>
 </head>
 <body>
 
-    <div class="portal-container">
-        <div class="portal-brand">◈ GALAXY POINT</div>
-        <div class="portal-sub">ENTERPRISE CRM PORTAL</div>
+    <div class="header">
+        <div class="brand">◈ GALAXY POINT</div>
+        <div class="status"><div class="status-dot"></div> System Online</div>
+    </div>
 
-        <div class="portal-grid">
-            <!-- Boss Panel Link -->
-            <a href="boss-panel.html" class="portal-card">
-                <div class="portal-icon">👑</div>
-                <div class="portal-title">Boss Panel</div>
-                <div class="portal-desc">View overall analytics, staff performance, and complete business overview.</div>
+    <div class="container">
+        <div class="welcome-text">
+            <h1>Command Center</h1>
+            <p>Welcome back to Galaxy Point CRM. Manage your business from one place.</p>
+        </div>
+
+        <!-- Live Data Stats -->
+        <div class="stats-row">
+            <div class="stat-box">
+                <h3>Total Social Leads</h3>
+                <div class="value" id="stat-leads">0</div>
+            </div>
+            <div class="stat-box">
+                <h3>Total Service Jobs</h3>
+                <div class="value" id="stat-jobs">0</div>
+            </div>
+            <div class="stat-box">
+                <h3>Pending Repairs</h3>
+                <div class="value" id="stat-pending">0</div>
+            </div>
+        </div>
+
+        <!-- Navigation Cards -->
+        <div class="app-grid">
+            <a href="boss-panel.html" class="app-card">
+                <div class="icon">👑</div>
+                <h2>Boss Dashboard</h2>
+                <p>View overall analytics, staff performance, and complete business overview.</p>
+                <span class="badge admin">Admin Only</span>
             </a>
 
-            <!-- Social Media Link -->
-            <a href="social-media.html" class="portal-card">
-                <div class="portal-icon">📱</div>
-                <div class="portal-title">Social Media</div>
-                <div class="portal-desc">Manage customer leads, track sources, and transfer them to departments.</div>
+            <a href="social-media.html" class="app-card">
+                <div class="icon">📱</div>
+                <h2>Social Media CRM</h2>
+                <p>Manage customer leads, track sources, and transfer them to departments.</p>
+                <span class="badge staff">Staff Access</span>
             </a>
 
-            <!-- Service Centre Link -->
-            <a href="service-centre.html" class="portal-card">
-                <div class="portal-icon">🛠️</div>
-                <div class="portal-title">Service Centre</div>
-                <div class="portal-desc">Handle repair jobs, update statuses, and generate customer bills.</div>
+            <a href="service-centre.html" class="app-card">
+                <div class="icon">🛠️</div>
+                <h2>Service Centre</h2>
+                <p>Handle repair jobs, update statuses, and generate customer bills.</p>
+                <span class="badge staff">Staff Access</span>
             </a>
         </div>
     </div>
 
+    <!-- Scripts to fetch Live Data -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCsyS5B4qCQF9JLUPCqH4jewiWueWIDQ",
+            authDomain: "galaxy-point-crm.firebaseapp.com",
+            projectId: "galaxy-point-crm",
+            storageBucket: "galaxy-point-crm.firebasestorage.app",
+            messagingSenderId: "524715744830",
+            appId: "1:524715744830:web:8307773b7c2eb5b2473b6f"
+        };
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        const db = firebase.firestore();
+
+        // Fetch Live Stats
+        db.collection('crm_data').doc('social').onSnapshot(doc => {
+            if (doc.exists) {
+                const leads = doc.data().list || [];
+                document.getElementById('stat-leads').innerText = leads.length;
+            }
+        });
+
+        db.collection('crm_data').doc('service').onSnapshot(doc => {
+            if (doc.exists) {
+                const jobs = doc.data().list || [];
+                document.getElementById('stat-jobs').innerText = jobs.length;
+                const pending = jobs.filter(j => j.status !== 'Completed').length;
+                document.getElementById('stat-pending').innerText = pending;
+            }
+        });
+    </script>
 </body>
 </html>
