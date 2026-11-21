@@ -5,160 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Galaxy Point | Enterprise Portal</title>
     <style>
+        /* ================= GLOBAL & PORTAL CSS ================= */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body {
-            background-color: #f8fafc;
-            color: #1e293b;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* Page scroll band karne ke liye */
-        }
-
-        /* Top Header Bar */
-        .app-header {
-            background: #ffffff;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #e2e8f0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-            z-index: 10;
-        }
+        body { background-color: #f8fafc; color: #1e293b; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        
+        .app-header { background: #ffffff; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.02); z-index: 10; }
         .brand { font-size: 20px; font-weight: 800; color: #1e3a8a; letter-spacing: 1px; }
         .brand span { color: #f59e0b; }
+        .main-container { flex: 1; position: relative; overflow-y: auto; }
 
-        /* Main Container */
-        .main-container {
-            flex: 1;
-            position: relative;
-            overflow-y: auto;
-        }
-
-        /* --- 1. Portal Home Page (Cards) --- */
-        .portal-home {
-            padding: 40px 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-            text-align: center;
-            transition: opacity 0.3s;
-        }
+        /* Portal Home */
+        .portal-home { padding: 40px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
         .brand-header { margin-bottom: 40px; }
         .brand-title { font-size: 32px; font-weight: 800; color: #1e3a8a; margin-bottom: 8px; }
         .brand-subtitle { font-size: 14px; color: #64748b; letter-spacing: 3px; text-transform: uppercase; }
-
-        .portal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        .portal-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 40px 20px;
-            text-decoration: none;
-            color: #1e293b;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .portal-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
-            border-color: #bfdbfe;
-        }
-        .card-icon {
-            font-size: 45px; margin-bottom: 20px; background: #eff6ff;
-            width: 90px; height: 90px; display: flex; align-items: center;
-            justify-content: center; border-radius: 50%;
-        }
+        
+        .portal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .portal-card { background: #ffffff; border-radius: 20px; padding: 40px 20px; text-decoration: none; color: #1e293b; display: flex; flex-direction: column; align-items: center; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03); transition: all 0.3s ease; cursor: pointer; }
+        .portal-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1); border-color: #bfdbfe; }
+        .card-icon { font-size: 45px; margin-bottom: 20px; background: #eff6ff; width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
         .card-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
         .card-desc { font-size: 14px; color: #64748b; margin-bottom: 25px; }
-        .login-btn {
-            padding: 10px 30px; background: #2563eb; color: #ffffff;
-            border-radius: 50px; font-weight: 600; font-size: 14px;
-            text-transform: uppercase; width: 100%; border: none;
-        }
+        .login-btn { padding: 10px 30px; background: #2563eb; color: #ffffff; border-radius: 50px; font-weight: 600; font-size: 14px; text-transform: uppercase; width: 100%; border: none; }
 
-        /* --- 2. Panel View (IFrame) --- */
-        .panel-view {
-            display: none; /* Default mein chhupa hua */
-            width: 100%;
-            height: 100%;
-            flex-direction: column;
-        }
-        
-        .panel-header {
-            background: #ffffff;
-            padding: 10px 20px;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .back-btn {
-            background: #eff6ff; color: #2563eb; border: none;
-            padding: 10px 20px; border-radius: 8px; font-weight: 600;
-            cursor: pointer; display: flex; align-items: center; gap: 5px;
-            transition: 0.2s;
-        }
+        /* Panel View */
+        .panel-view { display: none; width: 100%; flex-direction: column; background: #f4f7f6; min-height: 100%; }
+        .panel-header { background: #ffffff; padding: 15px 20px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 15px; position: sticky; top: 0; z-index: 100; }
+        .back-btn { background: #eff6ff; color: #2563eb; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .back-btn:hover { background: #dbeafe; }
-        
-        iframe {
-            flex: 1;
-            width: 100%;
-            border: none;
-            background: #f8fafc;
-        }
+        .panel-body { padding: 30px; max-width: 1200px; margin: 0 auto; width: 100%; }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .brand-title { font-size: 26px; }
-            .portal-grid { grid-template-columns: 1fr; }
-        }
+        /* ================= INNER PANEL CSS (From style.css) ================= */
+        .hidden { display: none !important; }
+        .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .top h1 { font-size: 26px; color: #111827; }
+        .muted { color: #6b7280; font-size: 14px; margin-top: 5px; }
+        .pill { background: #e5e7eb; padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: 600; color: #374151; }
+        
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-left: 4px solid #f59e0b; }
+        .card small { color: #6b7280; font-size: 13px; font-weight: 500; }
+        .card strong { display: block; font-size: 24px; color: #111827; margin-top: 8px; }
+
+        .panel { background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        .panel h2 { font-size: 18px; margin-bottom: 20px; color: #111827; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { background: #f9fafb; text-align: left; padding: 12px; font-size: 13px; color: #6b7280; border-bottom: 1px solid #e5e7eb; }
+        td { padding: 15px 12px; font-size: 14px; border-bottom: 1px solid #e5e7eb; color: #374151; }
+        
+        .tag { background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .bars .row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .bar { width: 100%; height: 8px; background: #e5e7eb; border-radius: 10px; margin-bottom: 15px; overflow: hidden; }
+        .bar .fill { height: 100%; background: #f59e0b; border-radius: 10px; }
+        
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        input, select, textarea { width: 100%; padding: 10px 15px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; outline: none; }
+        input:focus, select:focus, textarea:focus { border-color: #f59e0b; }
+        .formgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .formgrid .wide { grid-column: span 2; }
+        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #374151; }
+        
+        .btn { background: #f59e0b; color: #111827; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn.alt { background: #e5e7eb; color: #374151; }
+        .note { background: #fef3c7; color: #92400e; padding: 15px; border-radius: 8px; font-size: 13px; margin-top: 20px; border-left: 4px solid #f59e0b; }
+        
+        nav button { display: none; } /* Hide original nav buttons as we use top header */
     </style>
 </head>
 <body>
 
-    <!-- Top Header (Har jagah dikhega) -->
+    <!-- TOP HEADER -->
     <div class="app-header">
         <div class="brand">◈ GALAXY <span>POINT</span></div>
-        <div style="font-size:13px; font-weight:600; color:#64748b;">Staff Portal</div>
+        <div id="header-status" style="font-size:13px; font-weight:600; color:#64748b;">Staff Portal</div>
     </div>
 
     <div class="main-container">
         
-        <!-- === HOME PAGE (Cards View) === -->
+        <!-- ================= PORTAL HOME ================= -->
         <div class="portal-home" id="home-screen">
             <div class="brand-header">
                 <div class="brand-title">Welcome to Command Center</div>
                 <div class="brand-subtitle">Select a module to begin</div>
             </div>
-
             <div class="portal-grid">
-                <!-- Card 1: Boss -->
-                <div class="portal-card" onclick="openPanel('boss-panel.html')">
+                <div class="portal-card" onclick="openApp('boss')">
                     <div class="card-icon">👑</div>
                     <h2 class="card-title">Boss Dashboard</h2>
                     <p class="card-desc">View analytics and monitor department performance.</p>
                     <button class="login-btn">Open Panel</button>
                 </div>
-
-                <!-- Card 2: Social -->
-                <div class="portal-card" onclick="openPanel('social-media.html')">
+                <div class="portal-card" onclick="openApp('social')">
                     <div class="card-icon">📱</div>
                     <h2 class="card-title">Social Media CRM</h2>
                     <p class="card-desc">Manage customer leads and transfer tasks.</p>
                     <button class="login-btn">Open Panel</button>
                 </div>
-
-                <!-- Card 3: Service -->
-                <div class="portal-card" onclick="openPanel('service-centre.html')">
+                <div class="portal-card" onclick="openApp('service')">
                     <div class="card-icon">🛠️</div>
                     <h2 class="card-title">Service Centre</h2>
                     <p class="card-desc">Track repair jobs, update statuses, and generate bills.</p>
@@ -167,48 +111,196 @@
             </div>
         </div>
 
-        <!-- === PANEL VIEW (IFrame View) === -->
+        <!-- ================= PANEL WRAPPER ================= -->
         <div class="panel-view" id="panel-screen">
             <div class="panel-header">
                 <button class="back-btn" onclick="goBack()">← Back to Portal</button>
-                <div id="current-panel-name" style="font-weight: 600; color: #1e293b;">Panel Name</div>
+                <div id="current-panel-name" style="font-weight: 600; color: #1e293b;"></div>
             </div>
-            <!-- Yahan aapki purani files load hongi -->
-            <iframe id="panel-iframe" src=""></iframe>
+            <div class="panel-body" id="panel-content">
+                <!-- Yahan dynamic content aayega -->
+            </div>
         </div>
 
     </div>
 
+    <!-- FIREBASE SCRIPTS -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
     <script>
-        const homeScreen = document.getElementById('home-screen');
-        const panelScreen = document.getElementById('panel-screen');
-        const iframe = document.getElementById('panel-iframe');
-        const panelName = document.getElementById('current-panel-name');
+        // 1. FIREBASE SETUP
+        const firebaseConfig = {
+            apiKey: "AIzaSyCsyS5B4qCQF9JLUPCqH4jewiWueWIDQ",
+            authDomain: "galaxy-point-crm.firebaseapp.com",
+            projectId: "galaxy-point-crm",
+            storageBucket: "galaxy-point-crm.firebasestorage.app",
+            messagingSenderId: "524715744830",
+            appId: "1:524715744830:web:8307773b7c2eb5b2473b6f"
+        };
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        const db = firebase.firestore();
+        
+        const key = 'gp_social_data';
+        const svcKey = 'gp_service_data';
+        const labels = {sohail:'Taken by Sohail',new:'New Mobile – Pravin',used:'Used Mobile – Ashok',service:'Service Centre',telecom:'Telecom'};
 
-        // Panel Open Karne ka Function
-        function openPanel(fileName) {
-            // Home screen chupao, Panel screen dikhao
-            homeScreen.style.display = 'none';
-            panelScreen.style.display = 'flex';
-            
-            // Iframe mein file load karo (Page refresh nahi hoga)
-            iframe.src = fileName;
-            
-            // Header mein naam set karo
-            if(fileName === 'boss-panel.html') panelName.innerText = "Boss Dashboard";
-            else if(fileName === 'social-media.html') panelName.innerText = "Social Media CRM";
-            else panelName.innerText = "Service Centre";
+        // 2. COMMON FUNCTIONS
+        function esc(str) { return str ? str.toString().replace(/[&<>'"]/g, tag => ({'&': '&amp;','<': '&lt;','>': '&gt;',"'": '&#39;','"': '&quot;'}[tag] || tag)) : ''; }
+        function format(num) { return '₹' + Number(num || 0).toLocaleString('en-IN'); }
+        function stamp() { return new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }); }
+        function get(k) { const data = localStorage.getItem(k); return data ? JSON.parse(data) : []; }
+        function put(k, data) {
+            localStorage.setItem(k, JSON.stringify(data));
+            if (k === key) db.collection('crm_data').doc('social').set({ list: data });
+            else if (k === svcKey) db.collection('crm_data').doc('service').set({ list: data });
+            if (currentApp === 'boss') renderBoss();
+            if (currentApp === 'social') renderSocial();
+            if (currentApp === 'service') renderService();
         }
 
-        // Wapas Home aane ka Function
+        // 3. NAVIGATION (SPA LOGIC)
+        let currentApp = '';
+        function openApp(appName) {
+            currentApp = appName;
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('panel-screen').style.display = 'flex';
+            document.getElementById('header-status').innerText = "Active Module";
+            
+            const content = document.getElementById('panel-content');
+            const title = document.getElementById('current-panel-name');
+
+            if (appName === 'boss') {
+                title.innerText = "Boss Dashboard";
+                content.innerHTML = getBossHTML();
+                renderBoss();
+            } else if (appName === 'social') {
+                title.innerText = "Social Media CRM";
+                content.innerHTML = getSocialHTML();
+                renderSocial();
+            } else if (appName === 'service') {
+                title.innerText = "Service Centre";
+                content.innerHTML = getServiceHTML();
+                renderService();
+            }
+        }
+
         function goBack() {
-            panelScreen.style.display = 'none';
-            homeScreen.style.display = 'block';
-            
-            // Iframe ko clear karo taaki memory free ho
-            iframe.src = "";
+            currentApp = '';
+            document.getElementById('panel-screen').style.display = 'none';
+            document.getElementById('home-screen').style.display = 'block';
+            document.getElementById('header-status').innerText = "Staff Portal";
         }
-    </script>
 
+        // ==========================================
+        // 4. BOSS PANEL LOGIC
+        // ==========================================
+        function getBossHTML() {
+            return `<div class="top"><div><h1>Boss Dashboard</h1><div class="muted">Department overview</div></div></div>
+            <div class="cards" id="b-stats"></div>
+            <div class="panel"><h2>Department Overview</h2><div class="cards" id="b-dept"></div></div>
+            <div class="panel"><h2>Recent Activity</h2><div id="b-recent"></div></div>`;
+        }
+        function renderBoss() {
+            const a = get(key), b = get(svcKey);
+            const done = b.filter(x=>x.status==='Completed').length;
+            const amount = b.reduce((s,x)=>s+Number(x.amount||0),0);
+            
+            const card = (l,v)=>`<div class="card"><small>${l}</small><strong>${v}</strong></div>`;
+            document.getElementById('b-stats').innerHTML = [['Social Leads',a.length],['Service Jobs',b.length],['Transferred',a.filter(x=>x.transfer==='service').length],['Completed',done],['In Process',b.length-done],['Total Amount',format(amount)]].map(x=>card(...x)).join('');
+            document.getElementById('b-dept').innerHTML = card('Social Leads',a.length)+card('Service Jobs',b.length)+card('Sohail Ref',b.filter(x=>x.origin==='Sohail').length);
+            
+            document.getElementById('b-recent').innerHTML = [...a.slice(0,3).map(x=>`<p><b>${esc(x.name)}</b> · Social · ${esc(x.source)}</p>`),...b.slice(0,3).map(x=>`<p><b>${esc(x.name)}</b> · Service · ${esc(x.status)}</p>`)].join('') || 'No records yet';
+        }
+
+        // ==========================================
+        // 5. SOCIAL MEDIA LOGIC
+        // ==========================================
+        function getSocialHTML() {
+            return `<div class="top"><div><h1>Social Media CRM</h1><div class="muted">Customer acquisition</div></div></div>
+            <div class="panel"><div class="toolbar"><h2>Customer List</h2><button class="btn" onclick="openSocialForm()">+ Add Customer</button></div>
+            <input id="s-q" placeholder="Search customer..." oninput="renderSocial()">
+            <div style="overflow:auto;margin-top:15px"><table><thead><tr><th>Customer</th><th>Req</th><th>Source</th><th>Assigned</th><th>Action</th></tr></thead><tbody id="s-list"></tbody></table></div></div>
+            <div class="panel hidden" id="s-formpanel"><h2 id="s-formtitle">Add Customer</h2><form id="s-form"><div class="formgrid">
+            <div><label>Name</label><input id="s-name" required></div><div><label>Mobile</label><input id="s-phone" pattern="[0-9]{10}" maxlength="10" required></div>
+            <div class="wide"><label>Requirement</label><textarea id="s-req" required></textarea></div>
+            <div><label>Source</label><select id="s-source"><option>Instagram</option><option>WhatsApp</option><option>Calling</option><option>Justdial</option></select></div>
+            <div><label>Transfer To</label><select id="s-transfer"><option value="sohail">Sohail</option><option value="new">Pravin</option><option value="used">Ashok</option><option value="service">Service</option></select></div>
+            </div><p><button class="btn">Save</button> <button type="button" class="btn alt" onclick="closeSocialForm()">Cancel</button></p></form></div>`;
+        }
+        let s_editId = null;
+        function openSocialForm(id=null) {
+            s_editId = id; const r = get(key).find(x=>x.id===id);
+            document.getElementById('s-formpanel').classList.remove('hidden');
+            document.getElementById('s-formtitle').innerText = r ? 'Edit Customer' : 'Add Customer';
+            ['name','phone','req'].forEach((f,i)=>document.getElementById('s-'+f).value = r ? (f==='req'?r.requirement:r[f]) : '');
+            document.getElementById('s-source').value = r?.source || 'Instagram';
+            document.getElementById('s-transfer').value = r?.transfer || 'sohail';
+        }
+        function closeSocialForm() { document.getElementById('s-formpanel').classList.add('hidden'); s_editId=null; }
+        document.addEventListener('submit', (e) => {
+            if(e.target.id === 's-form') {
+                e.preventDefault();
+                let a = get(key);
+                const r = { id: s_editId || 'lead'+Date.now(), name: document.getElementById('s-name').value.trim(), phone: document.getElementById('s-phone').value.trim(), requirement: document.getElementById('s-req').value.trim(), source: document.getElementById('s-source').value, transfer: document.getElementById('s-transfer').value, date: stamp() };
+                if(s_editId) a = a.map(x=>x.id===s_editId?r:x); else a.unshift(r);
+                put(key, a); closeSocialForm();
+            }
+        });
+        function renderSocial() {
+            const a = get(key); const q = (document.getElementById('s-q')?.value || '').toLowerCase();
+            document.getElementById('s-list').innerHTML = a.filter(r=>(r.name+' '+r.phone).toLowerCase().includes(q)).map(r=>`<tr><td><b>${esc(r.name)}</b><br>${esc(r.phone)}</td><td>${esc(r.requirement)}</td><td>${esc(r.source)}</td><td><span class="tag">${labels[r.transfer]||'Unassigned'}</span></td><td><button class="btn alt" onclick="openSocialForm('${r.id}')">Edit</button></td></tr>`).join('') || '<tr><td colspan="5">No records</td></tr>';
+        }
+
+        // ==========================================
+        // 6. SERVICE CENTRE LOGIC
+        // ==========================================
+        function getServiceHTML() {
+            return `<div class="top"><div><h1>Service Centre</h1><div class="muted">Repair operations</div></div></div>
+            <div class="panel"><div class="toolbar"><h2>Service Records</h2><button class="btn" onclick="openServiceForm()">+ Add Job</button></div>
+            <input id="v-q" placeholder="Search..." oninput="renderService()">
+            <div style="overflow:auto;margin-top:15px"><table><thead><tr><th>Customer</th><th>Service</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="v-list"></tbody></table></div></div>
+            <div class="panel hidden" id="v-formpanel"><h2 id="v-formtitle">Add Job</h2><form id="v-form"><div class="formgrid">
+            <div><label>Name</label><input id="v-name" required></div><div><label>Mobile</label><input id="v-phone" pattern="[0-9]{10}" required></div>
+            <div><label>Service</label><input id="v-service" required></div><div><label>Amount</label><input id="v-amount" type="number" required></div>
+            <div><label>Status</label><select id="v-status"><option>In Process</option><option>Completed</option></select></div>
+            <div><label>Origin</label><select id="v-origin"><option value="Direct">Direct</option><option value="Sohail">Sohail</option></select></div>
+            </div><p><button class="btn">Save</button> <button type="button" class="btn alt" onclick="closeServiceForm()">Cancel</button></p></form></div>`;
+        }
+        let v_editId = null;
+        function openServiceForm(id=null) {
+            v_editId = id; const r = get(svcKey).find(x=>x.id===id);
+            document.getElementById('v-formpanel').classList.remove('hidden');
+            document.getElementById('v-formtitle').innerText = r ? 'Edit Job' : 'Add Job';
+            ['name','phone','service','amount'].forEach(f=>document.getElementById('v-'+f).value = r ? r[f] : '');
+            document.getElementById('v-status').value = r?.status || 'In Process';
+            document.getElementById('v-origin').value = r?.origin || 'Direct';
+        }
+        function closeServiceForm() { document.getElementById('v-formpanel').classList.add('hidden'); v_editId=null; }
+        document.addEventListener('submit', (e) => {
+            if(e.target.id === 'v-form') {
+                e.preventDefault();
+                let a = get(svcKey);
+                const r = { id: v_editId || 'job'+Date.now(), name: document.getElementById('v-name').value.trim(), phone: document.getElementById('v-phone').value.trim(), service: document.getElementById('v-service').value.trim(), amount: Number(document.getElementById('v-amount').value), status: document.getElementById('v-status').value, origin: document.getElementById('v-origin').value, date: stamp() };
+                if(v_editId) a = a.map(x=>x.id===v_editId?r:x); else a.unshift(r);
+                put(svcKey, a); closeServiceForm();
+            }
+        });
+        function renderService() {
+            const a = get(svcKey); const q = (document.getElementById('v-q')?.value || '').toLowerCase();
+            document.getElementById('v-list').innerHTML = a.filter(r=>(r.name+' '+r.phone).toLowerCase().includes(q)).map(r=>`<tr><td><b>${esc(r.name)}</b><br>${esc(r.phone)}</td><td>${esc(r.service)}</td><td>${format(r.amount)}</td><td>${esc(r.status)}</td><td><button class="btn alt" onclick="openServiceForm('${r.id}')">Edit</button></td></tr>`).join('') || '<tr><td colspan="5">No records</td></tr>';
+        }
+
+        // ==========================================
+        // 7. REAL-TIME SYNC
+        // ==========================================
+        db.collection('crm_data').doc('social').onSnapshot(doc => {
+            if (doc.exists) { localStorage.setItem(key, JSON.stringify(doc.data().list || [])); if (currentApp==='social') renderSocial(); if(currentApp==='boss') renderBoss(); }
+        });
+        db.collection('crm_data').doc('service').onSnapshot(doc => {
+            if (doc.exists) { localStorage.setItem(svcKey, JSON.stringify(doc.data().list || [])); if (currentApp==='service') renderService(); if(currentApp==='boss') renderBoss(); }
+        });
+
+    </script>
 </body>
 </html>
