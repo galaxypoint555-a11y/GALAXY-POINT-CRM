@@ -3,195 +3,215 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Galaxy Point | Command Center</title>
+    <title>Galaxy Point | Enterprise Portal</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Premium Dashboard Styling */
+        /* Reset & Core */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background: #0f172a;
-            background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+            font-family: 'Inter', sans-serif;
+            /* Rich Professional Wide Background */
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
             color: #fff;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            font-family: 'Inter', sans-serif;
+            justify-content: center;
+            overflow-x: hidden;
         }
-        .header {
-            width: 100%;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .header .brand { font-size: 24px; font-weight: 700; color: #f59e0b; letter-spacing: 1px; }
-        .header .status { font-size: 13px; color: #10b981; display: flex; align-items: center; gap: 5px;}
-        .status-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; }
-        
-        .container {
-            max-width: 1000px;
-            width: 100%;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .welcome-text { text-align: center; margin-bottom: 40px; }
-        .welcome-text h1 { font-size: 32px; margin-bottom: 10px; font-weight: 600; }
-        .welcome-text p { color: #94a3b8; font-size: 15px; }
 
-        /* Live Stats Row */
-        .stats-row {
-            display: flex;
-            gap: 20px;
+        .portal-wrapper {
             width: 100%;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-        .stat-box {
-            flex: 1;
-            min-width: 200px;
-            background: rgba(30, 41, 59, 0.8);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
+            max-width: 1200px;
+            padding: 40px 20px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .stat-box h3 { color: #94a3b8; font-size: 14px; font-weight: 500; margin-bottom: 10px; }
-        .stat-box .value { font-size: 28px; font-weight: 700; color: #f59e0b; }
-        
-        /* App Grid */
-        .app-grid {
+
+        /* Header Section */
+        .brand-header {
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .brand-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: #f59e0b;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .brand-subtitle {
+            font-size: 16px;
+            color: #94a3b8;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Grid for Cards */
+        .portal-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
         }
-        .app-card {
-            background: rgba(30, 41, 59, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 16px;
+
+        /* Premium Card Design */
+        .portal-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 50px 30px;
             text-decoration: none;
             color: #fff;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        .app-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-            background: #f59e0b; opacity: 0; transition: 0.3s;
+
+        /* Card Hover Effects */
+        .portal-card:hover {
+            transform: translateY(-12px);
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(245, 158, 11, 0.1);
         }
-        .app-card:hover {
-            transform: translateY(-5px);
-            background: rgba(30, 41, 59, 0.9);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+
+        /* Glow Effect on Hover */
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .portal-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Icon Style */
+        .card-icon {
+            font-size: 50px;
+            margin-bottom: 25px;
+            transition: transform 0.4s ease;
+            background: rgba(255,255,255,0.05);
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .portal-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(245, 158, 11, 0.1);
             border-color: rgba(245, 158, 11, 0.3);
         }
-        .app-card:hover::before { opacity: 1; }
-        
-        .icon { font-size: 35px; margin-bottom: 15px; }
-        .app-card h2 { font-size: 20px; font-weight: 600; margin-bottom: 10px; }
-        .app-card p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
-        
-        .badge {
-            display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-top: 15px;
+
+        /* Text Style */
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
         }
-        .badge.admin { background: #fef3c7; color: #92400e; }
-        .badge.staff { background: #dbeafe; color: #1e40af; }
+
+        .card-desc {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 250px;
+        }
+
+        /* Button/Badge Style */
+        .login-btn {
+            margin-top: auto;
+            padding: 12px 30px;
+            background: transparent;
+            color: #f59e0b;
+            border: 2px solid #f59e0b;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .portal-card:hover .login-btn {
+            background: #f59e0b;
+            color: #0f172a;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .brand-title { font-size: 32px; }
+            .portal-grid { grid-template-columns: 1fr; }
+            .portal-card { padding: 40px 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="brand">◈ GALAXY POINT</div>
-        <div class="status"><div class="status-dot"></div> System Online</div>
-    </div>
-
-    <div class="container">
-        <div class="welcome-text">
-            <h1>Command Center</h1>
-            <p>Welcome back to Galaxy Point CRM. Manage your business from one place.</p>
+    <div class="portal-wrapper">
+        <!-- Header -->
+        <div class="brand-header">
+            <div class="brand-title">◈ GALAXY POINT</div>
+            <div class="brand-subtitle">Enterprise CRM Portal</div>
         </div>
 
-        <!-- Live Data Stats -->
-        <div class="stats-row">
-            <div class="stat-box">
-                <h3>Total Social Leads</h3>
-                <div class="value" id="stat-leads">0</div>
-            </div>
-            <div class="stat-box">
-                <h3>Total Service Jobs</h3>
-                <div class="value" id="stat-jobs">0</div>
-            </div>
-            <div class="stat-box">
-                <h3>Pending Repairs</h3>
-                <div class="value" id="stat-pending">0</div>
-            </div>
-        </div>
-
-        <!-- Navigation Cards -->
-        <div class="app-grid">
-            <a href="boss-panel.html" class="app-card">
-                <div class="icon">👑</div>
-                <h2>Boss Dashboard</h2>
-                <p>View overall analytics, staff performance, and complete business overview.</p>
-                <span class="badge admin">Admin Only</span>
+        <!-- Cards Grid -->
+        <div class="portal-grid">
+            
+            <!-- Boss Dashboard Card -->
+            <a href="boss-panel.html" class="portal-card">
+                <div class="card-icon">👑</div>
+                <h2 class="card-title">Boss Dashboard</h2>
+                <p class="card-desc">Access complete business analytics, revenue overview, and monitor department performance.</p>
+                <div class="login-btn">Secure Login</div>
             </a>
 
-            <a href="social-media.html" class="app-card">
-                <div class="icon">📱</div>
-                <h2>Social Media CRM</h2>
-                <p>Manage customer leads, track sources, and transfer them to departments.</p>
-                <span class="badge staff">Staff Access</span>
+            <!-- Social Media CRM Card -->
+            <a href="social-media.html" class="portal-card">
+                <div class="card-icon">📱</div>
+                <h2 class="card-title">Social Media CRM</h2>
+                <p class="card-desc">Manage customer leads, track acquisition sources, and transfer tasks to other departments.</p>
+                <div class="login-btn">Secure Login</div>
             </a>
 
-            <a href="service-centre.html" class="app-card">
-                <div class="icon">🛠️</div>
-                <h2>Service Centre</h2>
-                <p>Handle repair jobs, update statuses, and generate customer bills.</p>
-                <span class="badge staff">Staff Access</span>
+            <!-- Service Centre Card -->
+            <a href="service-centre.html" class="portal-card">
+                <div class="card-icon">🛠️</div>
+                <h2 class="card-title">Service Centre</h2>
+                <p class="card-desc">Track repair jobs, update statuses, manage service bills, and view Sohail referrals.</p>
+                <div class="login-btn">Secure Login</div>
             </a>
+
         </div>
     </div>
 
-    <!-- Scripts to fetch Live Data -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCsyS5B4qCQF9JLUPCqH4jewiWueWIDQ",
-            authDomain: "galaxy-point-crm.firebaseapp.com",
-            projectId: "galaxy-point-crm",
-            storageBucket: "galaxy-point-crm.firebasestorage.app",
-            messagingSenderId: "524715744830",
-            appId: "1:524715744830:web:8307773b7c2eb5b2473b6f"
-        };
-        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
-        const db = firebase.firestore();
-
-        // Fetch Live Stats
-        db.collection('crm_data').doc('social').onSnapshot(doc => {
-            if (doc.exists) {
-                const leads = doc.data().list || [];
-                document.getElementById('stat-leads').innerText = leads.length;
-            }
-        });
-
-        db.collection('crm_data').doc('service').onSnapshot(doc => {
-            if (doc.exists) {
-                const jobs = doc.data().list || [];
-                document.getElementById('stat-jobs').innerText = jobs.length;
-                const pending = jobs.filter(j => j.status !== 'Completed').length;
-                document.getElementById('stat-pending').innerText = pending;
-            }
-        });
-    </script>
 </body>
 </html>
