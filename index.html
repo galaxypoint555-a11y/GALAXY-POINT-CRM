@@ -29,12 +29,12 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* Login Background */
+    /* Executive Login Background */
     .login-bg {
       background:
-        radial-gradient(circle at 12% 18%, rgba(29, 78, 216, 0.09) 0%, transparent 42%),
-        radial-gradient(circle at 88% 82%, rgba(15, 76, 129, 0.08) 0%, transparent 45%),
-        linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
+        radial-gradient(circle at 12% 15%, rgba(29, 78, 216, 0.11) 0%, transparent 42%),
+        radial-gradient(circle at 88% 85%, rgba(15, 76, 129, 0.10) 0%, transparent 45%),
+        linear-gradient(180deg, #FFFFFF 0%, #EEF4FC 100%);
     }
 
     /* Department Cards */
@@ -43,32 +43,34 @@
       overflow: hidden;
       background: #FFFFFF;
       border: 2px solid #E2E8F0;
-      border-radius: 18px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      border-radius: 20px;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.28s ease;
       cursor: pointer;
     }
-    .dept-card:hover { transform: translateY(-5px); }
-    .dept-card[data-role="boss"]:hover { border-color: #1D4ED8; box-shadow: 0 14px 30px -10px rgba(29, 78, 216, 0.24); }
-    .dept-card[data-role="service"]:hover { border-color: #059669; box-shadow: 0 14px 30px -10px rgba(5, 150, 105, 0.24); }
-    .dept-card[data-role="social"]:hover { border-color: #4F46E5; box-shadow: 0 14px 30px -10px rgba(79, 70, 229, 0.24); }
+    .dept-card:hover { transform: translateY(-6px); }
+    .dept-card[data-role="boss"]:hover { border-color: #1D4ED8; box-shadow: 0 18px 36px -12px rgba(29, 78, 216, 0.26); }
+    .dept-card[data-role="service"]:hover { border-color: #059669; box-shadow: 0 18px 36px -12px rgba(5, 150, 105, 0.26); }
+    .dept-card[data-role="social"]:hover { border-color: #4F46E5; box-shadow: 0 18px 36px -12px rgba(79, 70, 229, 0.26); }
 
     .dept-card.active-boss {
       border-color: #0F4C81;
       background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%);
-      box-shadow: 0 14px 32px -8px rgba(15, 76, 129, 0.28), 0 0 0 4px rgba(29, 78, 216, 0.12);
-      transform: translateY(-4px);
+      box-shadow: 0 16px 34px -8px rgba(15, 76, 129, 0.28), 0 0 0 4px rgba(29, 78, 216, 0.14);
+      transform: translateY(-5px);
     }
     .dept-card.active-service {
       border-color: #059669;
       background: linear-gradient(180deg, #FFFFFF 0%, #ECFDF5 100%);
-      box-shadow: 0 14px 32px -8px rgba(5, 150, 105, 0.28), 0 0 0 4px rgba(16, 185, 129, 0.12);
-      transform: translateY(-4px);
+      box-shadow: 0 16px 34px -8px rgba(5, 150, 105, 0.28), 0 0 0 4px rgba(16, 185, 129, 0.14);
+      transform: translateY(-5px);
     }
     .dept-card.active-social {
       border-color: #4F46E5;
       background: linear-gradient(180deg, #FFFFFF 0%, #EEF2FF 100%);
-      box-shadow: 0 14px 32px -8px rgba(79, 70, 229, 0.28), 0 0 0 4px rgba(99, 102, 241, 0.12);
-      transform: translateY(-4px);
+      box-shadow: 0 16px 34px -8px rgba(79, 70, 229, 0.28), 0 0 0 4px rgba(99, 102, 241, 0.14);
+      transform: translateY(-5px);
     }
 
     .ripple-wave {
@@ -82,26 +84,27 @@
       to { transform: scale(3.2); opacity: 0; }
     }
 
-    /* Fixed Desktop & Mobile Workspace Layout */
+    /* Desktop & Mobile Workspace Shell */
     .workspace-shell {
       display: flex;
       min-height: 100vh;
       width: 100%;
     }
     .workspace-sidebar {
-      width: 270px;
-      min-width: 270px;
+      width: 276px;
+      min-width: 276px;
       background: #FFFFFF;
       border-right: 1px solid #E2E8F0;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 20px 16px;
+      padding: 22px 16px;
+      box-shadow: 4px 0 24px rgba(15, 23, 42, 0.02);
     }
     .workspace-main {
       flex: 1;
       min-width: 0;
-      padding: 24px 28px;
+      padding: 24px 30px;
       background: #F4F7FB;
     }
     @media (max-width: 960px) {
@@ -119,11 +122,11 @@
     .nav-btn {
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
       width: 100%;
       padding: 11px 14px;
       border-radius: 12px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       color: #475569;
       transition: all 0.2s ease;
@@ -135,22 +138,54 @@
     }
     .nav-btn:hover { background: #F1F5F9; color: #0F4C81; }
     .nav-btn.active {
-      background: #0F4C81;
+      background: linear-gradient(135deg, #0F4C81 0%, #1D4ED8 100%);
       color: #FFFFFF;
-      box-shadow: 0 6px 16px -4px rgba(15, 76, 129, 0.35);
+      box-shadow: 0 8px 18px -4px rgba(15, 76, 129, 0.38);
     }
 
+    /* Executive Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #0B3860 0%, #0F4C81 52%, #1D4ED8 100%);
+      color: #FFFFFF;
+      border-radius: 22px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 34px -12px rgba(15, 76, 129, 0.45);
+    }
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Luxury KPI Cards */
     .kpi-card {
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 18px 20px;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 14px -4px rgba(15, 23, 42, 0.04);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      position: relative;
+      overflow: hidden;
     }
     .kpi-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px -8px rgba(15, 76, 129, 0.14);
+      transform: translateY(-3px);
+      border-color: #BFDBFE;
+      box-shadow: 0 14px 28px -10px rgba(15, 76, 129, 0.16);
+    }
+
+    .glass-panel {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 20px;
+      box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.04);
     }
 
     @keyframes shake {
@@ -159,6 +194,16 @@
       40%, 80% { transform: translateX(6px); }
     }
     .shake { animation: shake 0.35s ease; }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeSlideUp 0.3s ease forwards; }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #F1F5F9; }
+    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 999px; }
   </style>
 </head>
 <body>
@@ -178,11 +223,11 @@
             <span class="font-display font-extrabold text-xl tracking-tight text-slate-900">GALAXY POINT</span>
             <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-[#0F4C81] border border-blue-200">CRM</span>
           </div>
-          <p class="text-xs text-slate-500 font-medium">Unified Operations & Customer Management System</p>
+          <p class="text-xs text-slate-500 font-medium">Executive Operations & Real-Time Department Suite</p>
         </div>
       </div>
 
-      <span id="loginSyncBadge" class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700">
+      <span id="loginSyncBadge" class="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 shadow-xs">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         Connecting Firebase...
       </span>
@@ -205,7 +250,7 @@
             <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Boss Login</span>
           </div>
           <h2 class="text-xl font-extrabold text-slate-900">Jagdish</h2>
-          <p class="text-xs font-medium text-slate-500 mt-1">Owner & Executive Admin Overview</p>
+          <p class="text-xs font-medium text-slate-500 mt-1">Owner • Executive Dashboard & Analysis</p>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-[#0F4C81]">
             <span>Full Analytics & Control</span>
             <i class="fa-solid fa-arrow-right"></i>
@@ -222,7 +267,7 @@
           <h2 class="text-xl font-extrabold text-slate-900">Mohammed</h2>
           <p class="text-xs font-medium text-slate-500 mt-1">Service Centre Manager & Billing</p>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-700">
-            <span>Repairs & Referral Match</span>
+            <span>Repairs & Received by Sohail</span>
             <i class="fa-solid fa-arrow-right"></i>
           </div>
         </div>
@@ -244,7 +289,7 @@
       </div>
 
       <!-- Password Box -->
-      <div id="authBox" class="max-w-md mx-auto bg-white rounded-2xl border-2 border-[#0F4C81] p-6 shadow-lg transition-all">
+      <div id="authBox" class="max-w-md mx-auto bg-white rounded-2xl border-2 border-[#0F4C81] p-6 shadow-xl transition-all">
         <div class="flex items-center justify-between mb-4">
           <div class="flex items-center gap-3">
             <div id="authIconWrap" class="w-10 h-10 rounded-xl bg-blue-50 text-[#0F4C81] flex items-center justify-center text-base">
@@ -277,7 +322,7 @@
             <i class="fa-solid fa-circle-exclamation mr-1"></i> Incorrect password for selected workspace.
           </p>
 
-          <button id="loginSubmitBtn" type="submit" class="w-full py-3.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white font-bold text-sm tracking-wide shadow-md transition flex items-center justify-center gap-2">
+          <button id="loginSubmitBtn" type="submit" class="w-full py-3.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white font-bold text-sm tracking-wide shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
             <span>Enter Dashboard</span>
             <i class="fa-solid fa-arrow-right-to-bracket"></i>
           </button>
@@ -298,7 +343,7 @@
         <!-- Logo Header -->
         <div class="flex items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-blue-50/70 border border-blue-100 p-1.5 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-blue-50/80 border border-blue-100 p-1.5 flex items-center justify-center">
               <svg viewBox="0 0 220 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18 68 C18 32, 46 16, 86 16 L168 16 C196 16, 210 32, 210 54 C210 76, 196 92, 168 92 L134 92 L134 108 L112 108 L112 72 L166 72 C179 72, 186 64, 186 54 C186 44, 179 36, 166 36 L82 36 C52 36, 32 48, 22 72 C20 71, 18 70, 18 68 Z" fill="#141414"/>
                 <path d="M24 78 C32 98, 52 108, 82 108 L104 108 L104 62 L62 62 L54 78 L82 78 L82 88 C62 88, 48 81, 42 66 C34 69, 28 73, 24 78 Z" fill="#0F4C81"/>
@@ -321,7 +366,7 @@
 
       <!-- Bottom Profile & Switch Account -->
       <div class="pt-4 mt-4 border-t border-slate-100 space-y-2.5">
-        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-2.5">
+        <div class="p-3 rounded-xl bg-gradient-to-r from-slate-50 to-blue-50/40 border border-slate-200/80 flex items-center gap-2.5">
           <div id="sidebarUserIcon" class="w-9 h-9 rounded-lg bg-[#0F4C81] text-white flex items-center justify-center text-sm shrink-0">
             <i class="fa-solid fa-crown"></i>
           </div>
@@ -344,27 +389,27 @@
 
     <!-- Main Right Content Area -->
     <main class="workspace-main">
-      <!-- Top Dynamic Greeting & Quick Actions Header -->
-      <header class="bg-white rounded-2xl border border-slate-200 p-5 mb-6 shadow-xs flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <div class="inline-flex items-center gap-2 text-xs font-bold text-[#0F4C81] bg-blue-50 px-3 py-1 rounded-full mb-1.5">
+      <!-- Executive Royal Blue Hero Header -->
+      <header class="hero-banner p-6 mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div class="relative z-10">
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-blue-100 bg-white/15 backdrop-blur-xs px-3 py-1 rounded-full mb-2">
             <i class="fa-regular fa-clock"></i>
             <span id="liveClockBadge">Loading time...</span>
           </div>
-          <h1 id="dynamicGreetingTitle" class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h1 id="dynamicGreetingTitle" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Good Afternoon, Jagdish
           </h1>
-          <p id="workspaceSubtitle" class="text-xs sm:text-sm text-slate-500 mt-0.5">
-            GALAXY POINT • Real-Time Department Performance & Activity
+          <p id="workspaceSubtitle" class="text-xs sm:text-sm text-blue-100/90 mt-1">
+            GALAXY POINT • Executive Performance, Department Transfers & Live Analytics
           </p>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2.5">
+        <div class="relative z-10 flex flex-wrap items-center gap-2.5">
           <div id="headerQuickActions" class="flex items-center gap-2"></div>
-          <button onclick="logout()" class="px-3.5 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-bold text-slate-700 flex items-center gap-1.5 transition cursor-pointer">
+          <button onclick="logout()" class="px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/20 text-xs font-bold text-white flex items-center gap-1.5 transition cursor-pointer">
             <i class="fa-solid fa-arrow-left"></i> Switch Account
           </button>
-          <div class="px-3 py-2 rounded-xl bg-blue-50 border border-blue-100 text-xs font-bold text-[#0F4C81] flex items-center gap-2">
+          <div class="px-3.5 py-2.5 rounded-xl bg-white text-[#0F4C81] text-xs font-extrabold flex items-center gap-2 shadow-sm">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
             <span id="livePillText">FIREBASE LIVE</span>
           </div>
@@ -372,7 +417,7 @@
       </header>
 
       <!-- Dynamic Workspace Views -->
-      <div id="workspaceContent"></div>
+      <div id="workspaceContent" class="fade-in"></div>
     </main>
   </div>
 
@@ -408,7 +453,7 @@
         badgeBg: 'bg-blue-50 text-[#0F4C81]',
         btnClass: 'bg-[#0F4C81] hover:bg-[#1D4ED8]',
         rippleColor: 'rgba(15, 76, 129, 0.18)',
-        subtitle: 'GALAXY POINT • Executive Overview across Social Media & Service Centre'
+        subtitle: 'GALAXY POINT • Executive Overview, Analysis & Live Department Feed'
       },
       service: {
         id: 'service',
@@ -421,7 +466,7 @@
         badgeBg: 'bg-emerald-50 text-emerald-700',
         btnClass: 'bg-emerald-600 hover:bg-emerald-700',
         rippleColor: 'rgba(5, 150, 105, 0.18)',
-        subtitle: 'GALAXY POINT • Repair Operations, Referral Verification & Billing'
+        subtitle: 'GALAXY POINT • Repair Jobs, Received by Sohail & Instant Billing'
       },
       social: {
         id: 'social',
@@ -438,7 +483,6 @@
       }
     };
 
-    // Exact Transfer Labels Requested
     const TRANSFER_LABELS = {
       sohail: 'By Me – Sohail',
       new: 'New – Pravin',
@@ -447,8 +491,8 @@
       telecom: 'Telecom – Gulsar'
     };
 
-    const SOCIAL_KEY = 'gp_crm_social_v3';
-    const SERVICE_KEY = 'gp_crm_service_v3';
+    const SOCIAL_KEY = 'gp_crm_social_v4';
+    const SERVICE_KEY = 'gp_crm_service_v4';
 
     let selectedLoginDept = 'boss';
     let currentUserRole = null;
@@ -527,7 +571,7 @@
       authRoleLabel.style.color = dept.accentHex;
       authNameLabel.textContent = dept.name;
 
-      loginSubmitBtn.className = `w-full py-3.5 rounded-xl text-white font-bold text-sm tracking-wide shadow-md transition flex items-center justify-center gap-2 ${dept.btnClass}`;
+      loginSubmitBtn.className = `w-full py-3.5 rounded-xl text-white font-bold text-sm tracking-wide shadow-md transition flex items-center justify-center gap-2 cursor-pointer ${dept.btnClass}`;
 
       document.getElementById('loginError').classList.add('hidden');
       pinInput.value = '';
@@ -579,7 +623,7 @@
       selectDepartment(selectedLoginDept);
     }
 
-    // ==================== LIVE FIREBASE SYNC ====================
+    // ==================== LIVE FIREBASE SYNC (100% GENUINE DATA ONLY) ====================
     function loadLocalFallback() {
       socialLeads = JSON.parse(localStorage.getItem(SOCIAL_KEY) || '[]');
       serviceJobs = JSON.parse(localStorage.getItem(SERVICE_KEY) || '[]');
@@ -598,13 +642,13 @@
 
       if (live) {
         loginBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Firebase Live`;
-        loginBadge.className = 'inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700';
+        loginBadge.className = 'inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700';
         sidebarStatus.textContent = 'Live';
         sidebarStatus.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700';
         if (livePillText) livePillText.textContent = 'FIREBASE LIVE';
       } else {
         loginBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span> ${msg || 'Local Sync'}`;
-        loginBadge.className = 'inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700';
+        loginBadge.className = 'inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700';
         sidebarStatus.textContent = msg || 'Local';
         sidebarStatus.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700';
         if (livePillText) livePillText.textContent = msg || 'LOCAL SYNC';
@@ -624,7 +668,10 @@
             .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
           saveLocalFallback();
           setSyncStatus(true);
-          if (currentUserRole) renderWorkspace();
+          if (currentUserRole) {
+            setupSidebarForRole(DEPARTMENTS[currentUserRole]);
+            renderWorkspace();
+          }
         }, err => {
           console.error('Firestore Social Error:', err);
           setSyncStatus(false, 'Local Sync');
@@ -635,7 +682,10 @@
             .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
           saveLocalFallback();
           setSyncStatus(true);
-          if (currentUserRole) renderWorkspace();
+          if (currentUserRole) {
+            setupSidebarForRole(DEPARTMENTS[currentUserRole]);
+            renderWorkspace();
+          }
         }, err => {
           console.error('Firestore Service Error:', err);
           setSyncStatus(false, 'Local Sync');
@@ -658,6 +708,7 @@
         if (isEdit) socialLeads = socialLeads.map(x => x.id === record.id ? record : x);
         else socialLeads.unshift({ ...record, createdAt: Date.now() });
         saveLocalFallback();
+        setupSidebarForRole(DEPARTMENTS[currentUserRole]);
         renderWorkspace();
       }
     }
@@ -674,6 +725,7 @@
         if (isEdit) serviceJobs = serviceJobs.map(x => x.id === record.id ? record : x);
         else serviceJobs.unshift({ ...record, createdAt: Date.now() });
         saveLocalFallback();
+        setupSidebarForRole(DEPARTMENTS[currentUserRole]);
         renderWorkspace();
       }
     }
@@ -688,39 +740,45 @@
 
       const quickActions = document.getElementById('headerQuickActions');
       if (dept.id === 'social') {
-        quickActions.innerHTML = `<button onclick="quickAddSocial()" class="px-3.5 py-2 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs cursor-pointer">+ Add Customer</button>`;
+        quickActions.innerHTML = `<button onclick="quickAddSocial()" class="px-4 py-2.5 rounded-xl bg-white text-[#0F4C81] hover:bg-blue-50 text-xs font-extrabold shadow-sm cursor-pointer">+ Add Customer</button>`;
       } else if (dept.id === 'service') {
-        quickActions.innerHTML = `<button onclick="quickAddService()" class="px-3.5 py-2 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs cursor-pointer">+ Add Service Job</button>`;
+        quickActions.innerHTML = `<button onclick="quickAddService()" class="px-4 py-2.5 rounded-xl bg-white text-[#0F4C81] hover:bg-blue-50 text-xs font-extrabold shadow-sm cursor-pointer">+ Add Service Job</button>`;
       } else {
         quickActions.innerHTML = '';
       }
 
+      const receivedCount = socialLeads.filter(l => l.transfer === 'service').length;
       const nav = document.getElementById('sidebarNav');
       let tabs = [];
 
       if (dept.id === 'boss') {
         tabs = [
           { id: 'dashboard', label: 'Boss Dashboard', icon: 'fa-chart-pie' },
-          { id: 'social', label: 'Social Media Customers', icon: 'fa-bullhorn' },
-          { id: 'service', label: 'Service Centre Jobs', icon: 'fa-screwdriver-wrench' }
+          { id: 'analysis', label: 'Analysis', icon: 'fa-chart-line' },
+          { id: 'social', label: 'Social Media Customers', icon: 'fa-bullhorn', badge: socialLeads.length },
+          { id: 'service', label: 'Service Centre Jobs', icon: 'fa-screwdriver-wrench', badge: serviceJobs.length }
         ];
       } else if (dept.id === 'service') {
         tabs = [
           { id: 'dashboard', label: 'Service Dashboard', icon: 'fa-gauge-high' },
-          { id: 'customers', label: 'Customer Records', icon: 'fa-screwdriver-wrench' }
+          { id: 'customers', label: 'Customer Records', icon: 'fa-screwdriver-wrench', badge: serviceJobs.length },
+          { id: 'received', label: 'Received by Sohail', icon: 'fa-inbox', badge: receivedCount, highlight: true }
         ];
       } else if (dept.id === 'social') {
         tabs = [
           { id: 'dashboard', label: 'Social Dashboard', icon: 'fa-gauge-high' },
-          { id: 'customers', label: 'Customer Section', icon: 'fa-users' },
+          { id: 'customers', label: 'Customer Section', icon: 'fa-users', badge: socialLeads.length },
           { id: 'analytics', label: 'Channel Analytics', icon: 'fa-chart-column' }
         ];
       }
 
       nav.innerHTML = tabs.map(t => `
         <button onclick="switchTab('${t.id}')" class="nav-btn ${currentTab === t.id ? 'active' : ''}">
-          <i class="fa-solid ${t.icon} w-4 text-center"></i>
-          <span>${t.label}</span>
+          <span class="flex items-center gap-2.5">
+            <i class="fa-solid ${t.icon} w-4 text-center"></i>
+            <span>${t.label}</span>
+          </span>
+          ${t.badge !== undefined ? `<span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full ${currentTab === t.id ? 'bg-white/20 text-white' : (t.highlight ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-600')}">${t.badge}</span>` : ''}
         </button>
       `).join('');
     }
@@ -738,14 +796,14 @@
       setTimeout(() => openSocialForm(), 50);
     }
 
-    function quickAddService() {
+    function quickAddService(prefill = null) {
       currentTab = 'customers';
       setupSidebarForRole(DEPARTMENTS.service);
       renderWorkspace();
-      setTimeout(() => openServiceForm(), 50);
+      setTimeout(() => openServiceForm(null, prefill), 50);
     }
 
-    // ==================== FORMATTERS ====================
+    // ==================== FORMATTERS & VISUAL CHARTS ====================
     function esc(str) {
       return String(str ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
     }
@@ -754,19 +812,104 @@
       return '₹' + Number(num || 0).toLocaleString('en-IN');
     }
 
-    function renderBars(items, colorClass = 'bg-[#0F4C81]') {
+    function renderBars(items, colorClass = 'bg-gradient-to-r from-[#0F4C81] to-[#2563EB]') {
       const max = Math.max(1, ...items.map(i => i[1]));
       return items.map(([label, count]) => `
-        <div class="mb-3 last:mb-0">
-          <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+        <div class="mb-3.5 last:mb-0">
+          <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1.5">
             <span>${esc(label)}</span>
-            <span class="font-bold text-[#0F4C81]">${count}</span>
+            <span class="font-extrabold text-[#0F4C81]">${count}</span>
           </div>
           <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
             <div class="h-full ${colorClass} rounded-full transition-all duration-500" style="width: ${(count / max) * 100}%"></div>
           </div>
         </div>
       `).join('');
+    }
+
+    function renderAnalysisBlock() {
+      const totalLeads = socialLeads.length;
+      const transferredLeads = socialLeads.filter(x => x.transfer !== 'sohail').length;
+      const transferRate = totalLeads ? Math.round((transferredLeads / totalLeads) * 100) : 0;
+
+      const totalJobs = serviceJobs.length;
+      const completedJobs = serviceJobs.filter(j => j.status === 'Completed').length;
+      const completionRate = totalJobs ? Math.round((completedJobs / totalJobs) * 100) : 0;
+
+      const totalRevenue = serviceJobs.reduce((sum, j) => sum + Number(j.amount || 0), 0);
+      const avgTicket = totalJobs ? Math.round(totalRevenue / totalJobs) : 0;
+
+      const sohailServiceSent = socialLeads.filter(x => x.transfer === 'service').length;
+      const sohailServiceLogged = serviceJobs.filter(x => x.origin === 'Sohail').length;
+
+      return `
+        <div class="glass-panel p-6 mb-6">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
+            <div>
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#0F4C81] bg-blue-50 px-2.5 py-1 rounded-full">Executive Intelligence</span>
+              <h2 class="text-lg font-extrabold text-slate-900 mt-1.5">GALAXY POINT — Business & Department Analysis</h2>
+              <p class="text-xs text-slate-500">Live conversion efficiency, staff transfer distribution & service revenue metrics</p>
+            </div>
+            <div class="text-right">
+              <div class="text-xs font-semibold text-slate-400">Avg. Repair Ticket</div>
+              <div class="text-xl font-extrabold text-[#0F4C81]">${formatINR(avgTicket)}</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-blue-50/80 to-white border border-blue-100 flex items-center gap-4">
+              <div class="w-14 h-14 rounded-full flex items-center justify-center font-extrabold text-sm text-[#0F4C81] shrink-0"
+                   style="background: conic-gradient(#0F4C81 ${transferRate * 3.6}deg, #DBEAFE 0deg);">
+                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">${transferRate}%</div>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-slate-500 uppercase">Lead Transfer Rate</div>
+                <div class="text-lg font-extrabold text-slate-900">${transferredLeads} / ${totalLeads} Leads</div>
+                <div class="text-[11px] text-[#0F4C81] font-semibold">Routed to Staff Depts</div>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-50/80 to-white border border-emerald-100 flex items-center gap-4">
+              <div class="w-14 h-14 rounded-full flex items-center justify-center font-extrabold text-sm text-emerald-700 shrink-0"
+                   style="background: conic-gradient(#059669 ${completionRate * 3.6}deg, #D1FAE5 0deg);">
+                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">${completionRate}%</div>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-slate-500 uppercase">Service Completion</div>
+                <div class="text-lg font-extrabold text-slate-900">${completedJobs} / ${totalJobs} Jobs</div>
+                <div class="text-[11px] text-emerald-700 font-semibold">Closed by Mohammed</div>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-50/80 to-white border border-indigo-100 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-lg shrink-0 shadow-xs">
+                <i class="fa-solid fa-arrows-turn-right"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-slate-500 uppercase">Sohail → Mohammed</div>
+                <div class="text-lg font-extrabold text-slate-900">${sohailServiceSent} Sent • ${sohailServiceLogged} Logged</div>
+                <div class="text-[11px] text-indigo-700 font-semibold">Cross-Dept Referral Sync</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="p-4 rounded-2xl bg-slate-50/70 border border-slate-200/70">
+              <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-users-gear text-[#0F4C81]"></i> Staff Transfer Leaderboard
+              </h3>
+              ${renderBars(Object.entries(TRANSFER_LABELS).map(([k, label]) => [label, socialLeads.filter(r => r.transfer === k).length]))}
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50/70 border border-slate-200/70">
+              <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-bullseye text-[#0F4C81]"></i> Lead Acquisition Channels
+              </h3>
+              ${renderBars(['Instagram', 'WhatsApp', 'Calling', 'Justdial', 'Not specified'].map(s => [s, socialLeads.filter(r => r.source === s).length]), 'bg-gradient-to-r from-indigo-600 to-blue-500')}
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     // ==================== WORKSPACE RENDERERS ====================
@@ -777,41 +920,54 @@
       else if (currentUserRole === 'social') renderSocialPanel(container);
     }
 
-    // 1. BOSS PANEL (JAGDISH) — Shows ALL Social Media Transfers + Service Centre Jobs
+    // 1. BOSS PANEL (JAGDISH)
     function renderBossPanel(container) {
       const completed = serviceJobs.filter(j => j.status === 'Completed').length;
       const inProcess = serviceJobs.length - completed;
       const totalRevenue = serviceJobs.reduce((sum, j) => sum + Number(j.amount || 0), 0);
-      const sohailReferrals = serviceJobs.filter(j => j.origin === 'Sohail').length;
 
       if (currentTab === 'dashboard') {
         container.innerHTML = `
           <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             <div class="kpi-card">
-              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Social Media Leads</div>
-              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">${socialLeads.length}</div>
-              <div class="text-xs font-semibold text-indigo-600 mt-1">By Sayyed Sohail</div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Social Media Leads</span>
+                <span class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs"><i class="fa-solid fa-bullhorn"></i></span>
+              </div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">${socialLeads.length}</div>
+              <div class="text-xs font-semibold text-indigo-600 mt-1">Managed by Sayyed Sohail</div>
             </div>
+
             <div class="kpi-card">
-              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Service Centre Jobs</div>
-              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">${serviceJobs.length}</div>
-              <div class="text-xs font-semibold text-emerald-600 mt-1">By Mohammed</div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Service Centre Jobs</span>
+                <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+              </div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">${serviceJobs.length}</div>
+              <div class="text-xs font-semibold text-emerald-600 mt-1">Managed by Mohammed</div>
             </div>
+
             <div class="kpi-card">
-              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Service Value</div>
-              <div class="text-2xl sm:text-3xl font-extrabold text-[#0F4C81] mt-1">${formatINR(totalRevenue)}</div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Service Value</span>
+                <span class="w-8 h-8 rounded-lg bg-blue-50 text-[#0F4C81] flex items-center justify-center text-xs"><i class="fa-solid fa-indian-rupee-sign"></i></span>
+              </div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-[#0F4C81] mt-2">${formatINR(totalRevenue)}</div>
               <div class="text-xs font-semibold text-slate-500 mt-1">${completed} Completed • ${inProcess} In Process</div>
             </div>
+
             <div class="kpi-card">
               <div class="text-xs font-bold uppercase tracking-wider text-slate-400">New – Pravin</div>
               <div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.filter(x => x.transfer === 'new').length}</div>
               <div class="text-xs text-slate-500 mt-1">Transferred Leads</div>
             </div>
+
             <div class="kpi-card">
               <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Used – Ashok</div>
               <div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.filter(x => x.transfer === 'used').length}</div>
               <div class="text-xs text-slate-500 mt-1">Transferred Leads</div>
             </div>
+
             <div class="kpi-card">
               <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Telecom – Gulsar</div>
               <div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.filter(x => x.transfer === 'telecom').length}</div>
@@ -819,50 +975,15 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-              <h2 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-share-nodes text-[#0F4C81]"></i> Department Transfer Breakdown
-              </h2>
-              ${renderBars(Object.entries(TRANSFER_LABELS).map(([k, label]) => [label, socialLeads.filter(r => r.transfer === k).length]))}
-            </div>
+          <!-- Executive Analysis Section Directly Below Boss Dashboard KPIs -->
+          ${renderAnalysisBlock()}
 
-            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-              <h2 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-bolt text-[#0F4C81]"></i> Live Customer Feed (Social Media & Service)
-              </h2>
-              <div class="divide-y divide-slate-100">
-                ${[
-                  ...socialLeads.slice(0, 4).map(l => `
-                    <div class="py-2.5 flex items-center justify-between gap-2 text-sm">
-                      <div>
-                        <span class="font-bold text-slate-900">${esc(l.name)}</span>
-                        <span class="text-xs text-slate-500 ml-1">(${esc(l.phone)})</span>
-                        <span class="text-xs text-slate-500 block">${esc(l.requirement)}</span>
-                      </div>
-                      <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81] shrink-0">${esc(TRANSFER_LABELS[l.transfer] || 'By Me – Sohail')}</span>
-                    </div>
-                  `),
-                  ...serviceJobs.slice(0, 3).map(j => `
-                    <div class="py-2.5 flex items-center justify-between gap-2 text-sm">
-                      <div>
-                        <span class="font-bold text-slate-900">${esc(j.name)}</span>
-                        <span class="text-xs text-slate-500 block">${esc(j.service)} • ${formatINR(j.amount)}</span>
-                      </div>
-                      <span class="text-[11px] font-bold px-2.5 py-1 rounded-full ${j.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'} shrink-0">${esc(j.status)}</span>
-                    </div>
-                  `)
-                ].join('') || '<p class="text-sm text-slate-400">No customer activity recorded yet.</p>'}
-              </div>
-            </div>
-          </div>
-
-          <!-- Full Social Media Leads Table Directly Visible on Boss Dashboard -->
-          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+          <!-- Live All Social Media Leads & Transfers Table -->
+          <div class="glass-panel p-5">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div>
                 <h2 class="text-base font-bold text-slate-900">All Social Media Leads & Transfers (Live)</h2>
-                <p class="text-xs text-slate-500">Every entry added by Sayyed Sohail appears here automatically</p>
+                <p class="text-xs text-slate-500">Every customer entered by Sayyed Sohail updates here in real time</p>
               </div>
               <input id="bossDashSearch" oninput="filterBossDashTable()" placeholder="Search name, mobile, transfer..." class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
             </div>
@@ -882,9 +1003,11 @@
           </div>
         `;
         filterBossDashTable();
+      } else if (currentTab === 'analysis') {
+        container.innerHTML = renderAnalysisBlock();
       } else if (currentTab === 'social') {
         container.innerHTML = `
-          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+          <div class="glass-panel p-5">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div>
                 <h2 class="text-base font-bold text-slate-900">All Social Media Customers (Sayyed Sohail)</h2>
@@ -910,7 +1033,7 @@
         filterBossSocial();
       } else if (currentTab === 'service') {
         container.innerHTML = `
-          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+          <div class="glass-panel p-5">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div>
                 <h2 class="text-base font-bold text-slate-900">All Service Centre Customers (Mohammed)</h2>
@@ -952,7 +1075,7 @@
           <td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(x.source || 'Instagram')}</span></td>
           <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">${esc(TRANSFER_LABELS[x.transfer] || 'By Me – Sohail')}</span></td>
         </tr>
-      `).join('') || '<tr><td colspan="4" class="py-6 text-center text-slate-400 text-sm">No leads added yet.</td></tr>';
+      `).join('') || '<tr><td colspan="4" class="py-6 text-center text-slate-400 text-sm">No leads recorded yet.</td></tr>';
     }
 
     function filterBossSocial() {
@@ -986,53 +1109,119 @@
       `).join('') || '<tr><td colspan="5" class="py-6 text-center text-slate-400 text-sm">No matching service records found.</td></tr>';
     }
 
-    // 2. SERVICE CENTRE PANEL (MOHAMMED)
+    // 2. SERVICE CENTRE PANEL (MOHAMMED) — Includes "Received by Sohail"
     function renderServicePanel(container) {
       const done = serviceJobs.filter(x => x.status === 'Completed').length;
       const totalAmt = serviceJobs.reduce((s, x) => s + Number(x.amount || 0), 0);
       const pct = serviceJobs.length ? Math.round((done / serviceJobs.length) * 100) : 0;
+      const receivedFromSohail = socialLeads.filter(l => l.transfer === 'service');
 
       if (currentTab === 'dashboard') {
         container.innerHTML = `
           <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Total Customers</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${serviceJobs.length}</div></div>
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">From Sohail</div><div class="text-2xl font-extrabold text-indigo-600 mt-1">${serviceJobs.filter(x => x.origin === 'Sohail').length}</div></div>
+            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Total Service Jobs</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${serviceJobs.length}</div></div>
+            <div onclick="switchTab('received')" class="kpi-card cursor-pointer border-indigo-200 bg-indigo-50/30">
+              <div class="text-xs font-bold text-indigo-600 uppercase">Received by Sohail</div>
+              <div class="text-2xl font-extrabold text-indigo-700 mt-1">${receivedFromSohail.length}</div>
+              <div class="text-[11px] font-semibold text-indigo-600 mt-0.5">Click to view inbox →</div>
+            </div>
             <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">In Process</div><div class="text-2xl font-extrabold text-amber-600 mt-1">${serviceJobs.length - done}</div></div>
             <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Completed</div><div class="text-2xl font-extrabold text-emerald-600 mt-1">${done}</div></div>
             <div class="kpi-card col-span-2 lg:col-span-1"><div class="text-xs font-bold text-slate-400 uppercase">Total Service Value</div><div class="text-2xl font-extrabold text-[#0F4C81] mt-1">${formatINR(totalAmt)}</div></div>
           </div>
 
-          <div class="bg-white rounded-2xl border border-slate-200 p-5 mb-6 shadow-xs">
+          <div class="glass-panel p-5 mb-6">
             <div class="flex justify-between text-xs font-bold text-slate-700 mb-2">
               <span>Repair Completion Rate</span>
               <span class="text-[#0F4C81]">${pct}%</span>
             </div>
             <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-[#0F4C81] rounded-full transition-all duration-500" style="width:${pct}%"></div>
+              <div class="h-full bg-gradient-to-r from-[#0F4C81] to-[#2563EB] rounded-full transition-all duration-500" style="width:${pct}%"></div>
             </div>
           </div>
 
-          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-base font-bold text-slate-900">Recent Service Jobs</h2>
-              <button onclick="quickAddService()" class="px-3.5 py-2 rounded-xl bg-[#0F4C81] text-white text-xs font-bold cursor-pointer">+ Add Service Job</button>
-            </div>
-            <div class="divide-y divide-slate-100">
-              ${serviceJobs.slice(0, 6).map(r => `
-                <div class="py-3 flex flex-wrap items-center justify-between gap-2 text-sm">
-                  <div>
-                    <span class="font-bold text-slate-900">${esc(r.name)}</span>
-                    <span class="text-xs text-slate-500 ml-2">${esc(r.service)}</span>
-                  </div>
-                  <div class="flex items-center gap-2.5">
-                    <span class="font-bold text-[#0F4C81]">${formatINR(r.amount)}</span>
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-full ${r.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${esc(r.status)}</span>
-                  </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="glass-panel p-5">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h2 class="text-base font-bold text-slate-900">Received by Sohail (Transfers)</h2>
+                  <p class="text-xs text-slate-500">Customers sent to Service Centre by Sayyed Sohail</p>
                 </div>
-              `).join('') || '<p class="text-sm text-slate-400">No service jobs recorded yet.</p>'}
+                <button onclick="switchTab('received')" class="text-xs font-bold text-indigo-600 hover:underline cursor-pointer">View All (${receivedFromSohail.length})</button>
+              </div>
+              <div class="divide-y divide-slate-100">
+                ${receivedFromSohail.slice(0, 5).map(lead => {
+                  const alreadyLogged = serviceJobs.some(j => j.phone === lead.phone);
+                  return `
+                    <div class="py-3 flex flex-wrap items-center justify-between gap-2 text-sm">
+                      <div>
+                        <span class="font-bold text-slate-900">${esc(lead.name)}</span>
+                        <span class="text-xs text-slate-500 ml-1.5">${esc(lead.phone)}</span>
+                        <span class="text-xs text-slate-500 block">${esc(lead.requirement)}</span>
+                      </div>
+                      ${alreadyLogged
+                        ? '<span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">✓ Job Created</span>'
+                        : `<button onclick="createJobFromSohail('${lead.id}')" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold cursor-pointer">+ Create Job</button>`
+                      }
+                    </div>
+                  `;
+                }).join('') || '<p class="text-sm text-slate-400">No customers transferred by Sohail yet.</p>'}
+              </div>
+            </div>
+
+            <div class="glass-panel p-5">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-base font-bold text-slate-900">Recent Service Jobs</h2>
+                <button onclick="quickAddService()" class="px-3.5 py-2 rounded-xl bg-[#0F4C81] text-white text-xs font-bold cursor-pointer">+ Add Service Job</button>
+              </div>
+              <div class="divide-y divide-slate-100">
+                ${serviceJobs.slice(0, 5).map(r => `
+                  <div class="py-3 flex flex-wrap items-center justify-between gap-2 text-sm">
+                    <div>
+                      <span class="font-bold text-slate-900">${esc(r.name)}</span>
+                      <span class="text-xs text-slate-500 ml-2">${esc(r.service)}</span>
+                    </div>
+                    <div class="flex items-center gap-2.5">
+                      <span class="font-bold text-[#0F4C81]">${formatINR(r.amount)}</span>
+                      <span class="text-xs font-bold px-2.5 py-1 rounded-full ${r.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${esc(r.status)}</span>
+                    </div>
+                  </div>
+                `).join('') || '<p class="text-sm text-slate-400">No service jobs recorded yet.</p>'}
+              </div>
             </div>
           </div>
         `;
+      } else if (currentTab === 'received') {
+        container.innerHTML = `
+          <div class="glass-panel p-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div>
+                <div class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full mb-1">
+                  <i class="fa-solid fa-bullhorn"></i> Live Referral Inbox
+                </div>
+                <h2 class="text-lg font-extrabold text-slate-900">Received by Sohail</h2>
+                <p class="text-xs text-slate-500">All customers transferred to Service Centre by Sayyed Sohail appear here automatically</p>
+              </div>
+              <input id="receivedSearch" oninput="renderReceivedRows()" placeholder="Search name, mobile, requirement..." class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
+                    <th class="py-3 px-3">Customer Name & Mobile</th>
+                    <th class="py-3 px-3">Requirement / Issue</th>
+                    <th class="py-3 px-3">Source</th>
+                    <th class="py-3 px-3">Date</th>
+                    <th class="py-3 px-3">Service Status / Action</th>
+                  </tr>
+                </thead>
+                <tbody id="receivedTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
+              </table>
+            </div>
+          </div>
+        `;
+        renderReceivedRows();
       } else {
         container.innerHTML = `
           <div id="serviceFormCard" class="hidden bg-white rounded-2xl border-2 border-[#0F4C81] p-5 mb-6 shadow-md">
@@ -1088,7 +1277,7 @@
             </form>
           </div>
 
-          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+          <div class="glass-panel p-5">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <h2 class="text-base font-bold text-slate-900">Customer Service Records</h2>
               <button onclick="openServiceForm()" class="px-4 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs self-start cursor-pointer">
@@ -1126,6 +1315,47 @@
       }
     }
 
+    function renderReceivedRows() {
+      const q = (document.getElementById('receivedSearch')?.value || '').toLowerCase();
+      const body = document.getElementById('receivedTableBody');
+      if (!body) return;
+
+      const list = socialLeads.filter(l =>
+        l.transfer === 'service' &&
+        (l.name + ' ' + l.phone + ' ' + l.requirement).toLowerCase().includes(q)
+      );
+
+      body.innerHTML = list.map(lead => {
+        const job = serviceJobs.find(j => j.phone === lead.phone);
+        return `
+          <tr class="hover:bg-slate-50/80">
+            <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(lead.name)}</div><div class="text-xs text-slate-500">${esc(lead.phone)}</div></td>
+            <td class="py-3 px-3"><div class="font-medium text-slate-800">${esc(lead.requirement)}</div><div class="text-xs text-slate-400">${esc(lead.notes || '')}</div></td>
+            <td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(lead.source || 'Instagram')}</span></td>
+            <td class="py-3 px-3 text-xs text-slate-500">${esc(lead.date || '—')}</td>
+            <td class="py-3 px-3">
+              ${job
+                ? `<span class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">✓ Logged (${esc(job.status)})</span>`
+                : `<button onclick="createJobFromSohail('${lead.id}')" class="px-3 py-1.5 rounded-lg bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold cursor-pointer">+ Create Repair Job</button>`
+              }
+            </td>
+          </tr>
+        `;
+      }).join('') || '<tr><td colspan="5" class="py-8 text-center text-slate-400 text-sm">No customers transferred by Sayyed Sohail yet.</td></tr>';
+    }
+
+    function createJobFromSohail(leadId) {
+      const lead = socialLeads.find(x => x.id === leadId);
+      if (!lead) return;
+      quickAddService({
+        name: lead.name,
+        phone: lead.phone,
+        service: lead.requirement,
+        description: lead.notes || 'Transferred from Social Media CRM by Sayyed Sohail',
+        origin: 'Sohail'
+      });
+    }
+
     function checkServiceReferralMatch() {
       const phone = document.getElementById('svcPhone').value.trim();
       const banner = document.getElementById('referralMatchBanner');
@@ -1141,347 +1371,4 @@
         banner.textContent = `✓ Verified Referral from Sayyed Sohail — ${leads[0].name} (${phone}). Attribution will print on the Service Bill.`;
       } else if (any.length) {
         banner.className = 'sm:col-span-2 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs font-semibold text-amber-800';
-        banner.textContent = `Social Media lead found (${any[0].name}), marked under "${TRANSFER_LABELS[any[0].transfer]}". Confirm referral manually if needed.`;
-      } else {
-        banner.className = 'sm:col-span-2 p-3 rounded-xl bg-blue-50 border border-blue-200 text-xs font-medium text-[#0F4C81]';
-        banner.textContent = 'No matching Service Centre referral found. Proceeding as Direct Service Customer.';
-      }
-    }
-
-    function openServiceForm(id = null) {
-      editServiceId = id;
-      const r = serviceJobs.find(x => x.id === id);
-      const card = document.getElementById('serviceFormCard');
-      card.classList.remove('hidden');
-      document.getElementById('serviceFormTitle').textContent = r ? 'Edit Service Customer' : 'Add Service Customer';
-      document.getElementById('svcName').value = r?.name || '';
-      document.getElementById('svcPhone').value = r?.phone || '';
-      document.getElementById('svcRepair').value = r?.service || '';
-      document.getElementById('svcAmount').value = r?.amount ?? '';
-      document.getElementById('svcDesc').value = r?.description || '';
-      document.getElementById('svcOrigin').value = r?.origin || 'Direct';
-      document.getElementById('svcStatus').value = r?.status || 'In Process';
-      if (!r) checkServiceReferralMatch();
-      card.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function closeServiceForm() {
-      editServiceId = null;
-      document.getElementById('serviceFormCard')?.classList.add('hidden');
-    }
-
-    async function submitServiceForm(e) {
-      e.preventDefault();
-      const existing = serviceJobs.find(x => x.id === editServiceId);
-      const record = {
-        id: editServiceId || 'job' + Date.now(),
-        name: document.getElementById('svcName').value.trim(),
-        phone: document.getElementById('svcPhone').value.trim(),
-        service: document.getElementById('svcRepair').value.trim(),
-        amount: Number(document.getElementById('svcAmount').value),
-        description: document.getElementById('svcDesc').value.trim(),
-        origin: document.getElementById('svcOrigin').value,
-        status: document.getElementById('svcStatus').value,
-        date: existing?.date || new Date().toLocaleDateString('en-IN')
-      };
-      await upsertServiceJob(record, Boolean(editServiceId));
-      closeServiceForm();
-    }
-
-    function renderServiceRows() {
-      const q = (document.getElementById('svcSearch')?.value || '').toLowerCase();
-      const f = document.getElementById('svcFilter')?.value || 'All';
-      const body = document.getElementById('svcTableBody');
-      if (!body) return;
-
-      const filtered = serviceJobs.filter(r =>
-        (f === 'All' || r.status === f) &&
-        (r.name + ' ' + r.phone + ' ' + r.service).toLowerCase().includes(q)
-      );
-
-      body.innerHTML = filtered.map(r => `
-        <tr class="hover:bg-slate-50/80">
-          <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(r.name)}</div><div class="text-xs text-slate-500">${esc(r.phone)}</div></td>
-          <td class="py-3 px-3"><div class="font-medium text-slate-800">${esc(r.service)}</div><div class="text-xs text-slate-400">${esc(r.description)}</div></td>
-          <td class="py-3 px-3 font-bold text-[#0F4C81]">${formatINR(r.amount)}</td>
-          <td class="py-3 px-3">${r.origin === 'Sohail' ? '<span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Transferred by Sohail</span>' : '<span class="text-xs text-slate-500">Direct</span>'}</td>
-          <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full ${r.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${esc(r.status)}</span></td>
-          <td class="py-3 px-3">
-            <div class="flex items-center gap-1.5">
-              <button onclick="openServiceForm('${r.id}')" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-xs font-bold text-slate-700 cursor-pointer">Edit</button>
-              <button onclick="printServiceBill('${r.id}')" class="px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-xs font-bold text-[#0F4C81] cursor-pointer">Bill</button>
-            </div>
-          </td>
-        </tr>
-      `).join('') || '<tr><td colspan="6" class="py-6 text-center text-slate-400 text-sm">No service records found.</td></tr>';
-    }
-
-    function printServiceBill(id) {
-      const r = serviceJobs.find(x => x.id === id);
-      if (!r) return;
-      const w = window.open('', '_blank');
-      if (!w) {
-        alert('Please allow pop-ups in your browser to preview the Service Bill.');
-        return;
-      }
-      w.document.write(`
-        <!doctype html>
-        <html>
-        <head>
-          <title>GALAXY POINT — Service Bill Preview</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 36px; color: #0F172A; max-width: 650px; margin: auto; }
-            .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #0F4C81; padding-bottom: 16px; margin-bottom: 20px; }
-            .brand { display: flex; align-items: center; gap: 12px; }
-            .badge { background: #EFF6FF; color: #0F4C81; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 12px; }
-            .box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
-            .total { font-size: 22px; font-weight: 800; color: #0F4C81; }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <div class="brand">
-              <svg width="56" height="32" viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 68 C18 32, 46 16, 86 16 L168 16 C196 16, 210 32, 210 54 C210 76, 196 92, 168 92 L134 92 L134 108 L112 108 L112 72 L166 72 C179 72, 186 64, 186 54 C186 44, 179 36, 166 36 L82 36 C52 36, 32 48, 22 72 C20 71, 18 70, 18 68 Z" fill="#141414"/>
-                <path d="M24 78 C32 98, 52 108, 82 108 L104 108 L104 62 L62 62 L54 78 L82 78 L82 88 C62 88, 48 81, 42 66 C34 69, 28 73, 24 78 Z" fill="#0F4C81"/>
-              </svg>
-              <div>
-                <h1 style="margin:0;font-size:22px;color:#0F4C81;">GALAXY POINT</h1>
-                <small style="color:#64748B;">Service Centre Estimate & Job Slip</small>
-              </div>
-            </div>
-            <div class="badge">${esc(r.status)}</div>
-          </div>
-          <div class="box">
-            <p style="margin:4px 0;"><b>Customer Name:</b> ${esc(r.name)}</p>
-            <p style="margin:4px 0;"><b>Mobile Number:</b> ${esc(r.phone)}</p>
-            <p style="margin:4px 0;"><b>Date:</b> ${esc(r.date)}</p>
-          </div>
-          <div class="box">
-            <p style="margin:4px 0;"><b>Service / Repair:</b> ${esc(r.service)}</p>
-            <p style="margin:4px 0;"><b>Notes:</b> ${esc(r.description || '—')}</p>
-            <p style="margin:12px 0 4px;" class="total">Service Amount: ${formatINR(r.amount)}</p>
-          </div>
-          <p><b>Attribution:</b> ${r.origin === 'Sohail' ? 'Transferred by Sayyed Sohail (Social Media CRM)' : 'Direct Service Customer'}</p>
-          <hr style="border:none;border-top:1px solid #E2E8F0;margin:20px 0;">
-          <small style="color:#64748B;">Preview slip only • Not a GST tax invoice. Generated via GALAXY POINT CRM.</small>
-        </body>
-        </html>
-      `);
-      w.document.close();
-    }
-
-    // 3. SOCIAL MEDIA MANAGER PANEL (SAYYED SOHAIL)
-    function renderSocialPanel(container) {
-      const transferred = socialLeads.filter(x => x.transfer !== 'sohail').length;
-
-      if (currentTab === 'dashboard') {
-        container.innerHTML = `
-          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 mb-6">
-            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Total Leads</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.length}</div></div>
-            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Transfers</div><div class="text-2xl font-extrabold text-[#0F4C81] mt-1">${transferred}</div></div>
-            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">By Me – Sohail</div><div class="text-2xl font-extrabold text-indigo-600 mt-1">${socialLeads.filter(x => x.transfer === 'sohail').length}</div></div>
-            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">New – Pravin</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.filter(x => x.transfer === 'new').length}</div></div>
-            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Used – Ashok</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.filter(x => x.transfer === 'used').length}</div></div>
-            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Service – Mohammed</div><div class="text-2xl font-extrabold text-emerald-600 mt-1">${socialLeads.filter(x => x.transfer === 'service').length}</div></div>
-            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Telecom – Gulsar</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.filter(x => x.transfer === 'telecom').length}</div></div>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-              <h2 class="text-base font-bold text-slate-900 mb-4">Transfer Distribution</h2>
-              ${renderBars(Object.entries(TRANSFER_LABELS).map(([k, label]) => [label, socialLeads.filter(r => r.transfer === k).length]))}
-            </div>
-
-            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-              <div class="flex items-center justify-between mb-4">
-                <h2 class="text-base font-bold text-slate-900">Recent Customers</h2>
-                <button onclick="quickAddSocial()" class="px-3.5 py-2 rounded-xl bg-[#0F4C81] text-white text-xs font-bold cursor-pointer">+ Add Customer</button>
-              </div>
-              <div class="divide-y divide-slate-100">
-                ${socialLeads.slice(0, 6).map(r => `
-                  <div class="py-3 flex items-center justify-between gap-2 text-sm">
-                    <div>
-                      <span class="font-bold text-slate-900">${esc(r.name)}</span>
-                      <span class="text-xs text-slate-500 ml-2">${esc(r.phone)}</span>
-                      <span class="text-xs text-slate-400 block">${esc(r.requirement)}</span>
-                    </div>
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81] shrink-0">${esc(TRANSFER_LABELS[r.transfer] || 'By Me – Sohail')}</span>
-                  </div>
-                `).join('') || '<p class="text-sm text-slate-400">No customers added yet. Click "+ Add Customer" above.</p>'}
-              </div>
-            </div>
-          </div>
-        `;
-      } else if (currentTab === 'customers') {
-        container.innerHTML = `
-          <div id="socialFormCard" class="hidden bg-white rounded-2xl border-2 border-[#0F4C81] p-5 mb-6 shadow-md">
-            <h2 id="socialFormTitle" class="text-base font-bold text-slate-900 mb-4">Add Customer</h2>
-            <form onsubmit="submitSocialForm(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Customer Name</label>
-                <input id="socName" required placeholder="Enter customer name" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number (10 Digits)</label>
-                <input id="socPhone" pattern="[0-9]{10}" maxlength="10" required placeholder="10-digit mobile number" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
-              </div>
-              <div class="sm:col-span-2">
-                <label class="block text-xs font-bold text-slate-700 mb-1">Requirement</label>
-                <textarea id="socReq" rows="2" required placeholder="e.g. New iPhone 16, Display Repair, Used Samsung, SIM Port..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]"></textarea>
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Transfer To</label>
-                <select id="socTransfer" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-semibold bg-white">
-                  <option value="sohail">By Me – Sohail</option>
-                  <option value="new">New – Pravin</option>
-                  <option value="used">Used – Ashok</option>
-                  <option value="service">Service – Mohammed</option>
-                  <option value="telecom">Telecom – Gulsar</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Customer Source</label>
-                <select id="socSource" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white">
-                  <option>Instagram</option>
-                  <option>WhatsApp</option>
-                  <option>Calling</option>
-                  <option>Justdial</option>
-                  <option>Not specified</option>
-                </select>
-              </div>
-              <div class="sm:col-span-2">
-                <label class="block text-xs font-bold text-slate-700 mb-1">Notes (Optional)</label>
-                <input id="socNotes" placeholder="Follow-up details..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
-              </div>
-              <div class="sm:col-span-2 flex items-center gap-2.5 pt-1">
-                <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-sm cursor-pointer">
-                  Save Customer
-                </button>
-                <button type="button" onclick="closeSocialForm()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer">
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-              <div>
-                <h2 class="text-base font-bold text-slate-900">Customer Section</h2>
-                <p class="text-xs text-slate-500">All added customers sync live to Boss Panel (Jagdish)</p>
-              </div>
-              <button onclick="openSocialForm()" class="px-4 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs self-start cursor-pointer">
-                + Add Customer
-              </button>
-            </div>
-
-            <input id="socSearch" oninput="renderSocialRows()" placeholder="Search customer name, mobile, requirement, or transfer..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs mb-4 focus:outline-none focus:border-[#0F4C81]" />
-
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
-                    <th class="py-3 px-3">Name & Number</th>
-                    <th class="py-3 px-3">Requirement</th>
-                    <th class="py-3 px-3">Transfer</th>
-                    <th class="py-3 px-3">Source</th>
-                    <th class="py-3 px-3">Action</th>
-                  </tr>
-                </thead>
-                <tbody id="socTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
-              </table>
-            </div>
-          </div>
-        `;
-        renderSocialRows();
-      } else if (currentTab === 'analytics') {
-        const rate = socialLeads.length ? Math.round((transferred / socialLeads.length) * 100) + '%' : '0%';
-        container.innerHTML = `
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Total Leads</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.length}</div></div>
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Transferred Leads</div><div class="text-2xl font-extrabold text-[#0F4C81] mt-1">${transferred}</div></div>
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Transfer Rate</div><div class="text-2xl font-extrabold text-emerald-600 mt-1">${rate}</div></div>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-              <h2 class="text-base font-bold text-slate-900 mb-4">Channel Performance</h2>
-              ${renderBars(['Instagram', 'WhatsApp', 'Calling', 'Justdial', 'Not specified'].map(s => [s, socialLeads.filter(r => r.source === s).length]))}
-            </div>
-            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-              <h2 class="text-base font-bold text-slate-900 mb-4">Department Transfers</h2>
-              ${renderBars(Object.entries(TRANSFER_LABELS).map(([k, label]) => [label, socialLeads.filter(r => r.transfer === k).length]), 'bg-indigo-600')}
-            </div>
-          </div>
-        `;
-      }
-    }
-
-    function openSocialForm(id = null) {
-      editSocialId = id;
-      const r = socialLeads.find(x => x.id === id);
-      const card = document.getElementById('socialFormCard');
-      card.classList.remove('hidden');
-      document.getElementById('socialFormTitle').textContent = r ? 'Edit Customer' : 'Add Customer';
-      document.getElementById('socName').value = r?.name || '';
-      document.getElementById('socPhone').value = r?.phone || '';
-      document.getElementById('socReq').value = r?.requirement || '';
-      document.getElementById('socNotes').value = r?.notes || '';
-      document.getElementById('socSource').value = r?.source || 'Instagram';
-      document.getElementById('socTransfer').value = r?.transfer || 'sohail';
-      card.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function closeSocialForm() {
-      editSocialId = null;
-      document.getElementById('socialFormCard')?.classList.add('hidden');
-    }
-
-    async function submitSocialForm(e) {
-      e.preventDefault();
-      const existing = socialLeads.find(x => x.id === editSocialId);
-      const record = {
-        id: editSocialId || 'lead' + Date.now(),
-        name: document.getElementById('socName').value.trim(),
-        phone: document.getElementById('socPhone').value.trim(),
-        requirement: document.getElementById('socReq').value.trim(),
-        notes: document.getElementById('socNotes').value.trim(),
-        source: document.getElementById('socSource').value,
-        transfer: document.getElementById('socTransfer').value,
-        date: existing?.date || new Date().toLocaleDateString('en-IN')
-      };
-      await upsertSocialLead(record, Boolean(editSocialId));
-      closeSocialForm();
-    }
-
-    function renderSocialRows() {
-      const q = (document.getElementById('socSearch')?.value || '').toLowerCase();
-      const body = document.getElementById('socTableBody');
-      if (!body) return;
-
-      const filtered = socialLeads.filter(r =>
-        (r.name + ' ' + r.phone + ' ' + r.requirement + ' ' + (TRANSFER_LABELS[r.transfer] || '')).toLowerCase().includes(q)
-      );
-      body.innerHTML = filtered.map(r => `
-        <tr class="hover:bg-slate-50/80">
-          <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(r.name)}</div><div class="text-xs text-slate-500">${esc(r.phone)}</div></td>
-          <td class="py-3 px-3"><div class="font-medium text-slate-800">${esc(r.requirement)}</div><div class="text-xs text-slate-400">${esc(r.notes)}</div></td>
-          <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">${esc(TRANSFER_LABELS[r.transfer] || 'By Me – Sohail')}</span></td>
-          <td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(r.source)}</span></td>
-          <td class="py-3 px-3">
-            <button onclick="openSocialForm('${r.id}')" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-xs font-bold text-slate-700 cursor-pointer">Edit</button>
-          </td>
-        </tr>
-      `).join('') || '<tr><td colspan="5" class="py-6 text-center text-slate-400 text-sm">No customers found. Click "+ Add Customer" to add one.</td></tr>';
-    }
-
-    // ==================== BOOTSTRAP ====================
-    window.addEventListener('DOMContentLoaded', () => {
-      initAutoFirebase();
-      updateClockAndGreeting();
-      selectDepartment('boss');
-    });
-  </script>
-</body>
-</html>
+        banner.text
