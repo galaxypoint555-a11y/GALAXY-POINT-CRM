@@ -153,4 +153,1305 @@
     .nav-btn.active {
       background: #0F4C81;
       color: #FFFFFF;
-      box-shadow: 0 6px 16px -4px rgba(15,
+      box-shadow: 0 6px 16px -4px rgba(15, 76, 129, 0.35);
+    }
+
+    .kpi-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px -8px rgba(15, 76, 129, 0.14);
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .shake { animation: shake 0.35s ease; }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .portal-enter { animation: fadeSlideUp 0.35s ease forwards; }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #F1F5F9; }
+    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== 1. LOGIN GATEWAY ==================== -->
+  <div id="loginScreen" class="login-bg min-h-screen flex flex-col justify-between p-4 sm:p-8">
+    <!-- Top Brand Header -->
+    <header class="max-w-5xl w-full mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center p-1.5">
+          <!-- Original GP Logo SVG -->
+          <svg viewBox="0 0 220 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 68 C18 32, 46 16, 86 16 L168 16 C196 16, 210 32, 210 54 C210 76, 196 92, 168 92 L134 92 L134 108 L112 108 L112 72 L166 72 C179 72, 186 64, 186 54 C186 44, 179 36, 166 36 L82 36 C52 36, 32 48, 22 72 C20 71, 18 70, 18 68 Z" fill="#141414"/>
+            <path d="M24 78 C32 98, 52 108, 82 108 L104 108 L104 62 L62 62 L54 78 L82 78 L82 88 C62 88, 48 81, 42 66 C34 69, 28 73, 24 78 Z" fill="#0F4C81"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-display font-extrabold text-xl tracking-tight text-slate-900">GALAXY POINT</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-[#0F4C81] border border-blue-200">CRM</span>
+          </div>
+          <p class="text-xs text-slate-500 font-medium">Unified Operations & Customer Management System</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <span id="loginSyncBadge" class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Connecting Firebase...
+        </span>
+      </div>
+    </header>
+
+    <!-- Center Department Selector & Password Box -->
+    <main class="max-w-4xl w-full mx-auto my-8">
+      <div class="text-center mb-8">
+        <p id="loginGreeting" class="text-xs font-bold uppercase tracking-widest text-[#0F4C81] mb-1.5">Welcome to Galaxy Point</p>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Select Your Department Workspace</h1>
+        <p class="text-sm text-slate-500 mt-1">Click your department card below and enter your 4-digit access PIN</p>
+      </div>
+
+      <!-- 3 Department Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-7">
+        <!-- Boss Login Card -->
+        <div id="card-boss" data-role="boss" onclick="selectDepartment('boss', event)" class="dept-card p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#0F4C81] flex items-center justify-center text-xl border border-blue-100">
+              <i class="fa-solid fa-crown"></i>
+            </div>
+            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Boss Login</span>
+          </div>
+          <h2 class="text-xl font-extrabold text-slate-900">Jagdish</h2>
+          <p class="text-xs font-medium text-slate-500 mt-1">Owner & Executive Admin Overview</p>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-[#0F4C81]">
+            <span>Full Analytics & Control</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+
+        <!-- Service Centre Card -->
+        <div id="card-service" data-role="service" onclick="selectDepartment('service', event)" class="dept-card p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl border border-emerald-100">
+              <i class="fa-solid fa-screwdriver-wrench"></i>
+            </div>
+            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Service Centre</span>
+          </div>
+          <h2 class="text-xl font-extrabold text-slate-900">Mohammed</h2>
+          <p class="text-xs font-medium text-slate-500 mt-1">Service Centre Manager & Billing</p>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-700">
+            <span>Repairs & Referral Match</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+
+        <!-- Social Media Manager Card -->
+        <div id="card-social" data-role="social" onclick="selectDepartment('social', event)" class="dept-card p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-xl border border-indigo-100">
+              <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Social Media</span>
+          </div>
+          <h2 class="text-xl font-extrabold text-slate-900">Sayyed Sohail</h2>
+          <p class="text-xs font-medium text-slate-500 mt-1">Social Media Manager & Lead Routing</p>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-700">
+            <span>Leads & Dept Transfers</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Active Password Box -->
+      <div id="authBox" class="auth-box max-w-md mx-auto bg-white rounded-2xl border-2 border-[#0F4C81] p-6 shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <div id="authIconWrap" class="w-10 h-10 rounded-xl bg-blue-50 text-[#0F4C81] flex items-center justify-center text-base">
+              <i id="authIcon" class="fa-solid fa-crown"></i>
+            </div>
+            <div>
+              <span id="authRoleLabel" class="text-[11px] font-bold uppercase tracking-wider text-[#0F4C81]">BOSS / ADMIN CRM</span>
+              <h3 id="authNameLabel" class="text-base font-extrabold text-slate-900 leading-tight">Jagdish</h3>
+            </div>
+          </div>
+          <span class="text-xs font-semibold text-slate-400">PIN Required</span>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-3.5">
+          <div>
+            <div class="relative">
+              <input
+                id="pinInput"
+                type="password"
+                inputmode="numeric"
+                maxlength="6"
+                placeholder="Enter 4-Digit Password"
+                class="w-full px-4 py-3.5 rounded-xl border border-slate-300 text-center text-lg font-bold tracking-[0.35em] text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F4C81] focus:border-[#0F4C81] transition"
+                required
+              />
+              <button type="button" onclick="togglePinVisibility()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm">
+                <i id="eyeIcon" class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+            <p id="loginError" class="hidden text-xs font-semibold text-red-600 mt-2 text-center">
+              <i class="fa-solid fa-circle-exclamation mr-1"></i> Incorrect password for selected workspace.
+            </p>
+          </div>
+
+          <button id="loginSubmitBtn" type="submit" class="w-full py-3.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white font-bold text-sm tracking-wide shadow-md transition flex items-center justify-center gap-2">
+            <span>Enter Dashboard</span>
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-5xl w-full mx-auto text-center text-xs text-slate-400">
+      GALAXY POINT CRM • White & Royal Blue Edition • Real-Time Firebase Sync
+    </footer>
+  </div>
+
+  <!-- ==================== 2. MAIN WORKSPACE SHELL ==================== -->
+  <div id="workspaceApp" class="hidden min-h-screen flex flex-col lg:flex-row">
+    <!-- Sidebar -->
+    <aside class="w-full lg:w-68 bg-white border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col justify-between p-4 lg:p-5 shrink-0">
+      <div>
+        <!-- Brand Header with Original GP Logo -->
+        <div class="flex items-center justify-between lg:justify-start gap-3 pb-4 mb-5 border-b border-slate-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-50/70 border border-blue-100 p-1.5 flex items-center justify-center">
+              <svg viewBox="0 0 220 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 68 C18 32, 46 16, 86 16 L168 16 C196 16, 210 32, 210 54 C210 76, 196 92, 168 92 L134 92 L134 108 L112 108 L112 72 L166 72 C179 72, 186 64, 186 54 C186 44, 179 36, 166 36 L82 36 C52 36, 32 48, 22 72 C20 71, 18 70, 18 68 Z" fill="#141414"/>
+                <path d="M24 78 C32 98, 52 108, 82 108 L104 108 L104 62 L62 62 L54 78 L82 78 L82 88 C62 88, 48 81, 42 66 C34 69, 28 73, 24 78 Z" fill="#0F4C81"/>
+              </svg>
+            </div>
+            <div>
+              <div class="font-display font-extrabold text-base text-slate-900 tracking-tight leading-none">GALAXY POINT</div>
+              <div id="sidebarRoleTag" class="text-[10px] font-bold uppercase tracking-wider text-[#0F4C81] mt-1">BOSS / ADMIN CRM</div>
+            </div>
+          </div>
+
+          <button onclick="logout()" class="lg:hidden text-xs font-semibold text-red-600 bg-red-50 px-3 py-1.5 rounded-lg">
+            Logout
+          </button>
+        </div>
+
+        <!-- Dynamic Navigation Menu -->
+        <nav id="sidebarNav" class="flex lg:flex-col gap-1.5 overflow-x-auto pb-1 lg:pb-0"></nav>
+      </div>
+
+      <!-- Bottom User Card & Logout -->
+      <div class="hidden lg:block pt-5 mt-6 border-t border-slate-100 space-y-3">
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+          <div class="flex items-center gap-2.5">
+            <div id="sidebarUserIcon" class="w-9 h-9 rounded-lg bg-[#0F4C81] text-white flex items-center justify-center text-sm">
+              <i class="fa-solid fa-crown"></i>
+            </div>
+            <div class="min-w-0">
+              <p id="sidebarUserName" class="text-sm font-bold text-slate-900 truncate">Jagdish</p>
+              <p id="sidebarUserTitle" class="text-[11px] text-slate-500 truncate">Boss / Owner</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full py-2 px-3 rounded-xl border border-slate-200 bg-slate-50/70 text-xs font-semibold text-slate-700 flex items-center justify-between">
+          <span class="flex items-center gap-2"><i class="fa-solid fa-fire text-amber-500"></i> Cloud Sync</span>
+          <span id="sidebarSyncStatus" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">Live</span>
+        </div>
+
+        <button onclick="logout()" class="w-full py-2.5 px-3 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold flex items-center justify-center gap-2 transition">
+          <i class="fa-solid fa-right-from-bracket"></i> Switch / Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto portal-enter">
+      <!-- Top Dynamic Greeting Bar -->
+      <header class="bg-white rounded-2xl border border-slate-200 p-5 mb-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-[#0F4C81] bg-blue-50 px-3 py-1 rounded-full mb-1.5">
+            <i class="fa-regular fa-clock"></i>
+            <span id="liveClockBadge">Loading time...</span>
+          </div>
+          <h1 id="dynamicGreetingTitle" class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            Good Afternoon, Jagdish
+          </h1>
+          <p id="workspaceSubtitle" class="text-xs sm:text-sm text-slate-500 mt-0.5">
+            GALAXY POINT • Real-Time Department Performance & Activity
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2.5 self-start sm:self-center">
+          <div id="liveStatusPill" class="px-3.5 py-2 rounded-xl bg-blue-50 border border-blue-100 text-xs font-bold text-[#0F4C81] flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            <span id="livePillText">FIREBASE LIVE</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Workspace Views Container -->
+      <div id="workspaceContent"></div>
+    </main>
+  </div>
+
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <script>
+    // ==================== EMBEDDED LIVE FIREBASE CONFIG ====================
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyCsyv5BS4aqCQF9JlUPgCH4jewiWuewlDg",
+      authDomain: "galaxy-point-crm.firebaseapp.com",
+      projectId: "galaxy-point-crm",
+      storageBucket: "galaxy-point-crm.firebasestorage.app",
+      messagingSenderId: "524715744830",
+      appId: "1:524715744830:web:3de74eb19790a90b473b6f",
+      measurementId: "G-VYPVYZH8L2"
+    };
+
+    const SOCIAL_COLLECTION = 'social_customers';
+    const SERVICE_COLLECTION = 'service_customers';
+
+    // ==================== DEPARTMENT CONFIG & PASSWORDS ====================
+    const DEPARTMENTS = {
+      boss: {
+        id: 'boss',
+        name: 'Jagdish',
+        roleBadge: 'BOSS / ADMIN CRM',
+        roleTitle: 'Boss & Owner',
+        pin: '2214',
+        icon: 'fa-crown',
+        accentHex: '#0F4C81',
+        badgeBg: 'bg-blue-50 text-[#0F4C81]',
+        btnClass: 'bg-[#0F4C81] hover:bg-[#1D4ED8]',
+        rippleColor: 'rgba(15, 76, 129, 0.18)',
+        subtitle: 'GALAXY POINT • Executive Overview across Social Media & Service Centre'
+      },
+      service: {
+        id: 'service',
+        name: 'Mohammed',
+        roleBadge: 'SERVICE CENTRE CRM',
+        roleTitle: 'Service Centre Manager',
+        pin: '2121',
+        icon: 'fa-screwdriver-wrench',
+        accentHex: '#059669',
+        badgeBg: 'bg-emerald-50 text-emerald-700',
+        btnClass: 'bg-emerald-600 hover:bg-emerald-700',
+        rippleColor: 'rgba(5, 150, 105, 0.18)',
+        subtitle: 'GALAXY POINT • Repair Operations, Referral Verification & Billing'
+      },
+      social: {
+        id: 'social',
+        name: 'Sayyed Sohail',
+        roleBadge: 'SOCIAL MEDIA CRM',
+        roleTitle: 'Social Media Manager',
+        pin: '1228',
+        icon: 'fa-bullhorn',
+        accentHex: '#4F46E5',
+        badgeBg: 'bg-indigo-50 text-indigo-700',
+        btnClass: 'bg-indigo-600 hover:bg-indigo-700',
+        rippleColor: 'rgba(79, 70, 229, 0.18)',
+        subtitle: 'GALAXY POINT • Customer Acquisition, Leads & Department Transfers'
+      }
+    };
+
+    const TRANSFER_LABELS = {
+      sohail: 'Taken by Sohail',
+      new: 'New Mobile – Pravin',
+      used: 'Used Mobile – Ashok',
+      service: 'Service Centre',
+      telecom: 'Telecom'
+    };
+
+    const SOCIAL_KEY = 'gp_crm_social_v2';
+    const SERVICE_KEY = 'gp_crm_service_v2';
+
+    let selectedLoginDept = 'boss';
+    let currentUserRole = null;
+    let currentTab = 'dashboard';
+    let editSocialId = null;
+    let editServiceId = null;
+
+    let socialLeads = [];
+    let serviceJobs = [];
+    let db = null;
+    let isFirebaseLive = false;
+
+    // ==================== GREETING & LIVE CLOCK ====================
+    function getTimeGreeting() {
+      const hour = new Date().getHours();
+      if (hour < 12) return 'Good Morning';
+      if (hour < 17) return 'Good Afternoon';
+      return 'Good Evening';
+    }
+
+    function updateClockAndGreeting() {
+      const now = new Date();
+      const greeting = getTimeGreeting();
+      const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const dateStr = now.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+
+      const loginGreetEl = document.getElementById('loginGreeting');
+      if (loginGreetEl) {
+        loginGreetEl.textContent = `${greeting} • GALAXY POINT CRM`;
+      }
+
+      const clockEl = document.getElementById('liveClockBadge');
+      if (clockEl) {
+        clockEl.textContent = `${dateStr} • ${timeStr}`;
+      }
+
+      if (currentUserRole && DEPARTMENTS[currentUserRole]) {
+        const titleEl = document.getElementById('dynamicGreetingTitle');
+        if (titleEl) {
+          titleEl.textContent = `${greeting}, ${DEPARTMENTS[currentUserRole].name}`;
+        }
+      }
+    }
+    setInterval(updateClockAndGreeting, 1000);
+
+    // ==================== LOGIN CARD SELECTION & ANIMATION ====================
+    function selectDepartment(deptId, event) {
+      selectedLoginDept = deptId;
+      const dept = DEPARTMENTS[deptId];
+
+      const clickedCard = document.getElementById(`card-${deptId}`);
+      if (clickedCard && event) {
+        const rect = clickedCard.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple-wave';
+        ripple.style.width = ripple.style.height = `${size}px`;
+        ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+        ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+        ripple.style.backgroundColor = dept.rippleColor;
+        clickedCard.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 650);
+      }
+
+      Object.keys(DEPARTMENTS).forEach(key => {
+        const card = document.getElementById(`card-${key}`);
+        card.classList.remove('active-boss', 'active-service', 'active-social');
+      });
+      clickedCard.classList.add(`active-${deptId}`);
+
+      const authBox = document.getElementById('authBox');
+      const authIconWrap = document.getElementById('authIconWrap');
+      const authIcon = document.getElementById('authIcon');
+      const authRoleLabel = document.getElementById('authRoleLabel');
+      const authNameLabel = document.getElementById('authNameLabel');
+      const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+      const pinInput = document.getElementById('pinInput');
+
+      authBox.style.borderColor = dept.accentHex;
+      authIconWrap.className = `w-10 h-10 rounded-xl flex items-center justify-center text-base ${dept.badgeBg}`;
+      authIcon.className = `fa-solid ${dept.icon}`;
+      authRoleLabel.textContent = dept.roleBadge;
+      authRoleLabel.style.color = dept.accentHex;
+      authNameLabel.textContent = dept.name;
+
+      loginSubmitBtn.className = `w-full py-3.5 rounded-xl text-white font-bold text-sm tracking-wide shadow-md transition flex items-center justify-center gap-2 ${dept.btnClass}`;
+
+      document.getElementById('loginError').classList.add('hidden');
+      pinInput.value = '';
+      pinInput.focus();
+    }
+
+    function togglePinVisibility() {
+      const input = document.getElementById('pinInput');
+      const eye = document.getElementById('eyeIcon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        eye.className = 'fa-regular fa-eye-slash';
+      } else {
+        input.type = 'password';
+        eye.className = 'fa-regular fa-eye';
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const enteredPin = document.getElementById('pinInput').value.trim();
+      const dept = DEPARTMENTS[selectedLoginDept];
+
+      if (enteredPin === dept.pin) {
+        currentUserRole = selectedLoginDept;
+        currentTab = 'dashboard';
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('workspaceApp').classList.remove('hidden');
+        setupSidebarForRole(dept);
+        updateClockAndGreeting();
+        renderWorkspace();
+      } else {
+        const err = document.getElementById('loginError');
+        const box = document.getElementById('authBox');
+        err.classList.remove('hidden');
+        box.classList.remove('shake');
+        void box.offsetWidth;
+        box.classList.add('shake');
+        document.getElementById('pinInput').select();
+      }
+    }
+
+    function logout() {
+      currentUserRole = null;
+      editSocialId = null;
+      editServiceId = null;
+      document.getElementById('workspaceApp').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      selectDepartment(selectedLoginDept);
+    }
+
+    // ==================== AUTOMATIC LIVE FIREBASE SYNC ====================
+    function loadLocalFallback() {
+      socialLeads = JSON.parse(localStorage.getItem(SOCIAL_KEY) || '[]');
+      serviceJobs = JSON.parse(localStorage.getItem(SERVICE_KEY) || '[]');
+    }
+
+    function saveLocalFallback() {
+      localStorage.setItem(SOCIAL_KEY, JSON.stringify(socialLeads));
+      localStorage.setItem(SERVICE_KEY, JSON.stringify(serviceJobs));
+    }
+
+    function setSyncStatus(live, msg) {
+      isFirebaseLive = live;
+      const loginBadge = document.getElementById('loginSyncBadge');
+      const sidebarStatus = document.getElementById('sidebarSyncStatus');
+      const livePillText = document.getElementById('livePillText');
+
+      if (live) {
+        loginBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Firebase Live`;
+        loginBadge.className = 'inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700';
+        sidebarStatus.textContent = 'Live';
+        sidebarStatus.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700';
+        if (livePillText) livePillText.textContent = 'FIREBASE LIVE';
+      } else {
+        loginBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span> ${msg || 'Local Backup'}`;
+        loginBadge.className = 'inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700';
+        sidebarStatus.textContent = msg || 'Local';
+        sidebarStatus.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700';
+        if (livePillText) livePillText.textContent = msg || 'LOCAL SYNC';
+      }
+    }
+
+    function initAutoFirebase() {
+      loadLocalFallback();
+      try {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(FIREBASE_CONFIG);
+        }
+        db = firebase.firestore();
+
+        db.collection(SOCIAL_COLLECTION).onSnapshot(snap => {
+          socialLeads = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+            .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          saveLocalFallback();
+          setSyncStatus(true);
+          if (currentUserRole) renderWorkspace();
+        }, err => {
+          console.error('Firestore Social Error:', err);
+          setSyncStatus(false, 'Check Firestore Rules');
+        });
+
+        db.collection(SERVICE_COLLECTION).onSnapshot(snap => {
+          serviceJobs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+            .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          saveLocalFallback();
+          setSyncStatus(true);
+          if (currentUserRole) renderWorkspace();
+        }, err => {
+          console.error('Firestore Service Error:', err);
+          setSyncStatus(false, 'Check Firestore Rules');
+        });
+      } catch (e) {
+        console.error('Firebase Init Error:', e);
+        setSyncStatus(false, 'Offline Mode');
+      }
+    }
+
+    async function upsertSocialLead(record, isEdit) {
+      if (isFirebaseLive && db) {
+        if (isEdit) {
+          await db.collection(SOCIAL_COLLECTION).doc(record.id).set(record, { merge: true });
+        } else {
+          const { id, ...payload } = record;
+          await db.collection(SOCIAL_COLLECTION).add({ ...payload, createdAt: Date.now() });
+        }
+      } else {
+        if (isEdit) socialLeads = socialLeads.map(x => x.id === record.id ? record : x);
+        else socialLeads.unshift({ ...record, createdAt: Date.now() });
+        saveLocalFallback();
+        renderWorkspace();
+      }
+    }
+
+    async function upsertServiceJob(record, isEdit) {
+      if (isFirebaseLive && db) {
+        if (isEdit) {
+          await db.collection(SERVICE_COLLECTION).doc(record.id).set(record, { merge: true });
+        } else {
+          const { id, ...payload } = record;
+          await db.collection(SERVICE_COLLECTION).add({ ...payload, createdAt: Date.now() });
+        }
+      } else {
+        if (isEdit) serviceJobs = serviceJobs.map(x => x.id === record.id ? record : x);
+        else serviceJobs.unshift({ ...record, createdAt: Date.now() });
+        saveLocalFallback();
+        renderWorkspace();
+      }
+    }
+
+    // ==================== SIDEBAR & NAVIGATION ====================
+    function setupSidebarForRole(dept) {
+      document.getElementById('sidebarRoleTag').textContent = dept.roleBadge;
+      document.getElementById('sidebarUserName').textContent = dept.name;
+      document.getElementById('sidebarUserTitle').textContent = dept.roleTitle;
+      document.getElementById('sidebarUserIcon').innerHTML = `<i class="fa-solid ${dept.icon}"></i>`;
+      document.getElementById('workspaceSubtitle').textContent = dept.subtitle;
+
+      const nav = document.getElementById('sidebarNav');
+      let tabs = [];
+
+      if (dept.id === 'boss') {
+        tabs = [
+          { id: 'dashboard', label: 'Executive Dashboard', icon: 'fa-chart-pie' },
+          { id: 'social', label: 'Social Media Dept', icon: 'fa-bullhorn' },
+          { id: 'service', label: 'Service Centre Dept', icon: 'fa-screwdriver-wrench' }
+        ];
+      } else if (dept.id === 'service') {
+        tabs = [
+          { id: 'dashboard', label: 'Service Dashboard', icon: 'fa-gauge-high' },
+          { id: 'customers', label: 'Service Records', icon: 'fa-screwdriver-wrench' }
+        ];
+      } else if (dept.id === 'social') {
+        tabs = [
+          { id: 'dashboard', label: 'Social Dashboard', icon: 'fa-gauge-high' },
+          { id: 'customers', label: 'Customer Leads', icon: 'fa-users' },
+          { id: 'analytics', label: 'Channel Analytics', icon: 'fa-chart-column' }
+        ];
+      }
+
+      nav.innerHTML = tabs.map(t => `
+        <button onclick="switchTab('${t.id}')" class="nav-btn ${currentTab === t.id ? 'active' : ''}">
+          <i class="fa-solid ${t.icon} w-4 text-center"></i>
+          <span>${t.label}</span>
+        </button>
+      `).join('');
+    }
+
+    function switchTab(tabId) {
+      currentTab = tabId;
+      setupSidebarForRole(DEPARTMENTS[currentUserRole]);
+      renderWorkspace();
+    }
+
+    // ==================== UTILITY FORMATTERS ====================
+    function esc(str) {
+      return String(str ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+
+    function formatINR(num) {
+      return '₹' + Number(num || 0).toLocaleString('en-IN');
+    }
+
+    function renderBars(items, colorClass = 'bg-[#0F4C81]') {
+      const max = Math.max(1, ...items.map(i => i[1]));
+      return items.map(([label, count]) => `
+        <div class="mb-3 last:mb-0">
+          <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+            <span>${esc(label)}</span>
+            <span class="font-bold text-[#0F4C81]">${count}</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+            <div class="h-full ${colorClass} rounded-full transition-all duration-500" style="width: ${(count / max) * 100}%"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ==================== WORKSPACE RENDERERS ====================
+    function renderWorkspace() {
+      const container = document.getElementById('workspaceContent');
+      if (currentUserRole === 'boss') renderBossPanel(container);
+      else if (currentUserRole === 'service') renderServicePanel(container);
+      else if (currentUserRole === 'social') renderSocialPanel(container);
+    }
+
+    // 1. BOSS PANEL (JAGDISH)
+    function renderBossPanel(container) {
+      const completed = serviceJobs.filter(j => j.status === 'Completed').length;
+      const inProcess = serviceJobs.length - completed;
+      const totalRevenue = serviceJobs.reduce((sum, j) => sum + Number(j.amount || 0), 0);
+      const sohailReferrals = serviceJobs.filter(j => j.origin === 'Sohail').length;
+
+      if (currentTab === 'dashboard') {
+        container.innerHTML = `
+          <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            <div class="kpi-card">
+              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Social Media Leads</div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">${socialLeads.length}</div>
+              <div class="text-xs font-semibold text-indigo-600 mt-1">Managed by Sayyed Sohail</div>
+            </div>
+            <div class="kpi-card">
+              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Service Centre Jobs</div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">${serviceJobs.length}</div>
+              <div class="text-xs font-semibold text-emerald-600 mt-1">Managed by Mohammed</div>
+            </div>
+            <div class="kpi-card">
+              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Service Value</div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-[#0F4C81] mt-1">${formatINR(totalRevenue)}</div>
+              <div class="text-xs font-semibold text-slate-500 mt-1">${completed} Completed • ${inProcess} In Process</div>
+            </div>
+            <div class="kpi-card">
+              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Sohail → Service Referrals</div>
+              <div class="text-2xl font-extrabold text-slate-900 mt-1">${sohailReferrals}</div>
+              <div class="text-xs text-slate-500 mt-1">Verified Cross-Dept Conversions</div>
+            </div>
+            <div class="kpi-card">
+              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Completed Repairs</div>
+              <div class="text-2xl font-extrabold text-emerald-600 mt-1">${completed}</div>
+              <div class="text-xs text-slate-500 mt-1">Ready / Delivered</div>
+            </div>
+            <div class="kpi-card">
+              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Active In Process</div>
+              <div class="text-2xl font-extrabold text-amber-600 mt-1">${inProcess}</div>
+              <div class="text-xs text-slate-500 mt-1">Currently on Bench</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+              <h2 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-bullhorn text-[#0F4C81]"></i> Lead Acquisition Sources
+              </h2>
+              ${renderBars(['Instagram', 'WhatsApp', 'Calling', 'Justdial', 'Not specified'].map(s => [s, socialLeads.filter(r => r.source === s).length]))}
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+              <h2 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-bolt text-[#0F4C81]"></i> Latest Activity Across Departments
+              </h2>
+              <div class="divide-y divide-slate-100">
+                ${[
+                  ...socialLeads.slice(0, 3).map(l => `
+                    <div class="py-2.5 flex items-center justify-between text-sm">
+                      <div>
+                        <span class="font-bold text-slate-900">${esc(l.name)}</span>
+                        <span class="text-xs text-slate-500 block">${esc(l.requirement)}</span>
+                      </div>
+                      <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">${esc(l.source)}</span>
+                    </div>
+                  `),
+                  ...serviceJobs.slice(0, 3).map(j => `
+                    <div class="py-2.5 flex items-center justify-between text-sm">
+                      <div>
+                        <span class="font-bold text-slate-900">${esc(j.name)}</span>
+                        <span class="text-xs text-slate-500 block">${esc(j.service)} • ${formatINR(j.amount)}</span>
+                      </div>
+                      <span class="text-[11px] font-bold px-2.5 py-1 rounded-full ${j.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${esc(j.status)}</span>
+                    </div>
+                  `)
+                ].join('') || '<p class="text-sm text-slate-400">No activity recorded yet.</p>'}
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (currentTab === 'social') {
+        container.innerHTML = `
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 class="text-base font-bold text-slate-900">All Social Media Customers (Sayyed Sohail)</h2>
+                <p class="text-xs text-slate-500">Live feed of all customer inquiries and department routing</p>
+              </div>
+              <input id="bossSocialSearch" oninput="filterBossSocial()" placeholder="Search name or mobile..." class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
+                    <th class="py-3 px-3">Customer</th>
+                    <th class="py-3 px-3">Requirement</th>
+                    <th class="py-3 px-3">Source</th>
+                    <th class="py-3 px-3">Assigned To</th>
+                  </tr>
+                </thead>
+                <tbody id="bossSocialBody" class="divide-y divide-slate-100 text-sm"></tbody>
+              </table>
+            </div>
+          </div>
+        `;
+        filterBossSocial();
+      } else if (currentTab === 'service') {
+        container.innerHTML = `
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 class="text-base font-bold text-slate-900">All Service Centre Customers (Mohammed)</h2>
+                <p class="text-xs text-slate-500">Live repair tickets, referral attribution & service billing</p>
+              </div>
+              <input id="bossServiceSearch" oninput="filterBossService()" placeholder="Search customer or mobile..." class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
+                    <th class="py-3 px-3">Customer</th>
+                    <th class="py-3 px-3">Repair / Service</th>
+                    <th class="py-3 px-3">Amount</th>
+                    <th class="py-3 px-3">Status</th>
+                    <th class="py-3 px-3">Referral</th>
+                  </tr>
+                </thead>
+                <tbody id="bossServiceBody" class="divide-y divide-slate-100 text-sm"></tbody>
+              </table>
+            </div>
+          </div>
+        `;
+        filterBossService();
+      }
+    }
+
+    function filterBossSocial() {
+      const q = (document.getElementById('bossSocialSearch')?.value || '').toLowerCase();
+      const body = document.getElementById('bossSocialBody');
+      if (!body) return;
+      const rows = socialLeads.filter(x => (x.name + ' ' + x.phone + ' ' + x.requirement).toLowerCase().includes(q));
+      body.innerHTML = rows.map(x => `
+        <tr class="hover:bg-slate-50/80">
+          <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(x.name)}</div><div class="text-xs text-slate-500">${esc(x.phone)}</div></td>
+          <td class="py-3 px-3 text-slate-700">${esc(x.requirement)}</td>
+          <td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(x.source)}</span></td>
+          <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">${esc(TRANSFER_LABELS[x.transfer] || 'Unassigned')}</span></td>
+        </tr>
+      `).join('') || '<tr><td colspan="4" class="py-6 text-center text-slate-400 text-sm">No matching customers found.</td></tr>';
+    }
+
+    function filterBossService() {
+      const q = (document.getElementById('bossServiceSearch')?.value || '').toLowerCase();
+      const body = document.getElementById('bossServiceBody');
+      if (!body) return;
+      const rows = serviceJobs.filter(x => (x.name + ' ' + x.phone + ' ' + x.service).toLowerCase().includes(q));
+      body.innerHTML = rows.map(x => `
+        <tr class="hover:bg-slate-50/80">
+          <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(x.name)}</div><div class="text-xs text-slate-500">${esc(x.phone)}</div></td>
+          <td class="py-3 px-3 text-slate-700">${esc(x.service)}</td>
+          <td class="py-3 px-3 font-bold text-[#0F4C81]">${formatINR(x.amount)}</td>
+          <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full ${x.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${esc(x.status)}</span></td>
+          <td class="py-3 px-3">${x.origin === 'Sohail' ? '<span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Transferred by Sohail</span>' : '<span class="text-xs text-slate-500">Direct</span>'}</td>
+        </tr>
+      `).join('') || '<tr><td colspan="5" class="py-6 text-center text-slate-400 text-sm">No matching service records found.</td></tr>';
+    }
+
+    // 2. SERVICE CENTRE PANEL (MOHAMMED)
+    function renderServicePanel(container) {
+      const done = serviceJobs.filter(x => x.status === 'Completed').length;
+      const totalAmt = serviceJobs.reduce((s, x) => s + Number(x.amount || 0), 0);
+      const pct = serviceJobs.length ? Math.round((done / serviceJobs.length) * 100) : 0;
+
+      if (currentTab === 'dashboard') {
+        container.innerHTML = `
+          <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Total Customers</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${serviceJobs.length}</div></div>
+            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Transferred by Sohail</div><div class="text-2xl font-extrabold text-indigo-600 mt-1">${serviceJobs.filter(x => x.origin === 'Sohail').length}</div></div>
+            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">In Process</div><div class="text-2xl font-extrabold text-amber-600 mt-1">${serviceJobs.length - done}</div></div>
+            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Completed</div><div class="text-2xl font-extrabold text-emerald-600 mt-1">${done}</div></div>
+            <div class="kpi-card col-span-2 lg:col-span-1"><div class="text-xs font-bold text-slate-400 uppercase">Total Service Value</div><div class="text-2xl font-extrabold text-[#0F4C81] mt-1">${formatINR(totalAmt)}</div></div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 mb-6 shadow-xs">
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-2">
+              <span>Repair Completion Rate</span>
+              <span class="text-[#0F4C81]">${pct}%</span>
+            </div>
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-[#0F4C81] rounded-full transition-all duration-500" style="width:${pct}%"></div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-base font-bold text-slate-900">Recent Service Jobs</h2>
+              <button onclick="switchTab('customers')" class="text-xs font-bold text-[#0F4C81] hover:underline">+ Add / Manage Jobs</button>
+            </div>
+            <div class="divide-y divide-slate-100">
+              ${serviceJobs.slice(0, 6).map(r => `
+                <div class="py-3 flex flex-wrap items-center justify-between gap-2 text-sm">
+                  <div>
+                    <span class="font-bold text-slate-900">${esc(r.name)}</span>
+                    <span class="text-xs text-slate-500 ml-2">${esc(r.service)}</span>
+                  </div>
+                  <div class="flex items-center gap-2.5">
+                    <span class="font-bold text-[#0F4C81]">${formatINR(r.amount)}</span>
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-full ${r.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${esc(r.status)}</span>
+                  </div>
+                </div>
+              `).join('') || '<p class="text-sm text-slate-400">No service jobs recorded yet.</p>'}
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div id="serviceFormCard" class="hidden bg-white rounded-2xl border-2 border-[#0F4C81] p-5 mb-6 shadow-md">
+            <h2 id="serviceFormTitle" class="text-base font-bold text-slate-900 mb-4">Add Service Customer</h2>
+            <form onsubmit="submitServiceForm(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number (10-Digit Referral Check)</label>
+                <input id="svcPhone" pattern="[0-9]{10}" maxlength="10" oninput="checkServiceReferralMatch()" required placeholder="e.g. 9823456710" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Customer Name</label>
+                <input id="svcName" required placeholder="Customer full name" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Service / Repair</label>
+                <input id="svcRepair" required placeholder="e.g. Display replacement" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Service Amount (₹)</label>
+                <input id="svcAmount" type="number" min="0" step="1" required placeholder="0" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-bold text-slate-700 mb-1">Description / Notes</label>
+                <textarea id="svcDesc" rows="2" placeholder="Parts details, warranty or technician notes..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]"></textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Received From</label>
+                <select id="svcOrigin" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white">
+                  <option value="Direct">Direct Customer</option>
+                  <option value="Sohail">Transferred by Sohail</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Service Status</label>
+                <select id="svcStatus" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white">
+                  <option value="In Process">In Process</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+
+              <div id="referralMatchBanner" class="sm:col-span-2 p-3 rounded-xl bg-blue-50 border border-blue-200 text-xs font-medium text-[#0F4C81]">
+                Enter a 10-digit mobile number to automatically check Social Media CRM referrals.
+              </div>
+
+              <div class="sm:col-span-2 flex items-center gap-2.5 pt-1">
+                <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-sm">
+                  Save Service Record
+                </button>
+                <button type="button" onclick="closeServiceForm()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-600 hover:bg-slate-50">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <h2 class="text-base font-bold text-slate-900">Customer Service Records</h2>
+              <button onclick="openServiceForm()" class="px-4 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs self-start">
+                + Add Service Customer
+              </button>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 mb-4">
+              <input id="svcSearch" oninput="renderServiceRows()" placeholder="Search customer, mobile, service..." class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-[#0F4C81]" />
+              <select id="svcFilter" onchange="renderServiceRows()" class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs bg-white sm:w-44">
+                <option value="All">All Status</option>
+                <option value="In Process">In Process</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
+                    <th class="py-3 px-3">Customer</th>
+                    <th class="py-3 px-3">Service</th>
+                    <th class="py-3 px-3">Amount</th>
+                    <th class="py-3 px-3">Referral</th>
+                    <th class="py-3 px-3">Status</th>
+                    <th class="py-3 px-3">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="svcTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
+              </table>
+            </div>
+          </div>
+        `;
+        renderServiceRows();
+      }
+    }
+
+    function checkServiceReferralMatch() {
+      const phone = document.getElementById('svcPhone').value.trim();
+      const banner = document.getElementById('referralMatchBanner');
+      const leads = socialLeads.filter(x => x.phone === phone && x.transfer === 'service');
+      const any = socialLeads.filter(x => x.phone === phone);
+
+      if (leads.length) {
+        document.getElementById('svcOrigin').value = 'Sohail';
+        if (!document.getElementById('svcName').value.trim()) {
+          document.getElementById('svcName').value = leads[0].name;
+        }
+        banner.className = 'sm:col-span-2 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800';
+        banner.textContent = `✓ Verified Referral from Sayyed Sohail — ${leads[0].name} (${phone}). Attribution will print on the Service Bill.`;
+      } else if (any.length) {
+        banner.className = 'sm:col-span-2 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs font-semibold text-amber-800';
+        banner.textContent = `Social Media lead found (${any[0].name}), but marked under "${TRANSFER_LABELS[any[0].transfer]}". Confirm referral manually if needed.`;
+      } else {
+        banner.className = 'sm:col-span-2 p-3 rounded-xl bg-blue-50 border border-blue-200 text-xs font-medium text-[#0F4C81]';
+        banner.textContent = 'No matching Service Centre referral found. Proceeding as Direct Service Customer.';
+      }
+    }
+
+    function openServiceForm(id = null) {
+      editServiceId = id;
+      const r = serviceJobs.find(x => x.id === id);
+      const card = document.getElementById('serviceFormCard');
+      card.classList.remove('hidden');
+      document.getElementById('serviceFormTitle').textContent = r ? 'Edit Service Customer' : 'Add Service Customer';
+      document.getElementById('svcName').value = r?.name || '';
+      document.getElementById('svcPhone').value = r?.phone || '';
+      document.getElementById('svcRepair').value = r?.service || '';
+      document.getElementById('svcAmount').value = r?.amount ?? '';
+      document.getElementById('svcDesc').value = r?.description || '';
+      document.getElementById('svcOrigin').value = r?.origin || 'Direct';
+      document.getElementById('svcStatus').value = r?.status || 'In Process';
+      if (!r) checkServiceReferralMatch();
+      card.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeServiceForm() {
+      editServiceId = null;
+      document.getElementById('serviceFormCard')?.classList.add('hidden');
+    }
+
+    async function submitServiceForm(e) {
+      e.preventDefault();
+      const existing = serviceJobs.find(x => x.id === editServiceId);
+      const record = {
+        id: editServiceId || 'job' + Date.now(),
+        name: document.getElementById('svcName').value.trim(),
+        phone: document.getElementById('svcPhone').value.trim(),
+        service: document.getElementById('svcRepair').value.trim(),
+        amount: Number(document.getElementById('svcAmount').value),
+        description: document.getElementById('svcDesc').value.trim(),
+        origin: document.getElementById('svcOrigin').value,
+        status: document.getElementById('svcStatus').value,
+        date: existing?.date || new Date().toLocaleDateString('en-IN')
+      };
+      await upsertServiceJob(record, Boolean(editServiceId));
+      closeServiceForm();
+    }
+
+    function renderServiceRows() {
+      const q = (document.getElementById('svcSearch')?.value || '').toLowerCase();
+      const f = document.getElementById('svcFilter')?.value || 'All';
+      const body = document.getElementById('svcTableBody');
+      if (!body) return;
+
+      const filtered = serviceJobs.filter(r =>
+        (f === 'All' || r.status === f) &&
+        (r.name + ' ' + r.phone + ' ' + r.service).toLowerCase().includes(q)
+      );
+
+      body.innerHTML = filtered.map(r => `
+        <tr class="hover:bg-slate-50/80">
+          <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(r.name)}</div><div class="text-xs text-slate-500">${esc(r.phone)}</div></td>
+          <td class="py-3 px-3"><div class="font-medium text-slate-800">${esc(r.service)}</div><div class="text-xs text-slate-400">${esc(r.description)}</div></td>
+          <td class="py-3 px-3 font-bold text-[#0F4C81]">${formatINR(r.amount)}</td>
+          <td class="py-3 px-3">${r.origin === 'Sohail' ? '<span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Transferred by Sohail</span>' : '<span class="text-xs text-slate-500">Direct</span>'}</td>
+          <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full ${r.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${esc(r.status)}</span></td>
+          <td class="py-3 px-3">
+            <div class="flex items-center gap-1.5">
+              <button onclick="openServiceForm('${r.id}')" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-xs font-bold text-slate-700">Edit</button>
+              <button onclick="printServiceBill('${r.id}')" class="px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-xs font-bold text-[#0F4C81]">Bill</button>
+            </div>
+          </td>
+        </tr>
+      `).join('') || '<tr><td colspan="6" class="py-6 text-center text-slate-400 text-sm">No service records found.</td></tr>';
+    }
+
+    function printServiceBill(id) {
+      const r = serviceJobs.find(x => x.id === id);
+      if (!r) return;
+      const w = window.open('', '_blank');
+      if (!w) {
+        alert('Please allow pop-ups in your browser to preview the Service Bill.');
+        return;
+      }
+      w.document.write(`
+        <!doctype html>
+        <html>
+        <head>
+          <title>GALAXY POINT — Service Bill Preview</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 36px; color: #0F172A; max-width: 650px; margin: auto; }
+            .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #0F4C81; padding-bottom: 16px; margin-bottom: 20px; }
+            .brand { display: flex; align-items: center; gap: 12px; }
+            .badge { background: #EFF6FF; color: #0F4C81; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 12px; }
+            .box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+            .total { font-size: 22px; font-weight: 800; color: #0F4C81; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div class="brand">
+              <svg width="56" height="32" viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 68 C18 32, 46 16, 86 16 L168 16 C196 16, 210 32, 210 54 C210 76, 196 92, 168 92 L134 92 L134 108 L112 108 L112 72 L166 72 C179 72, 186 64, 186 54 C186 44, 179 36, 166 36 L82 36 C52 36, 32 48, 22 72 C20 71, 18 70, 18 68 Z" fill="#141414"/>
+                <path d="M24 78 C32 98, 52 108, 82 108 L104 108 L104 62 L62 62 L54 78 L82 78 L82 88 C62 88, 48 81, 42 66 C34 69, 28 73, 24 78 Z" fill="#0F4C81"/>
+              </svg>
+              <div>
+                <h1 style="margin:0;font-size:22px;color:#0F4C81;">GALAXY POINT</h1>
+                <small style="color:#64748B;">Service Centre Estimate & Job Slip</small>
+              </div>
+            </div>
+            <div class="badge">${esc(r.status)}</div>
+          </div>
+          <div class="box">
+            <p style="margin:4px 0;"><b>Customer Name:</b> ${esc(r.name)}</p>
+            <p style="margin:4px 0;"><b>Mobile Number:</b> ${esc(r.phone)}</p>
+            <p style="margin:4px 0;"><b>Date:</b> ${esc(r.date)}</p>
+          </div>
+          <div class="box">
+            <p style="margin:4px 0;"><b>Service / Repair:</b> ${esc(r.service)}</p>
+            <p style="margin:4px 0;"><b>Notes:</b> ${esc(r.description || '—')}</p>
+            <p style="margin:12px 0 4px;" class="total">Service Amount: ${formatINR(r.amount)}</p>
+          </div>
+          <p><b>Attribution:</b> ${r.origin === 'Sohail' ? 'Transferred by Sayyed Sohail (Social Media CRM)' : 'Direct Service Customer'}</p>
+          <hr style="border:none;border-top:1px solid #E2E8F0;margin:20px 0;">
+          <small style="color:#64748B;">Preview slip only • Not a GST tax invoice. Generated via GALAXY POINT CRM.</small>
+        </body>
+        </html>
+      `);
+      w.document.close();
+    }
+
+    // 3. SOCIAL MEDIA MANAGER PANEL (SAYYED SOHAIL)
+    function renderSocialPanel(container) {
+      const transferred = socialLeads.filter(x => x.transfer !== 'sohail').length;
+
+      if (currentTab === 'dashboard') {
+        container.innerHTML = `
+          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 mb-6">
+            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Total Leads</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.length}</div></div>
+            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Transfers</div><div class="text-2xl font-extrabold text-[#0F4C81] mt-1">${transferred}</div></div>
+            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">By Sohail</div><div class="text-2xl font-extrabold text-indigo-600 mt-1">${socialLeads.filter(x => x.transfer === 'sohail').length}</div></div>
+            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Service Ref</div><div class="text-2xl font-extrabold text-emerald-600 mt-1">${socialLeads.filter(x => x.transfer === 'service').length}</div></div>
+            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">New – Pravin</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.filter(x => x.transfer === 'new').length}</div></div>
+            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Used – Ashok</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.filter(x => x.transfer === 'used').length}</div></div>
+            <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Telecom</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.filter(x => x.transfer === 'telecom').length}</div></div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+              <h2 class="text-base font-bold text-slate-900 mb-4">Customer Sources</h2>
+              ${renderBars(['Instagram', 'WhatsApp', 'Calling', 'Justdial', 'Not specified'].map(s => [s, socialLeads.filter(r => r.source === s).length]))}
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-base font-bold text-slate-900">Recent Customers</h2>
+                <button onclick="switchTab('customers')" class="text-xs font-bold text-[#0F4C81] hover:underline">+ Add Customer</button>
+              </div>
+              <div class="divide-y divide-slate-100">
+                ${socialLeads.slice(0, 5).map(r => `
+                  <div class="py-3 flex items-center justify-between text-sm">
+                    <div>
+                      <span class="font-bold text-slate-900">${esc(r.name)}</span>
+                      <span class="text-xs text-slate-500 ml-2">${esc(r.phone)}</span>
+                    </div>
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(TRANSFER_LABELS[r.transfer] || 'Unassigned')}</span>
+                  </div>
+                `).join('') || '<p class="text-sm text-slate-400">No customers yet.</p>'}
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (currentTab === 'customers') {
+        container.innerHTML = `
+          <div id="socialFormCard" class="hidden bg-white rounded-2xl border-2 border-[#0F4C81] p-5 mb-6 shadow-md">
+            <h2 id="socialFormTitle" class="text-base font-bold text-slate-900 mb-4">Add Customer</h2>
+            <form onsubmit="submitSocialForm(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Customer Name</label>
+                <input id="socName" required placeholder="Customer full name" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number (10 Digits)</label>
+                <input id="socPhone" pattern="[0-9]{10}" maxlength="10" required placeholder="10-digit mobile" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-bold text-slate-700 mb-1">Requirement</label>
+                <textarea id="socReq" rows="2" required placeholder="Product or service requirement..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]"></textarea>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-bold text-slate-700 mb-1">Notes</label>
+                <textarea id="socNotes" rows="1" placeholder="Additional follow-up notes..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]"></textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Customer Source</label>
+                <select id="socSource" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white">
+                  <option>Instagram</option>
+                  <option>WhatsApp</option>
+                  <option>Calling</option>
+                  <option>Justdial</option>
+                  <option>Not specified</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Transfer / Handled By</label>
+                <select id="socTransfer" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white">
+                  <option value="sohail">Taken by Sohail</option>
+                  <option value="new">New Mobile – Pravin</option>
+                  <option value="used">Used Mobile – Ashok</option>
+                  <option value="service">Service Centre</option>
+                  <option value="telecom">Telecom</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2 flex items-center gap-2.5 pt-1">
+                <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-sm">
+                  Save Customer
+                </button>
+                <button type="button" onclick="closeSocialForm()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-600 hover:bg-slate-50">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <h2 class="text-base font-bold text-slate-900">Customer Lead Directory</h2>
+              <button onclick="openSocialForm()" class="px-4 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs self-start">
+                + Add Customer
+              </button>
+            </div>
+
+            <input id="socSearch" oninput="renderSocialRows()" placeholder="Search customer name, mobile, or requirement..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs mb-4 focus:outline-none focus:border-[#0F4C81]" />
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
+                    <th class="py-3 px-3">Customer</th>
+                    <th class="py-3 px-3">Requirement</th>
+                    <th class="py-3 px-3">Source</th>
+                    <th class="py-3 px-3">Assigned To</th>
+                    <th class="py-3 px-3">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="socTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
+              </table>
+            </div>
+          </div>
+        `;
+        renderSocialRows();
+      } else if (currentTab === 'analytics') {
+        const rate = socialLeads.length ? Math.round((transferred / socialLeads.length) * 100) + '%' : '0%';
+        container.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Total Leads</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.length}</div></div>
+            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Department Transfers</div><div class="text-2xl font-extrabold text-[#0F4C81] mt-1">${transferred}</div></div>
+            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Transfer Rate</div><div class="text-2xl font-extrabold text-emerald-600 mt-1">${rate}</div></div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+              <h2 class="text-base font-bold text-slate-900 mb-4">Channel Performance</h2>
+              ${renderBars(['Instagram', 'WhatsApp', 'Calling', 'Justdial', 'Not specified'].map(s => [s, socialLeads.filter(r => r.source === s).length]))}
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+              <h2 class="text-base font-bold text-slate-900 mb-4">Department Transfers</h2>
+              ${renderBars(Object.entries(TRANSFER_LABELS).map(([k, label]) => [label, socialLeads.filter(r => r.transfer === k).length]), 'bg-indigo-600')}
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function openSocialForm(id = null) {
+      editSocialId = id;
+      const r = socialLeads.find(x => x.id === id);
+      const card = document.getElementById('socialFormCard');
+      card.classList.remove('hidden');
+      document.getElementById('socialFormTitle').textContent = r ? 'Edit Customer' : 'Add Customer';
+      document.getElementById('socName').value = r?.name || '';
+      document.getElementById('socPhone').value = r?.phone || '';
+      document.getElementById('socReq').value = r?.requirement || '';
+      document.getElementById('socNotes').value = r?.notes || '';
+      document.getElementById('socSource').value = r?.source || 'Instagram';
+      document.getElementById('socTransfer').value = r?.transfer || 'sohail';
+      card.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeSocialForm() {
+      editSocialId = null;
+      document.getElementById('socialFormCard')?.classList.add('hidden');
+    }
+
+    async function submitSocialForm(e) {
+      e.preventDefault();
+      const existing = socialLeads.find(x => x.id === editSocialId);
+      const record = {
+        id: editSocialId || 'lead' + Date.now(),
+        name: document.getElementById('socName').value.trim(),
+        phone: document.getElementById('socPhone').value.trim(),
+        requirement: document.getElementById('socReq').value.trim(),
+        notes: document.getElementById('socNotes').value.trim(),
+        source: document.getElementById('socSource').value,
+        transfer: document.getElementById('socTransfer').value,
+        date: existing?.date || new Date().toLocaleDateString('en-IN')
+      };
+      await upsertSocialLead(record, Boolean(editSocialId));
+      closeSocialForm();
+    }
+
+    function renderSocialRows() {
+      const q = (document.getElementById('socSearch')?.value || '').toLowerCase();
+      const body = document.getElementById('socTableBody');
+      if (!body) return;
+
+      const filtered = socialLeads.filter(r => (r.name + ' ' + r.phone + ' ' + r.requirement).toLowerCase().includes(q));
+      body.innerHTML = filtered.map(r => `
+        <tr class="hover:bg-slate-50/80">
+          <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(r.name)}</div><div class="text-xs text-slate-500">${esc(r.phone)}</div></td>
+          <td class="py-3 px-3"><div class="font-medium text-slate-800">${esc(r.requirement)}</div><div class="text-xs text-slate-400">${esc(r.notes)}</div></td>
+          <td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(r.source)}</span></td>
+          <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">${esc(TRANSFER_LABELS[r.transfer] || 'Unassigned')}</span></td>
+          <td class="py-3 px-3">
+            <button onclick="openSocialForm('${r.id}')" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-xs font-bold text-slate-700">Edit</button>
+          </td>
+        </tr>
+      `).join('') || '<tr><td colspan="5" class="py-6 text-center text-slate-400 text-sm">No matching customers found.</td></tr>';
+    }
+
+    // ==================== BOOTSTRAP ====================
+    window.addEventListener('DOMContentLoaded', () => {
+      initAutoFirebase();
+      updateClockAndGreeting();
+      selectDepartment('boss');
+    });
+  </script>
+</body>
+</html>
