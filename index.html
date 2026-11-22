@@ -1,216 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Galaxy Point | Enterprise Portal</title>
-    <style>
-        /* Core Reset & White Background */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body {
-            background-color: #f8fafc;
-            color: #1e293b;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; 
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GALAXY POINT | Executive CRM Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --gp-blue: #0F4C81;
+      --gp-royal: #1D4ED8;
+      --gp-light-blue: #EFF6FF;
+      --gp-border: #E2E8F0;
+    }
 
-        /* Top Header Bar */
-        .app-header {
-            background: #ffffff;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #e2e8f0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-            z-index: 10;
-        }
-        .brand { font-size: 20px; font-weight: 800; color: #1e3a8a; letter-spacing: 1px; }
-        .brand span { color: #f59e0b; }
+    * { box-sizing: border-box; }
 
-        /* Main Container */
-        .main-container {
-            flex: 1;
-            position: relative;
-            overflow-y: auto;
-            background: #f8fafc;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F4F7FB;
+      color: #0F172A;
+      margin: 0;
+      overflow-x: hidden;
+    }
 
-        /* --- 1. Portal Home Page (Cards) --- */
-        .portal-home {
-            padding: 40px 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .brand-header { margin-bottom: 40px; }
-        .brand-title { font-size: 32px; font-weight: 800; color: #1e3a8a; margin-bottom: 8px; }
-        .brand-subtitle { font-size: 14px; color: #64748b; letter-spacing: 3px; text-transform: uppercase; }
+    h1, h2, h3, .font-display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
 
-        .portal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        .portal-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 40px 20px;
-            text-decoration: none;
-            color: #1e293b;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .portal-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
-            border-color: #bfdbfe;
-        }
-        .card-icon {
-            font-size: 45px; margin-bottom: 20px; background: #eff6ff;
-            width: 90px; height: 90px; display: flex; align-items: center;
-            justify-content: center; border-radius: 50%;
-        }
-        .card-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
-        .card-desc { font-size: 14px; color: #64748b; margin-bottom: 25px; }
-        .login-btn {
-            padding: 10px 30px; background: #2563eb; color: #ffffff;
-            border-radius: 50px; font-weight: 600; font-size: 14px;
-            text-transform: uppercase; width: 100%; border: none;
-        }
+    /* Login Background Subtle Blue-White Mesh */
+    .login-bg {
+      background:
+        radial-gradient(circle at 12% 18%, rgba(29, 78, 216, 0.09) 0%, transparent 42%),
+        radial-gradient(circle at 88% 82%, rgba(15, 76, 129, 0.08) 0%, transparent 45%),
+        linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
+    }
 
-        /* --- 2. Panel View (IFrame) --- */
-        .panel-view {
-            display: none; 
-            width: 100%;
-            height: 100%;
-            flex-direction: column;
-        }
-        
-        .panel-header {
-            background: #ffffff;
-            padding: 10px 20px;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .back-btn {
-            background: #eff6ff; color: #2563eb; border: none;
-            padding: 10px 20px; border-radius: 8px; font-weight: 600;
-            cursor: pointer; display: flex; align-items: center; gap: 5px;
-            transition: 0.2s;
-        }
-        .back-btn:hover { background: #dbeafe; }
-        
-        /* This is where the iframe sits */
-        iframe {
-            flex: 1;
-            width: 100%;
-            border: none;
-            background: #f4f7f6; /* Matches the background of your other files */
-        }
+    /* Department Card Hover & Click Color Wave Animation */
+    .dept-card {
+      position: relative;
+      overflow: hidden;
+      background: #FFFFFF;
+      border: 2px solid #E2E8F0;
+      border-radius: 18px;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.28s ease;
+      cursor: pointer;
+    }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .brand-title { font-size: 26px; }
-            .portal-grid { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Top Header -->
-    <div class="app-header">
-        <div class="brand">◈ GALAXY <span>POINT</span></div>
-        <div style="font-size:13px; font-weight:600; color:#64748b;">Staff Portal</div>
-    </div>
-
-    <div class="main-container">
-        
-        <!-- === HOME PAGE (Cards View) === -->
-        <div class="portal-home" id="home-screen">
-            <div class="brand-header">
-                <div class="brand-title">Welcome to Command Center</div>
-                <div class="brand-subtitle">Select a module to begin</div>
-            </div>
-
-            <div class="portal-grid">
-                <!-- Card 1: Boss -->
-                <div class="portal-card" onclick="openPanel('boss-panel.html')">
-                    <div class="card-icon">👑</div>
-                    <h2 class="card-title">Boss Dashboard</h2>
-                    <p class="card-desc">View analytics and monitor department performance.</p>
-                    <button class="login-btn">Open Panel</button>
-                </div>
-
-                <!-- Card 2: Social -->
-                <div class="portal-card" onclick="openPanel('social-media.html')">
-                    <div class="card-icon">📱</div>
-                    <h2 class="card-title">Social Media CRM</h2>
-                    <p class="card-desc">Manage customer leads and transfer tasks.</p>
-                    <button class="login-btn">Open Panel</button>
-                </div>
-
-                <!-- Card 3: Service -->
-                <div class="portal-card" onclick="openPanel('service-centre.html')">
-                    <div class="card-icon">🛠️</div>
-                    <h2 class="card-title">Service Centre</h2>
-                    <p class="card-desc">Track repair jobs, update statuses, and generate bills.</p>
-                    <button class="login-btn">Open Panel</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- === PANEL VIEW (IFrame View) === -->
-        <div class="panel-view" id="panel-screen">
-            <div class="panel-header">
-                <button class="back-btn" onclick="goBack()">← Back to Portal</button>
-                <div id="current-panel-name" style="font-weight: 600; color: #1e293b;">Panel Name</div>
-            </div>
-            <!-- Yahan aapki files (boss-panel.html etc) load hongi -->
-            <iframe id="panel-iframe" src=""></iframe>
-        </div>
-
-    </div>
-
-    <!-- JavaScript to handle the panel switching -->
-    <script>
-        const homeScreen = document.getElementById('home-screen');
-        const panelScreen = document.getElementById('panel-screen');
-        const iframe = document.getElementById('panel-iframe');
-        const panelName = document.getElementById('current-panel-name');
-
-        // Jab card par click hoga
-        function openPanel(fileName) {
-            // Home wali screen chupao
-            homeScreen.style.display = 'none';
-            // Panel wali screen dikhao
-            panelScreen.style.display = 'flex';
-            
-            // Iframe ke andar aapki file load karo
-            iframe.src = fileName;
-            
-            // Upar naam set karo
-            if(fileName === 'boss-panel.html') panelName.innerText = "Boss Dashboard";
-            else if(fileName === 'social-media.html') panelName.innerText = "Social Media CRM";
-            else panelName.innerText = "Service Centre";
-        }
-
-        // Wapas aane ka function
-        function goBack() {
-            panelScreen.style.display = 'none';
-            homeScreen.style.display = 'block';
-            iframe.src = ""; // Iframe clear karo
-        }
-    </script>
-
-</body>
-</html>
+    .dept-card::before {
+      content: "";
+      position: absolute;
+      inset
