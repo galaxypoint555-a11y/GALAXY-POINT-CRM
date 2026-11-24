@@ -624,22 +624,32 @@
     }
 
     function recoverAndLoadPermanentData() {
-      deletedSocialIds = new Set(JSON.parse(localStorage.getItem(DELETED_SOCIAL_IDS_KEY) || '[]'));
-      let currentSocial = JSON.parse(localStorage.getItem(PERMANENT_SOCIAL_KEY) || '[]')
-        .filter(item => item && !deletedSocialIds.has(item.id));
+      // Clear accidental blocklist if socialLeads is currently empty so genuine records never stay hidden
+      const rawSaved = JSON.parse(localStorage.getItem(PERMANENT_SOCIAL_KEY) || '[]');
+      if (rawSaved.length === 0) {
+        localStorage.removeItem(DELETED_SOCIAL_IDS_KEY);
+        deletedSocialIds = new Set();
+      } else {
+        deletedSocialIds = new Set(JSON.parse(localStorage.getItem(DELETED_SOCIAL_IDS_KEY) || '[]'));
+      }
+
+      let currentSocial = rawSaved.filter(item => item && !deletedSocialIds.has(item.id));
       let currentService = JSON.parse(localStorage.getItem(PERMANENT_SERVICE_KEY) || '[]');
       dailyMetricsMap = JSON.parse(localStorage.getItem(PERMANENT_METRICS_KEY) || '{}');
 
-      // Scan ALL localStorage keys for any saved Galaxy Point customer records without deleting them
+      // Scan ALL localStorage keys for any saved Galaxy Point customer records
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (!key || key === DELETED_SOCIAL_IDS_KEY || key === PERMANENT_METRICS_KEY) continue;
         try {
           const parsed = JSON.parse(localStorage.getItem(key) || 'null');
           if (Array.isArray(parsed) && parsed.length > 0) {
-            if (parsed[0].requirement !== undefined || parsed[0].transfer !== undefined) {
-              currentSocial = mergeUniqueRecords(currentSocial, parsed);
-            } else if (parsed[0].service !== undefined || parsed[0].amount !== undefined) {
+            if (parsed[0].requirement !== undefined || parsed[0].transfer !== undefined || parsed[0].phone !== undefined) {
+              if (parsed[0].service === undefined && parsed[0].amount === undefined) {
+                currentSocial = mergeUniqueRecords(currentSocial, parsed);
+              }
+            }
+            if (parsed[0].service !== undefined || parsed[0].amount !== undefined) {
               currentService = mergeUniqueRecords(currentService, parsed);
             }
           }
@@ -653,18 +663,27 @@
     }
 
     async function manualRecoverAllData() {
+      localStorage.removeItem(DELETED_SOCIAL_IDS_KEY);
+      deletedSocialIds = new Set();
       recoverAndLoadPermanentData();
-      if (isFirebaseLive && db) {
+
+      if (db) {
         try {
-          const socialSnap = await db.collection(SOCIAL_COLLECTION).get();
-          const cloudSocial = socialSnap.docs
-            .map(doc => ({ id: doc.id, ...doc.data() }))
-            .filter(item => !deletedSocialIds.has(item.id));
-          socialLeads = mergeUniqueRecords(socialLeads, cloudSocial);
+          // Check primary and fallback Firestore collections
+          const possibleSocialCols = [SOCIAL_COLLECTION, 'customers', 'leads'];
+          for (const colName of possibleSocialCols) {
+            const snap = await db.collection(colName).get();
+            if (!snap.empty) {
+              const docs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+              socialLeads = mergeUniqueRecords(socialLeads, docs);
+            }
+          }
 
           const serviceSnap = await db.collection(SERVICE_COLLECTION).get();
-          const cloudService = serviceSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          serviceJobs = mergeUniqueRecords(serviceJobs, cloudService);
+          if (!serviceSnap.empty) {
+            const cloudService = serviceSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            serviceJobs = mergeUniqueRecords(serviceJobs, cloudService);
+          }
 
           for (const item of socialLeads) {
             const { id, ...payload } = item;
@@ -675,15 +694,18 @@
             await db.collection(SERVICE_COLLECTION).doc(id).set({ ...payload, createdAt: item.createdAt || Date.now() }, { merge: true });
           }
           savePermanentLocalData();
+          setSyncStatus(true);
         } catch (err) {
           console.error('Manual sync error:', err);
+          setSyncStatus(false, 'Firestore Locked');
+          showToast('Firestore Rules locked hain — Local data recovered!');
         }
       }
       if (currentUserRole) {
         setupSidebarForRole(DEPARTMENTS[currentUserRole]);
         renderWorkspace();
       }
-      showToast(`Refreshed! ${socialLeads.length} leads & ${serviceJobs.length} service jobs synced.`);
+      showToast(`Recovered: ${socialLeads.length} Customers & ${serviceJobs.length} Service Jobs!`);
     }
 
     function savePermanentLocalData() {
