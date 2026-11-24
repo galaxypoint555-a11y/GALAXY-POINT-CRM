@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GALAXY POINT | Executive CRM Portal</title>
+  <title>GALAXY POINT • Executive CRM Suite</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,15 +11,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     :root {
+      --gp-navy: #0A3665;
       --gp-blue: #0F4C81;
       --gp-royal: #1D4ED8;
+      --gp-sky: #0284C7;
+      --gp-surface: #F3F6FB;
     }
 
     * { box-sizing: border-box; }
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #F4F7FB;
+      background-color: var(--gp-surface);
       color: #0F172A;
       margin: 0;
       overflow-x: hidden;
@@ -29,46 +32,75 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    .login-bg {
-      background:
-        radial-gradient(circle at 12% 15%, rgba(29, 78, 216, 0.11) 0%, transparent 42%),
-        radial-gradient(circle at 88% 85%, rgba(15, 76, 129, 0.10) 0%, transparent 45%),
-        linear-gradient(180deg, #FFFFFF 0%, #EEF4FC 100%);
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
     }
 
+    /* Executive White & Royal Blue Mesh Background */
+    .login-canvas {
+      background:
+        radial-gradient(circle at 10% 10%, rgba(29, 78, 216, 0.08) 0%, transparent 38%),
+        radial-gradient(circle at 90% 15%, rgba(15, 76, 129, 0.09) 0%, transparent 40%),
+        radial-gradient(circle at 50% 95%, rgba(2, 132, 199, 0.07) 0%, transparent 45%),
+        linear-gradient(180deg, #FFFFFF 0%, #EFF4FA 100%);
+    }
+
+    /* Premium Executive Card Styling */
+    .exec-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px -4px rgba(15, 76, 129, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03);
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease;
+    }
+
+    .exec-card:hover {
+      box-shadow: 0 12px 28px -8px rgba(15, 76, 129, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
+    }
+
+    /* Department Login Cards with Smooth Color Wave & Hover Lift */
     .dept-card {
       position: relative;
       overflow: hidden;
       background: #FFFFFF;
       border: 2px solid #E2E8F0;
-      border-radius: 20px;
-      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-                  box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-                  border-color 0.28s ease;
+      border-radius: 22px;
+      transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
       cursor: pointer;
     }
-    .dept-card:hover { transform: translateY(-6px); }
-    .dept-card[data-role="boss"]:hover { border-color: #1D4ED8; box-shadow: 0 18px 36px -12px rgba(29, 78, 216, 0.26); }
-    .dept-card[data-role="service"]:hover { border-color: #059669; box-shadow: 0 18px 36px -12px rgba(5, 150, 105, 0.26); }
-    .dept-card[data-role="social"]:hover { border-color: #4F46E5; box-shadow: 0 18px 36px -12px rgba(79, 70, 229, 0.26); }
+    .dept-card:hover {
+      transform: translateY(-6px);
+    }
+    .dept-card[data-role="boss"]:hover {
+      border-color: #1D4ED8;
+      box-shadow: 0 18px 36px -12px rgba(29, 78, 216, 0.25);
+    }
+    .dept-card[data-role="service"]:hover {
+      border-color: #059669;
+      box-shadow: 0 18px 36px -12px rgba(5, 150, 105, 0.25);
+    }
+    .dept-card[data-role="social"]:hover {
+      border-color: #4F46E5;
+      box-shadow: 0 18px 36px -12px rgba(79, 70, 229, 0.25);
+    }
 
     .dept-card.active-boss {
       border-color: #0F4C81;
       background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%);
-      box-shadow: 0 16px 34px -8px rgba(15, 76, 129, 0.28), 0 0 0 4px rgba(29, 78, 216, 0.14);
-      transform: translateY(-5px);
+      box-shadow: 0 18px 36px -10px rgba(15, 76, 129, 0.28), 0 0 0 4px rgba(29, 78, 216, 0.12);
+      transform: translateY(-4px);
     }
     .dept-card.active-service {
       border-color: #059669;
       background: linear-gradient(180deg, #FFFFFF 0%, #ECFDF5 100%);
-      box-shadow: 0 16px 34px -8px rgba(5, 150, 105, 0.28), 0 0 0 4px rgba(16, 185, 129, 0.14);
-      transform: translateY(-5px);
+      box-shadow: 0 18px 36px -10px rgba(5, 150, 105, 0.28), 0 0 0 4px rgba(16, 185, 129, 0.12);
+      transform: translateY(-4px);
     }
     .dept-card.active-social {
       border-color: #4F46E5;
       background: linear-gradient(180deg, #FFFFFF 0%, #EEF2FF 100%);
-      box-shadow: 0 16px 34px -8px rgba(79, 70, 229, 0.28), 0 0 0 4px rgba(99, 102, 241, 0.14);
-      transform: translateY(-5px);
+      box-shadow: 0 18px 36px -10px rgba(79, 70, 229, 0.28), 0 0 0 4px rgba(99, 102, 241, 0.12);
+      transform: translateY(-4px);
     }
 
     .ripple-wave {
@@ -79,9 +111,10 @@
       pointer-events: none;
     }
     @keyframes rippleAnim {
-      to { transform: scale(3.2); opacity: 0; }
+      to { transform: scale(3.4); opacity: 0; }
     }
 
+    /* Fixed Desktop & Mobile Workspace Shell */
     .workspace-shell {
       display: flex;
       min-height: 100vh;
@@ -96,13 +129,14 @@
       flex-direction: column;
       justify-content: space-between;
       padding: 22px 16px;
-      box-shadow: 4px 0 24px rgba(15, 23, 42, 0.02);
+      box-shadow: 4px 0 24px -12px rgba(15, 76, 129, 0.08);
+      z-index: 20;
     }
     .workspace-main {
       flex: 1;
       min-width: 0;
-      padding: 24px 30px;
-      background: #F4F7FB;
+      padding: 24px 32px;
+      background: #F3F6FB;
     }
     @media (max-width: 960px) {
       .workspace-shell { flex-direction: column; }
@@ -121,43 +155,34 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 11px 14px;
-      border-radius: 12px;
+      padding: 12px 15px;
+      border-radius: 14px;
       font-size: 13.5px;
       font-weight: 600;
       color: #475569;
       transition: all 0.2s ease;
       text-align: left;
       white-space: nowrap;
-      border: none;
+      border: 1px solid transparent;
       background: transparent;
       cursor: pointer;
     }
-    .nav-btn:hover { background: #F1F5F9; color: #0F4C81; }
+    .nav-btn:hover {
+      background: #F1F5F9;
+      color: #0F4C81;
+    }
     .nav-btn.active {
-      background: linear-gradient(135deg, #0F4C81 0%, #1D4ED8 100%);
+      background: linear-gradient(135deg, #0A3665 0%, #1D4ED8 100%);
       color: #FFFFFF;
-      box-shadow: 0 8px 18px -4px rgba(15, 76, 129, 0.38);
+      box-shadow: 0 8px 18px -6px rgba(15, 76, 129, 0.45);
     }
 
-    .hero-banner {
-      background: linear-gradient(135deg, #0B3860 0%, #0F4C81 52%, #1D4ED8 100%);
+    /* Royal Blue Executive Hero Banner */
+    .royal-banner {
+      background: linear-gradient(135deg, #092C54 0%, #0F4C81 55%, #1D4ED8 100%);
       color: #FFFFFF;
       border-radius: 22px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 16px 34px -12px rgba(15, 76, 129, 0.45);
-    }
-    .hero-banner::after {
-      content: "";
-      position: absolute;
-      right: -40px;
-      top: -40px;
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.14) 0%, transparent 70%);
-      pointer-events: none;
+      box-shadow: 0 14px 30px -10px rgba(15, 76, 129, 0.35);
     }
 
     .kpi-card {
@@ -167,13 +192,11 @@
       padding: 18px 20px;
       box-shadow: 0 4px 14px -4px rgba(15, 23, 42, 0.04);
       transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
-      position: relative;
-      overflow: hidden;
     }
     .kpi-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       border-color: #BFDBFE;
-      box-shadow: 0 14px 28px -10px rgba(15, 76, 129, 0.16);
+      box-shadow: 0 12px 24px -8px rgba(15, 76, 129, 0.14);
     }
 
     .glass-panel {
@@ -190,151 +213,184 @@
     }
     .shake { animation: shake 0.35s ease; }
 
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(10px); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .fade-in { animation: fadeSlideUp 0.3s ease forwards; }
+    .animate-fade-in { animation: fadeIn 0.3s ease forwards; }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #F1F5F9; }
     ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
   </style>
 </head>
 <body>
 
-  <!-- ==================== 1. LOGIN GATEWAY ==================== -->
-  <div id="loginScreen" class="login-bg min-h-screen flex flex-col justify-between p-4 sm:p-8">
-    <header class="max-w-5xl w-full mx-auto flex flex-wrap items-center justify-between gap-4">
+  <!-- Toast Notification -->
+  <div id="toastBox" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ==================== 1. EXECUTIVE LOGIN GATEWAY ==================== -->
+  <div id="loginScreen" class="login-canvas min-h-screen flex flex-col justify-between">
+    <!-- Top Royal Blue Accent Line -->
+    <div class="h-1.5 w-full bg-gradient-to-r from-[#0A3665] via-[#1D4ED8] to-[#0284C7]"></div>
+
+    <!-- Top Header -->
+    <header class="max-w-6xl w-full mx-auto px-4 sm:px-8 pt-5 pb-4 flex flex-wrap items-center justify-between gap-4">
       <div class="flex items-center gap-3.5">
-        <div class="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center p-1.5">
+        <div class="w-13 h-12 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center p-1.5">
+          <!-- Original GP Logo SVG -->
           <svg viewBox="0 0 220 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <path d="M18 68 C18 32, 46 16, 86 16 L168 16 C196 16, 210 32, 210 54 C210 76, 196 92, 168 92 L134 92 L134 108 L112 108 L112 72 L166 72 C179 72, 186 64, 186 54 C186 44, 179 36, 166 36 L82 36 C52 36, 32 48, 22 72 C20 71, 18 70, 18 68 Z" fill="#141414"/>
             <path d="M24 78 C32 98, 52 108, 82 108 L104 108 L104 62 L62 62 L54 78 L82 78 L82 88 C62 88, 48 81, 42 66 C34 69, 28 73, 24 78 Z" fill="#0F4C81"/>
           </svg>
         </div>
         <div>
-          <div class="flex items-center gap-2">
-            <span class="font-display font-extrabold text-xl tracking-tight text-slate-900">GALAXY POINT</span>
-            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-[#0F4C81] border border-blue-200">CRM</span>
+          <div class="flex items-center gap-2.5">
+            <span class="font-display font-extrabold text-xl sm:text-2xl tracking-tight text-slate-900">GALAXY POINT</span>
+            <span class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-blue-50 text-[#0F4C81] border border-blue-200">EXECUTIVE CRM</span>
           </div>
-          <p class="text-xs text-slate-500 font-medium">Executive Operations & Real-Time Department Suite</p>
+          <p class="text-xs text-slate-500 font-medium">Unified Retail, Service & Lead Management Suite</p>
         </div>
       </div>
 
-      <span id="loginSyncBadge" class="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 shadow-xs">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        Connecting Firebase...
-      </span>
+      <div class="flex items-center gap-3">
+        <span id="loginSyncBadge" class="inline-flex items-center gap-2 text-xs font-bold px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Connecting Firebase...
+        </span>
+      </div>
     </header>
 
-    <main class="max-w-4xl w-full mx-auto my-8">
-      <div class="text-center mb-8">
-        <p id="loginGreeting" class="text-xs font-bold uppercase tracking-widest text-[#0F4C81] mb-1.5">Welcome to Galaxy Point</p>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Select Your Department Workspace</h1>
-        <p class="text-sm text-slate-500 mt-1">Click your department card below and enter your 4-digit access PIN</p>
+    <!-- Center Department Selector -->
+    <main class="max-w-5xl w-full mx-auto px-4 sm:px-8 my-6">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-[#0F4C81] text-xs font-bold mb-3">
+          <i class="fa-regular fa-clock"></i>
+          <span id="loginGreeting">Welcome • GALAXY POINT CRM</span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Select Your Department Workspace</h1>
+        <p class="text-sm text-slate-500 mt-1.5">Click your department card below and enter your 4-digit security PIN to launch your live dashboard</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-7">
-        <div id="card-boss" data-role="boss" onclick="selectDepartment('boss', event)" class="dept-card p-6">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#0F4C81] flex items-center justify-center text-xl border border-blue-100">
-              <i class="fa-solid fa-crown"></i>
+      <!-- 3 Department Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Boss Login -->
+        <div id="card-boss" data-role="boss" onclick="selectDepartment('boss', event)" class="dept-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-[#0A3665] to-[#1D4ED8] text-white flex items-center justify-center text-xl shadow-md shadow-blue-900/20">
+                <i class="fa-solid fa-crown"></i>
+              </div>
+              <span class="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-blue-50 text-[#0F4C81] border border-blue-200">Boss Login</span>
             </div>
-            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Boss Login</span>
+            <h2 class="text-2xl font-extrabold text-slate-900">Jagdish</h2>
+            <p class="text-xs font-semibold text-[#0F4C81] mt-1">Owner & Executive Admin</p>
+            <p class="text-xs text-slate-500 mt-2.5 leading-relaxed">Complete business overview, staff transfer tracking, service revenue & deep analysis.</p>
           </div>
-          <h2 class="text-xl font-extrabold text-slate-900">Jagdish</h2>
-          <p class="text-xs font-medium text-slate-500 mt-1">Owner • Executive Dashboard & Analysis</p>
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-[#0F4C81]">
-            <span>Full Analytics & Control</span>
+          <div class="mt-5 pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#0F4C81]">
+            <span>Executive Control & Analysis</span>
             <i class="fa-solid fa-arrow-right"></i>
           </div>
         </div>
 
-        <div id="card-service" data-role="service" onclick="selectDepartment('service', event)" class="dept-card p-6">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl border border-emerald-100">
-              <i class="fa-solid fa-screwdriver-wrench"></i>
+        <!-- Service Centre -->
+        <div id="card-service" data-role="service" onclick="selectDepartment('service', event)" class="dept-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 text-white flex items-center justify-center text-xl shadow-md shadow-emerald-900/20">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+              </div>
+              <span class="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Service Centre</span>
             </div>
-            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Service Centre</span>
+            <h2 class="text-2xl font-extrabold text-slate-900">Mohammed</h2>
+            <p class="text-xs font-semibold text-emerald-700 mt-1">Service Centre Manager</p>
+            <p class="text-xs text-slate-500 mt-2.5 leading-relaxed">Repair job sheets, auto 10-digit Sohail referral verification & instant printable bills.</p>
           </div>
-          <h2 class="text-xl font-extrabold text-slate-900">Mohammed</h2>
-          <p class="text-xs font-medium text-slate-500 mt-1">Service Centre Manager & Billing</p>
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-700">
-            <span>Repairs & Received by Sohail</span>
+          <div class="mt-5 pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-700">
+            <span>Repair Desk & Billing</span>
             <i class="fa-solid fa-arrow-right"></i>
           </div>
         </div>
 
-        <div id="card-social" data-role="social" onclick="selectDepartment('social', event)" class="dept-card p-6">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-xl border border-indigo-100">
-              <i class="fa-solid fa-bullhorn"></i>
+        <!-- Social Media Manager -->
+        <div id="card-social" data-role="social" onclick="selectDepartment('social', event)" class="dept-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-indigo-600 to-blue-600 text-white flex items-center justify-center text-xl shadow-md shadow-indigo-900/20">
+                <i class="fa-solid fa-bullhorn"></i>
+              </div>
+              <span class="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">Social Media</span>
             </div>
-            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Social Media</span>
+            <h2 class="text-2xl font-extrabold text-slate-900">Sayyed Sohail</h2>
+            <p class="text-xs font-semibold text-indigo-700 mt-1">Social Media Manager</p>
+            <p class="text-xs text-slate-500 mt-2.5 leading-relaxed">Lead acquisition, customer requirements & direct counter routing (Pravin, Ashok, Mohammed, Gulsar).</p>
           </div>
-          <h2 class="text-xl font-extrabold text-slate-900">Sayyed Sohail</h2>
-          <p class="text-xs font-medium text-slate-500 mt-1">Social Media Manager & Lead Routing</p>
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-700">
-            <span>Leads & Dept Transfers</span>
+          <div class="mt-5 pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-indigo-700">
+            <span>Leads & Counter Transfers</span>
             <i class="fa-solid fa-arrow-right"></i>
           </div>
         </div>
       </div>
 
-      <div id="authBox" class="max-w-md mx-auto bg-white rounded-2xl border-2 border-[#0F4C81] p-6 shadow-xl transition-all">
-        <div class="flex items-center justify-between mb-4">
+      <!-- Password Verification Box -->
+      <div id="authBox" class="max-w-md mx-auto bg-white rounded-3xl border-2 border-[#0F4C81] p-6 sm:p-7 shadow-xl transition-all">
+        <div class="flex items-center justify-between mb-5">
           <div class="flex items-center gap-3">
-            <div id="authIconWrap" class="w-10 h-10 rounded-xl bg-blue-50 text-[#0F4C81] flex items-center justify-center text-base">
+            <div id="authIconWrap" class="w-11 h-11 rounded-2xl bg-blue-50 text-[#0F4C81] flex items-center justify-center text-lg">
               <i id="authIcon" class="fa-solid fa-crown"></i>
             </div>
             <div>
-              <span id="authRoleLabel" class="text-[11px] font-bold uppercase tracking-wider text-[#0F4C81]">BOSS / ADMIN CRM</span>
-              <h3 id="authNameLabel" class="text-base font-extrabold text-slate-900 leading-tight">Jagdish</h3>
+              <span id="authRoleLabel" class="text-[10px] font-extrabold uppercase tracking-widest text-[#0F4C81]">BOSS / ADMIN CRM</span>
+              <h3 id="authNameLabel" class="text-lg font-extrabold text-slate-900 leading-tight">Jagdish</h3>
             </div>
           </div>
-          <span class="text-xs font-semibold text-slate-400">PIN Required</span>
+          <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600">
+            <i class="fa-solid fa-lock mr-1 text-[10px]"></i> PIN Access
+          </span>
         </div>
 
-        <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-3.5">
+        <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
           <div class="relative">
             <input
               id="pinInput"
               type="password"
               inputmode="numeric"
               maxlength="6"
-              placeholder="Enter 4-Digit Password"
-              class="w-full px-4 py-3.5 rounded-xl border border-slate-300 text-center text-lg font-bold tracking-[0.35em] text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F4C81] focus:border-[#0F4C81]"
+              placeholder="••••"
+              class="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-200 bg-slate-50/70 focus:bg-white text-center text-xl font-extrabold tracking-[0.45em] text-slate-900 focus:outline-none focus:border-[#0F4C81] transition"
               required
             />
-            <button type="button" onclick="togglePinVisibility()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm">
+            <button type="button" onclick="togglePinVisibility()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-sm">
               <i id="eyeIcon" class="fa-regular fa-eye"></i>
             </button>
           </div>
-          <p id="loginError" class="hidden text-xs font-semibold text-red-600 text-center">
-            <i class="fa-solid fa-circle-exclamation mr-1"></i> Incorrect password for selected workspace.
+          <p id="loginError" class="hidden text-xs font-bold text-red-600 text-center">
+            <i class="fa-solid fa-circle-exclamation mr-1"></i> Incorrect password. Please try again.
           </p>
 
-          <button id="loginSubmitBtn" type="submit" class="w-full py-3.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white font-bold text-sm tracking-wide shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
-            <span>Enter Dashboard</span>
+          <button id="loginSubmitBtn" type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#0A3665] to-[#1D4ED8] hover:opacity-95 text-white font-bold text-sm tracking-wide shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
+            <span>Enter Executive Dashboard</span>
             <i class="fa-solid fa-arrow-right-to-bracket"></i>
           </button>
         </form>
       </div>
     </main>
 
-    <footer class="max-w-5xl w-full mx-auto text-center text-xs text-slate-400">
-      GALAXY POINT CRM • White & Royal Blue Edition • Permanent Cloud & Local Sync
+    <footer class="max-w-6xl w-full mx-auto px-4 py-4 text-center text-xs text-slate-400">
+      GALAXY POINT CRM • White & Royal Blue Executive Edition • Real-Time Multi-Device Sync
     </footer>
   </div>
 
   <!-- ==================== 2. MAIN WORKSPACE SHELL ==================== -->
   <div id="workspaceApp" style="display:none;" class="workspace-shell">
+    <!-- Left Executive Sidebar -->
     <aside class="workspace-sidebar">
       <div>
-        <div class="flex items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
+        <!-- Brand Header with Original GP Logo -->
+        <div class="flex items-center justify-between gap-3 pb-5 mb-5 border-b border-slate-100">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-blue-50/80 border border-blue-100 p-1.5 flex items-center justify-center">
+            <div class="w-11 h-10 rounded-xl bg-blue-50/80 border border-blue-200/80 p-1.5 flex items-center justify-center shadow-xs">
               <svg viewBox="0 0 220 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18 68 C18 32, 46 16, 86 16 L168 16 C196 16, 210 32, 210 54 C210 76, 196 92, 168 92 L134 92 L134 108 L112 108 L112 72 L166 72 C179 72, 186 64, 186 54 C186 44, 179 36, 166 36 L82 36 C52 36, 32 48, 22 72 C20 71, 18 70, 18 68 Z" fill="#141414"/>
                 <path d="M24 78 C32 98, 52 108, 82 108 L104 108 L104 62 L62 62 L54 78 L82 78 L82 88 C62 88, 48 81, 42 66 C34 69, 28 73, 24 78 Z" fill="#0F4C81"/>
@@ -342,58 +398,62 @@
             </div>
             <div>
               <div class="font-display font-extrabold text-base text-slate-900 tracking-tight leading-none">GALAXY POINT</div>
-              <div id="sidebarRoleTag" class="text-[10px] font-bold uppercase tracking-wider text-[#0F4C81] mt-1">BOSS / ADMIN CRM</div>
+              <div id="sidebarRoleTag" class="text-[10px] font-extrabold uppercase tracking-wider text-[#0F4C81] mt-1">BOSS / ADMIN CRM</div>
             </div>
           </div>
 
-          <button onclick="logout()" class="md:hidden text-xs font-bold text-red-600 bg-red-50 px-3 py-1.5 rounded-lg">
+          <button onclick="logout()" class="md:hidden text-xs font-bold text-red-600 bg-red-50 px-3 py-1.5 rounded-xl border border-red-200">
             <i class="fa-solid fa-arrow-left mr-1"></i> Back
           </button>
         </div>
 
+        <!-- Navigation Menu -->
         <nav id="sidebarNav" class="flex flex-row md:flex-col gap-1.5 overflow-x-auto pb-1"></nav>
       </div>
 
-      <div class="pt-4 mt-4 border-t border-slate-100 space-y-2.5">
-        <div class="p-3 rounded-xl bg-gradient-to-r from-slate-50 to-blue-50/40 border border-slate-200/80 flex items-center gap-2.5">
-          <div id="sidebarUserIcon" class="w-9 h-9 rounded-lg bg-[#0F4C81] text-white flex items-center justify-center text-sm shrink-0">
+      <!-- Bottom User Card & Switch Account -->
+      <div class="pt-4 mt-4 border-t border-slate-100 space-y-3">
+        <div class="p-3.5 rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50/50 border border-slate-200/90 flex items-center gap-3">
+          <div id="sidebarUserIcon" class="w-10 h-10 rounded-xl bg-[#0F4C81] text-white flex items-center justify-center text-sm shadow-sm shrink-0">
             <i class="fa-solid fa-crown"></i>
           </div>
           <div class="min-w-0">
-            <p id="sidebarUserName" class="text-sm font-bold text-slate-900 truncate">Jagdish</p>
-            <p id="sidebarUserTitle" class="text-[11px] text-slate-500 truncate">Boss / Owner</p>
+            <p id="sidebarUserName" class="text-sm font-extrabold text-slate-900 truncate">Jagdish</p>
+            <p id="sidebarUserTitle" class="text-[11px] font-medium text-slate-500 truncate">Boss & Owner</p>
           </div>
         </div>
 
-        <div class="w-full py-2 px-3 rounded-xl border border-slate-200 bg-slate-50/70 text-xs font-semibold text-slate-700 flex items-center justify-between">
-          <span class="flex items-center gap-2"><i class="fa-solid fa-shield-halved text-emerald-600"></i> Data Protected</span>
-          <span id="sidebarSyncStatus" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">Live</span>
+        <div class="w-full py-2.5 px-3.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 flex items-center justify-between">
+          <span class="flex items-center gap-2"><i class="fa-solid fa-fire text-amber-500"></i> Cloud Database</span>
+          <span id="sidebarSyncStatus" class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Live</span>
         </div>
 
-        <button onclick="logout()" class="w-full py-2.5 px-3 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
+        <button onclick="logout()" class="w-full py-2.5 px-3.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
           <i class="fa-solid fa-arrow-left"></i> Back / Switch Account
         </button>
       </div>
     </aside>
 
+    <!-- Main Content Area -->
     <main class="workspace-main">
-      <header class="hero-banner p-6 mb-6 flex flex-wrap items-center justify-between gap-4">
-        <div class="relative z-10">
-          <div class="inline-flex items-center gap-2 text-xs font-bold text-blue-100 bg-white/15 backdrop-blur-xs px-3 py-1 rounded-full mb-2">
+      <!-- Top Executive Royal-Blue & White Header -->
+      <header class="royal-banner p-5 sm:p-6 mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 text-[11px] font-bold text-blue-100 bg-white/15 backdrop-blur-xs px-3 py-1 rounded-full mb-2">
             <i class="fa-regular fa-clock"></i>
             <span id="liveClockBadge">Loading time...</span>
           </div>
-          <h1 id="dynamicGreetingTitle" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h1 id="dynamicGreetingTitle" class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
             Good Afternoon, Jagdish
           </h1>
-          <p id="workspaceSubtitle" class="text-xs sm:text-sm text-blue-100/90 mt-1">
-            GALAXY POINT • Executive Performance, Department Transfers & Live Analytics
+          <p id="workspaceSubtitle" class="text-xs sm:text-sm text-blue-100/90 mt-0.5">
+            GALAXY POINT • Executive Overview across Social Media & Service Centre
           </p>
         </div>
 
-        <div class="relative z-10 flex flex-wrap items-center gap-2.5">
+        <div class="flex flex-wrap items-center gap-2.5">
           <div id="headerQuickActions" class="flex items-center gap-2"></div>
-          <button onclick="logout()" class="px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/20 text-xs font-bold text-white flex items-center gap-1.5 transition cursor-pointer">
+          <button onclick="logout()" class="px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-xs font-bold text-white flex items-center gap-1.5 transition cursor-pointer">
             <i class="fa-solid fa-arrow-left"></i> Switch Account
           </button>
           <div class="px-3.5 py-2.5 rounded-xl bg-white text-[#0F4C81] text-xs font-extrabold flex items-center gap-2 shadow-sm">
@@ -403,8 +463,24 @@
         </div>
       </header>
 
+      <!-- Dynamic Workspace Views -->
       <div id="workspaceContent" class="fade-in"></div>
     </main>
+  </div>
+
+  <!-- Custom Delete Confirmation Modal (No browser confirm()) -->
+  <div id="deleteConfirmModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl border border-slate-200 max-w-sm w-full p-6 shadow-2xl">
+      <div class="w-11 h-11 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-lg mb-4">
+        <i class="fa-solid fa-trash-can"></i>
+      </div>
+      <h3 class="text-base font-extrabold text-slate-900">Remove Customer Record?</h3>
+      <p id="deleteConfirmText" class="text-xs text-slate-500 mt-1.5 leading-relaxed">Are you sure you want to delete this customer? Other records will remain untouched.</p>
+      <div class="flex items-center justify-end gap-2.5 mt-5">
+        <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer">Cancel</button>
+        <button type="button" id="confirmDeleteBtn" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-xs cursor-pointer">Yes, Delete</button>
+      </div>
+    </div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -424,10 +500,12 @@
 
     const SOCIAL_COLLECTION = 'social_customers';
     const SERVICE_COLLECTION = 'service_customers';
+    const METRICS_COLLECTION = 'daily_inquiry_metrics';
 
     // PERMANENT STORAGE KEYS (NEVER CHANGE ACROSS FUTURE UPDATES)
     const PERMANENT_SOCIAL_KEY = 'gp_crm_social_permanent';
     const PERMANENT_SERVICE_KEY = 'gp_crm_service_permanent';
+    const PERMANENT_METRICS_KEY = 'gp_crm_daily_metrics_permanent';
     const LEGACY_SOCIAL_KEYS = ['gp_crm_social_v1', 'gp_crm_social_v2', 'gp_crm_social_v3', 'gp_crm_social_v4', 'gp_social_leads'];
     const LEGACY_SERVICE_KEYS = ['gp_crm_service_v1', 'gp_crm_service_v2', 'gp_crm_service_v3', 'gp_crm_service_v4', 'gp_service_jobs'];
 
@@ -442,7 +520,7 @@
         icon: 'fa-crown',
         accentHex: '#0F4C81',
         badgeBg: 'bg-blue-50 text-[#0F4C81]',
-        btnClass: 'bg-[#0F4C81] hover:bg-[#1D4ED8]',
+        btnClass: 'bg-gradient-to-r from-[#0A3665] to-[#1D4ED8] hover:opacity-95',
         rippleColor: 'rgba(15, 76, 129, 0.18)',
         subtitle: 'GALAXY POINT • Executive Overview, Analysis & Live Department Feed'
       },
@@ -455,9 +533,9 @@
         icon: 'fa-screwdriver-wrench',
         accentHex: '#059669',
         badgeBg: 'bg-emerald-50 text-emerald-700',
-        btnClass: 'bg-emerald-600 hover:bg-emerald-700',
+        btnClass: 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:opacity-95',
         rippleColor: 'rgba(5, 150, 105, 0.18)',
-        subtitle: 'GALAXY POINT • Repair Jobs, Received by Sohail & Instant Billing'
+        subtitle: 'GALAXY POINT • Repair Operations, Referral Verification & Billing'
       },
       social: {
         id: 'social',
@@ -468,7 +546,7 @@
         icon: 'fa-bullhorn',
         accentHex: '#4F46E5',
         badgeBg: 'bg-indigo-50 text-indigo-700',
-        btnClass: 'bg-indigo-600 hover:bg-indigo-700',
+        btnClass: 'bg-gradient-to-r from-indigo-600 to-blue-600 hover:opacity-95',
         rippleColor: 'rgba(79, 70, 229, 0.18)',
         subtitle: 'GALAXY POINT • Customer Acquisition, Leads & Department Transfers'
       }
@@ -487,13 +565,105 @@
     let currentTab = 'dashboard';
     let editSocialId = null;
     let editServiceId = null;
+    let pendingDeleteId = null;
+    let selectedMetricDate = null;
+    let bossMetricRange = 'all';
 
     let socialLeads = [];
     let serviceJobs = [];
+    let dailyMetricsMap = {};
     let db = null;
     let isFirebaseLive = false;
 
-    // ==================== GREETING & LIVE CLOCK ====================
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      if (!box) return;
+      const el = document.createElement('div');
+      el.className = 'px-4 py-3 rounded-xl bg-slate-900 text-white text-xs font-bold shadow-lg flex items-center gap-2 animate-fade-in';
+      el.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> <span>${esc(msg)}</span>`;
+      box.appendChild(el);
+      setTimeout(() => el.remove(), 3000);
+    }
+
+    // ==================== DATA RECOVERY & NON-DESTRUCTIVE SYNC ====================
+    function getTodayISO() {
+      const d = new Date();
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    function formatDisplayDate(isoStr) {
+      if (!isoStr) return '';
+      const [y, m, d] = isoStr.split('-').map(Number);
+      const dt = new Date(y, m - 1, d);
+      return dt.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function getLast30DaysList() {
+      const list = [];
+      const base = new Date();
+      for (let i = 0; i < 30; i++) {
+        const dt = new Date(base);
+        dt.setDate(base.getDate() - i);
+        const yyyy = dt.getFullYear();
+        const mm = String(dt.getMonth() + 1).padStart(2, '0');
+        const dd = String(dt.getDate()).padStart(2, '0');
+        const iso = `${yyyy}-${mm}-${dd}`;
+        list.push({
+          iso,
+          label: i === 0 ? `Today (${formatDisplayDate(iso)})` : (i === 1 ? `Yesterday (${formatDisplayDate(iso)})` : formatDisplayDate(iso))
+        });
+      }
+      return list;
+    }
+
+    function mergeUniqueRecords(baseList, incomingList, keyField = 'id') {
+      const map = new Map();
+      [...baseList, ...incomingList].forEach(item => {
+        if (!item) return;
+        const uniqueKey = item[keyField] || `${item.name}_${item.phone}_${item.requirement || item.service}`;
+        map.set(uniqueKey, { ...map.get(uniqueKey), ...item });
+      });
+      return Array.from(map.values()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    }
+
+    function recoverAndLoadPermanentData() {
+      let currentSocial = JSON.parse(localStorage.getItem(PERMANENT_SOCIAL_KEY) || '[]');
+      let currentService = JSON.parse(localStorage.getItem(PERMANENT_SERVICE_KEY) || '[]');
+      dailyMetricsMap = JSON.parse(localStorage.getItem(PERMANENT_METRICS_KEY) || '{}');
+
+      LEGACY_SOCIAL_KEYS.forEach(oldKey => {
+        try {
+          const oldData = JSON.parse(localStorage.getItem(oldKey) || '[]');
+          if (Array.isArray(oldData) && oldData.length) {
+            currentSocial = mergeUniqueRecords(currentSocial, oldData);
+          }
+        } catch (e) {}
+      });
+
+      LEGACY_SERVICE_KEYS.forEach(oldKey => {
+        try {
+          const oldData = JSON.parse(localStorage.getItem(oldKey) || '[]');
+          if (Array.isArray(oldData) && oldData.length) {
+            currentService = mergeUniqueRecords(currentService, oldData);
+          }
+        } catch (e) {}
+      });
+
+      socialLeads = currentSocial;
+      serviceJobs = currentService;
+      if (!selectedMetricDate) selectedMetricDate = getTodayISO();
+      savePermanentLocalData();
+    }
+
+    function savePermanentLocalData() {
+      localStorage.setItem(PERMANENT_SOCIAL_KEY, JSON.stringify(socialLeads));
+      localStorage.setItem(PERMANENT_SERVICE_KEY, JSON.stringify(serviceJobs));
+      localStorage.setItem(PERMANENT_METRICS_KEY, JSON.stringify(dailyMetricsMap));
+    }
+
     function getTimeGreeting() {
       const hour = new Date().getHours();
       if (hour < 12) return 'Good Morning';
@@ -508,7 +678,7 @@
       const dateStr = now.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
 
       const loginGreetEl = document.getElementById('loginGreeting');
-      if (loginGreetEl) loginGreetEl.textContent = `${greeting} • GALAXY POINT CRM`;
+      if (loginGreetEl) loginGreetEl.textContent = `${greeting} • ${dateStr} • ${timeStr}`;
 
       const clockEl = document.getElementById('liveClockBadge');
       if (clockEl) clockEl.textContent = `${dateStr} • ${timeStr}`;
@@ -520,7 +690,7 @@
     }
     setInterval(updateClockAndGreeting, 1000);
 
-    // ==================== LOGIN CARD SELECTION ====================
+    // ==================== LOGIN SELECTION & ANIMATION ====================
     function selectDepartment(deptId, event) {
       selectedLoginDept = deptId;
       const dept = DEPARTMENTS[deptId];
@@ -553,13 +723,13 @@
       const pinInput = document.getElementById('pinInput');
 
       authBox.style.borderColor = dept.accentHex;
-      authIconWrap.className = `w-10 h-10 rounded-xl flex items-center justify-center text-base ${dept.badgeBg}`;
+      authIconWrap.className = `w-11 h-11 rounded-2xl flex items-center justify-center text-lg ${dept.badgeBg}`;
       authIcon.className = `fa-solid ${dept.icon}`;
       authRoleLabel.textContent = dept.roleBadge;
       authRoleLabel.style.color = dept.accentHex;
       authNameLabel.textContent = dept.name;
 
-      loginSubmitBtn.className = `w-full py-3.5 rounded-xl text-white font-bold text-sm tracking-wide shadow-md transition flex items-center justify-center gap-2 cursor-pointer ${dept.btnClass}`;
+      loginSubmitBtn.className = `w-full py-3.5 rounded-2xl text-white font-bold text-sm tracking-wide shadow-lg transition flex items-center justify-center gap-2 cursor-pointer ${dept.btnClass}`;
 
       document.getElementById('loginError').classList.add('hidden');
       pinInput.value = '';
@@ -591,6 +761,7 @@
         setupSidebarForRole(dept);
         updateClockAndGreeting();
         renderWorkspace();
+        showToast(`${getTimeGreeting()}, ${dept.name}!`);
       } else {
         const err = document.getElementById('loginError');
         const box = document.getElementById('authBox');
@@ -611,50 +782,6 @@
       selectDepartment(selectedLoginDept);
     }
 
-    // ==================== DATA RECOVERY & NON-DESTRUCTIVE SYNC ====================
-    function mergeUniqueRecords(baseList, incomingList, keyField = 'id') {
-      const map = new Map();
-      [...baseList, ...incomingList].forEach(item => {
-        if (!item) return;
-        const uniqueKey = item[keyField] || `${item.name}_${item.phone}_${item.requirement || item.service}`;
-        map.set(uniqueKey, { ...map.get(uniqueKey), ...item });
-      });
-      return Array.from(map.values()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-    }
-
-    function recoverAndLoadPermanentData() {
-      let currentSocial = JSON.parse(localStorage.getItem(PERMANENT_SOCIAL_KEY) || '[]');
-      let currentService = JSON.parse(localStorage.getItem(PERMANENT_SERVICE_KEY) || '[]');
-
-      // Recover any customer records from earlier storage keys (v1, v2, v3, v4)
-      LEGACY_SOCIAL_KEYS.forEach(oldKey => {
-        try {
-          const oldData = JSON.parse(localStorage.getItem(oldKey) || '[]');
-          if (Array.isArray(oldData) && oldData.length) {
-            currentSocial = mergeUniqueRecords(currentSocial, oldData);
-          }
-        } catch (e) {}
-      });
-
-      LEGACY_SERVICE_KEYS.forEach(oldKey => {
-        try {
-          const oldData = JSON.parse(localStorage.getItem(oldKey) || '[]');
-          if (Array.isArray(oldData) && oldData.length) {
-            currentService = mergeUniqueRecords(currentService, oldData);
-          }
-        } catch (e) {}
-      });
-
-      socialLeads = currentSocial;
-      serviceJobs = currentService;
-      savePermanentLocalData();
-    }
-
-    function savePermanentLocalData() {
-      localStorage.setItem(PERMANENT_SOCIAL_KEY, JSON.stringify(socialLeads));
-      localStorage.setItem(PERMANENT_SERVICE_KEY, JSON.stringify(serviceJobs));
-    }
-
     function setSyncStatus(live, msg) {
       isFirebaseLive = live;
       const loginBadge = document.getElementById('loginSyncBadge');
@@ -662,16 +789,24 @@
       const livePillText = document.getElementById('livePillText');
 
       if (live) {
-        loginBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Firebase Live`;
-        loginBadge.className = 'inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700';
-        sidebarStatus.textContent = 'Live';
-        sidebarStatus.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700';
+        if (loginBadge) {
+          loginBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Firebase Live`;
+          loginBadge.className = 'inline-flex items-center gap-2 text-xs font-bold px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 shadow-xs';
+        }
+        if (sidebarStatus) {
+          sidebarStatus.textContent = 'Live';
+          sidebarStatus.className = 'text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200';
+        }
         if (livePillText) livePillText.textContent = 'FIREBASE LIVE';
       } else {
-        loginBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span> ${msg || 'Local Safe Mode'}`;
-        loginBadge.className = 'inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700';
-        sidebarStatus.textContent = msg || 'Saved Locally';
-        sidebarStatus.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700';
+        if (loginBadge) {
+          loginBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span> ${msg || 'Local Safe Mode'}`;
+          loginBadge.className = 'inline-flex items-center gap-2 text-xs font-bold px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 shadow-xs';
+        }
+        if (sidebarStatus) {
+          sidebarStatus.textContent = msg || 'Saved Locally';
+          sidebarStatus.className = 'text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200';
+        }
         if (livePillText) livePillText.textContent = msg || 'LOCAL SAFE SYNC';
       }
     }
@@ -686,7 +821,6 @@
 
         db.collection(SOCIAL_COLLECTION).onSnapshot(async snap => {
           const cloudDocs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          // Push any recovered local leads up to Firestore so nothing is ever lost
           if (socialLeads.length && cloudDocs.length === 0) {
             for (const item of socialLeads) {
               const { id, ...payload } = item;
@@ -726,6 +860,17 @@
           console.error('Firestore Service Error:', err);
           setSyncStatus(false, 'Local Safe Mode');
         });
+
+        db.collection(METRICS_COLLECTION).onSnapshot(async snap => {
+          snap.docs.forEach(doc => {
+            dailyMetricsMap[doc.id] = { date: doc.id, ...doc.data() };
+          });
+          savePermanentLocalData();
+          setSyncStatus(true);
+          if (currentUserRole) renderWorkspace();
+        }, err => {
+          console.error('Firestore Metrics Error:', err);
+        });
       } catch (e) {
         console.error('Firebase Init Error:', e);
         setSyncStatus(false, 'Local Safe Mode');
@@ -734,7 +879,6 @@
 
     async function upsertSocialLead(record, isEdit) {
       const payload = { ...record, createdAt: record.createdAt || Date.now() };
-      // Always save locally first so data is 100% safe even if network drops
       if (isEdit) socialLeads = socialLeads.map(x => x.id === payload.id ? payload : x);
       else socialLeads.unshift(payload);
       savePermanentLocalData();
@@ -748,6 +892,65 @@
       }
     }
 
+    function askDeleteSocialLead(id) {
+      const target = socialLeads.find(x => x.id === id);
+      if (!target) return;
+      pendingDeleteId = id;
+      document.getElementById('deleteConfirmText').textContent = `Remove "${target.name}" (${target.phone}) from Social Media leads? All other customer records will remain untouched.`;
+      document.getElementById('deleteConfirmModal').classList.remove('hidden');
+      document.getElementById('confirmDeleteBtn').onclick = confirmDeleteSocialLead;
+    }
+
+    function closeDeleteModal() {
+      pendingDeleteId = null;
+      document.getElementById('deleteConfirmModal').classList.add('hidden');
+    }
+
+    async function confirmDeleteSocialLead() {
+      if (!pendingDeleteId) return;
+      const targetId = pendingDeleteId;
+      closeDeleteModal();
+
+      socialLeads = socialLeads.filter(x => x.id !== targetId);
+      savePermanentLocalData();
+
+      if (isFirebaseLive && db) {
+        try {
+          await db.collection(SOCIAL_COLLECTION).doc(targetId).delete();
+        } catch (err) {
+          console.error('Delete sync error:', err);
+        }
+      }
+      if (currentUserRole) {
+        setupSidebarForRole(DEPARTMENTS[currentUserRole]);
+        renderWorkspace();
+      }
+    }
+
+    async function saveDailyInquiryMetrics(dateIso, metricsObj) {
+      const payload = {
+        date: dateIso,
+        totalCalls: Number(metricsObj.totalCalls || 0),
+        callLeads: Number(metricsObj.callLeads || 0),
+        whatsappMsgs: Number(metricsObj.whatsappMsgs || 0),
+        instagramMsgs: Number(metricsObj.instagramMsgs || 0),
+        justdialLeads: Number(metricsObj.justdialLeads || 0),
+        updatedBy: 'Sayyed Sohail',
+        updatedAt: Date.now()
+      };
+      dailyMetricsMap[dateIso] = payload;
+      savePermanentLocalData();
+
+      if (isFirebaseLive && db) {
+        try {
+          await db.collection(METRICS_COLLECTION).doc(dateIso).set(payload, { merge: true });
+        } catch (err) {
+          console.error('Metrics Firestore save error:', err);
+        }
+      }
+      if (currentUserRole) renderWorkspace();
+    }
+
     async function upsertServiceJob(record, isEdit) {
       const payload = { ...record, createdAt: record.createdAt || Date.now() };
       if (isEdit) serviceJobs = serviceJobs.map(x => x.id === payload.id ? payload : x);
@@ -755,12 +958,17 @@
       savePermanentLocalData();
 
       if (isFirebaseLive && db) {
-        await db.collection(SERVICE_COLLECTION).doc(payload.id).set(payload, { merge: true });
+        try {
+          await db.collection(SERVICE_COLLECTION).doc(payload.id).set(payload, { merge: true });
+        } catch (err) {
+          console.error('Service Firestore sync error:', err);
+        }
       }
       if (currentUserRole) {
         setupSidebarForRole(DEPARTMENTS[currentUserRole]);
         renderWorkspace();
       }
+      showToast(`Service job for "${record.name}" saved!`);
     }
 
     // ==================== SIDEBAR & QUICK HEADER ACTIONS ====================
@@ -773,14 +981,13 @@
 
       const quickActions = document.getElementById('headerQuickActions');
       if (dept.id === 'social') {
-        quickActions.innerHTML = `<button onclick="quickAddSocial()" class="px-4 py-2.5 rounded-xl bg-white text-[#0F4C81] hover:bg-blue-50 text-xs font-extrabold shadow-sm cursor-pointer">+ Add Customer</button>`;
-      } else if (dept.id === 'service') {
-        quickActions.innerHTML = `<button onclick="quickAddService()" class="px-4 py-2.5 rounded-xl bg-white text-[#0F4C81] hover:bg-blue-50 text-xs font-extrabold shadow-sm cursor-pointer">+ Add Service Job</button>`;
-      } else {
         quickActions.innerHTML = '';
+      } else if (dept.id === 'service') {
+        quickActions.innerHTML = `<button onclick="quickAddService()" class="px-4 py-2.5 rounded-xl bg-white hover:bg-blue-50 text-[#0F4C81] text-xs font-extrabold shadow-sm cursor-pointer transition">+ Add Service Job</button>`;
+      } else {
+        quickActions.innerHTML = `<button onclick="switchTab('analysis')" class="px-4 py-2.5 rounded-xl bg-white hover:bg-blue-50 text-[#0F4C81] text-xs font-extrabold shadow-sm cursor-pointer transition"><i class="fa-solid fa-chart-line mr-1.5"></i>View Analysis</button>`;
       }
 
-      const receivedCount = socialLeads.filter(l => l.transfer === 'service').length;
       const nav = document.getElementById('sidebarNav');
       let tabs = [];
 
@@ -788,19 +995,19 @@
         tabs = [
           { id: 'dashboard', label: 'Boss Dashboard', icon: 'fa-chart-pie' },
           { id: 'analysis', label: 'Analysis', icon: 'fa-chart-line' },
-          { id: 'social', label: 'Social Media Customers', icon: 'fa-bullhorn', badge: socialLeads.length },
-          { id: 'service', label: 'Service Centre Jobs', icon: 'fa-screwdriver-wrench', badge: serviceJobs.length }
+          { id: 'social', label: 'Social Media Customers', icon: 'fa-bullhorn' },
+          { id: 'service', label: 'Service Centre Jobs', icon: 'fa-screwdriver-wrench' }
         ];
       } else if (dept.id === 'service') {
         tabs = [
           { id: 'dashboard', label: 'Service Dashboard', icon: 'fa-gauge-high' },
-          { id: 'customers', label: 'Customer Records', icon: 'fa-screwdriver-wrench', badge: serviceJobs.length },
-          { id: 'received', label: 'Received by Sohail', icon: 'fa-inbox', badge: receivedCount, highlight: true }
+          { id: 'customers', label: 'Customer Records', icon: 'fa-screwdriver-wrench' }
         ];
       } else if (dept.id === 'social') {
         tabs = [
           { id: 'dashboard', label: 'Social Dashboard', icon: 'fa-gauge-high' },
           { id: 'customers', label: 'Customer Section', icon: 'fa-users', badge: socialLeads.length },
+          { id: 'daily_update', label: 'Total Todays Leads Update', icon: 'fa-calendar-check', highlight: true },
           { id: 'analytics', label: 'Channel Analytics', icon: 'fa-chart-column' }
         ];
       }
@@ -829,11 +1036,11 @@
       setTimeout(() => openSocialForm(), 50);
     }
 
-    function quickAddService(prefill = null) {
+    function quickAddService() {
       currentTab = 'customers';
       setupSidebarForRole(DEPARTMENTS.service);
       renderWorkspace();
-      setTimeout(() => openServiceForm(null, prefill), 50);
+      setTimeout(() => openServiceForm(), 50);
     }
 
     // ==================== FORMATTERS & VISUAL CHARTS ====================
@@ -845,100 +1052,179 @@
       return '₹' + Number(num || 0).toLocaleString('en-IN');
     }
 
-    function renderBars(items, colorClass = 'bg-gradient-to-r from-[#0F4C81] to-[#2563EB]') {
+    function renderBars(items, gradientClass = 'from-[#0A3665] to-[#1D4ED8]') {
       const max = Math.max(1, ...items.map(i => i[1]));
-      return items.map(([label, count]) => `
-        <div class="mb-3.5 last:mb-0">
-          <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1.5">
-            <span>${esc(label)}</span>
-            <span class="font-extrabold text-[#0F4C81]">${count}</span>
+      return items.map(([label, count]) => {
+        const pct = Math.round((count / max) * 100);
+        return `
+          <div class="mb-3.5 last:mb-0">
+            <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1.5">
+              <span>${esc(label)}</span>
+              <span class="font-extrabold text-[#0F4C81] tabular-nums">${count}</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r ${gradientClass} rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+            </div>
           </div>
-          <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-            <div class="h-full ${colorClass} rounded-full transition-all duration-500" style="width: ${(count / max) * 100}%"></div>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
-    function renderAnalysisBlock() {
+    function renderAnalysisBlock(compact = false) {
       const totalLeads = socialLeads.length;
-      const transferredLeads = socialLeads.filter(x => x.transfer !== 'sohail').length;
-      const transferRate = totalLeads ? Math.round((transferredLeads / totalLeads) * 100) : 0;
-
       const totalJobs = serviceJobs.length;
       const completedJobs = serviceJobs.filter(j => j.status === 'Completed').length;
+      const pendingJobs = totalJobs - completedJobs;
+      const totalRev = serviceJobs.reduce((s, j) => s + Number(j.amount || 0), 0);
+      const completedRev = serviceJobs.filter(j => j.status === 'Completed').reduce((s, j) => s + Number(j.amount || 0), 0);
+      const pendingRev = totalRev - completedRev;
+      const sohailRefs = serviceJobs.filter(j => j.origin === 'Sohail').length;
       const completionRate = totalJobs ? Math.round((completedJobs / totalJobs) * 100) : 0;
+      const transferRate = totalLeads ? Math.round((socialLeads.filter(l => l.transfer !== 'sohail').length / totalLeads) * 100) : 0;
 
-      const totalRevenue = serviceJobs.reduce((sum, j) => sum + Number(j.amount || 0), 0);
-      const avgTicket = totalJobs ? Math.round(totalRevenue / totalJobs) : 0;
+      const staffStats = [
+        { key: 'sohail', name: 'By Me – Sohail', role: 'Direct Follow-up', count: socialLeads.filter(x => x.transfer === 'sohail').length, color: 'bg-indigo-600' },
+        { key: 'new', name: 'New – Pravin', role: 'New Smartphones', count: socialLeads.filter(x => x.transfer === 'new').length, color: 'bg-[#0F4C81]' },
+        { key: 'used', name: 'Used – Ashok', role: 'Pre-Owned Devices', count: socialLeads.filter(x => x.transfer === 'used').length, color: 'bg-sky-600' },
+        { key: 'service', name: 'Service – Mohammed', role: 'Repair & Service', count: socialLeads.filter(x => x.transfer === 'service').length, color: 'bg-emerald-600' },
+        { key: 'telecom', name: 'Telecom – Gulsar', role: 'SIM & MNP Plans', count: socialLeads.filter(x => x.transfer === 'telecom').length, color: 'bg-amber-500' }
+      ].sort((a, b) => b.count - a.count);
 
-      const sohailServiceSent = socialLeads.filter(x => x.transfer === 'service').length;
-      const sohailServiceLogged = serviceJobs.filter(x => x.origin === 'Sohail').length;
+      const channelStats = ['Instagram', 'WhatsApp', 'Calling', 'Justdial', 'Not specified'].map(src => [
+        src, socialLeads.filter(r => r.source === src).length
+      ]);
 
       return `
-        <div class="glass-panel p-6 mb-6">
-          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
+        <div class="space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#0F4C81] bg-blue-50 px-2.5 py-1 rounded-full">Executive Intelligence</span>
-              <h2 class="text-lg font-extrabold text-slate-900 mt-1.5">GALAXY POINT — Business & Department Analysis</h2>
-              <p class="text-xs text-slate-500">Live conversion efficiency, staff transfer distribution & service revenue metrics</p>
+              <div class="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wider text-[#0F4C81] bg-blue-50 px-3 py-1 rounded-full border border-blue-200 mb-1">
+                <i class="fa-solid fa-chart-line"></i> Executive Analysis Suite
+              </div>
+              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Department Performance & Revenue Analysis</h2>
             </div>
-            <div class="text-right">
-              <div class="text-xs font-semibold text-slate-400">Avg. Repair Ticket</div>
-              <div class="text-xl font-extrabold text-[#0F4C81]">${formatINR(avgTicket)}</div>
+            ${compact ? `<button onclick="switchTab('analysis')" class="px-4 py-2 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs cursor-pointer transition">Open Full Analysis Page →</button>` : ''}
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="exec-card p-5 border-l-4 border-l-[#0F4C81]">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase">
+                <span>Lead Transfer Rate</span>
+                <i class="fa-solid fa-shuffle text-[#0F4C81]"></i>
+              </div>
+              <div class="text-2xl font-extrabold text-slate-900 mt-2 tabular-nums">${transferRate}%</div>
+              <p class="text-xs text-slate-500 mt-1">Routed to Pravin, Ashok, Mohammed & Gulsar</p>
+            </div>
+
+            <div class="exec-card p-5 border-l-4 border-l-emerald-600">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase">
+                <span>Service Completion</span>
+                <i class="fa-solid fa-circle-check text-emerald-600"></i>
+              </div>
+              <div class="text-2xl font-extrabold text-emerald-700 mt-2 tabular-nums">${completionRate}%</div>
+              <p class="text-xs text-slate-500 mt-1">${completedJobs} of ${totalJobs} repairs completed</p>
+            </div>
+
+            <div class="exec-card p-5 border-l-4 border-l-indigo-600">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase">
+                <span>Realized Billing</span>
+                <i class="fa-solid fa-indian-rupee-sign text-indigo-600"></i>
+              </div>
+              <div class="text-2xl font-extrabold text-slate-900 mt-2 tabular-nums">${formatINR(completedRev)}</div>
+              <p class="text-xs text-slate-500 mt-1">Pending pipeline: <strong class="text-amber-600">${formatINR(pendingRev)}</strong></p>
+            </div>
+
+            <div class="exec-card p-5 border-l-4 border-l-sky-600">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase">
+                <span>Sohail → Service</span>
+                <i class="fa-solid fa-handshake text-sky-600"></i>
+              </div>
+              <div class="text-2xl font-extrabold text-sky-700 mt-2 tabular-nums">${sohailRefs} Jobs</div>
+              <p class="text-xs text-slate-500 mt-1">Verified cross-department conversions</p>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-            <div class="p-4 rounded-2xl bg-gradient-to-br from-blue-50/80 to-white border border-blue-100 flex items-center gap-4">
-              <div class="w-14 h-14 rounded-full flex items-center justify-center font-extrabold text-sm text-[#0F4C81] shrink-0"
-                   style="background: conic-gradient(#0F4C81 ${transferRate * 3.6}deg, #DBEAFE 0deg);">
-                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">${transferRate}%</div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="exec-card p-6">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h3 class="text-base font-extrabold text-slate-900">Staff Transfer Analysis</h3>
+                  <p class="text-xs text-slate-500">Leads assigned per counter head</p>
+                </div>
+                <span class="w-9 h-9 rounded-xl bg-blue-50 text-[#0F4C81] flex items-center justify-center text-sm"><i class="fa-solid fa-users-gear"></i></span>
               </div>
+              <div class="space-y-3">
+                ${staffStats.map((st, idx) => `
+                  <div class="p-3 rounded-xl bg-slate-50/90 border border-slate-200/70 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                      <span class="w-6 h-6 rounded-lg ${st.color} text-white text-[11px] font-extrabold flex items-center justify-center">${idx + 1}</span>
+                      <div>
+                        <div class="text-xs font-extrabold text-slate-900">${esc(st.name)}</div>
+                        <div class="text-[10px] text-slate-500">${esc(st.role)}</div>
+                      </div>
+                    </div>
+                    <div class="text-right">
+                      <span class="text-sm font-extrabold text-[#0F4C81] tabular-nums">${st.count}</span>
+                      <span class="block text-[10px] text-slate-400">${totalLeads ? Math.round((st.count / totalLeads) * 100) : 0}%</span>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="exec-card p-6 flex flex-col justify-between">
               <div>
-                <div class="text-xs font-bold text-slate-500 uppercase">Lead Transfer Rate</div>
-                <div class="text-lg font-extrabold text-slate-900">${transferredLeads} / ${totalLeads} Leads</div>
-                <div class="text-[11px] text-[#0F4C81] font-semibold">Routed to Staff Depts</div>
+                <div class="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 class="text-base font-extrabold text-slate-900">Channel Acquisition Mix</h3>
+                    <p class="text-xs text-slate-500">Where Galaxy Point leads originate</p>
+                  </div>
+                  <span class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm"><i class="fa-solid fa-bullhorn"></i></span>
+                </div>
+                ${renderBars(channelStats, 'from-[#0A3665] to-[#1D4ED8]')}
+              </div>
+              <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span class="text-slate-500 font-medium">Top Performing Source</span>
+                <span class="font-extrabold text-[#0F4C81]">${esc([...channelStats].sort((a,b) => b[1]-a[1])[0]?.[0] || 'Instagram')}</span>
               </div>
             </div>
 
-            <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-50/80 to-white border border-emerald-100 flex items-center gap-4">
-              <div class="w-14 h-14 rounded-full flex items-center justify-center font-extrabold text-sm text-emerald-700 shrink-0"
-                   style="background: conic-gradient(#059669 ${completionRate * 3.6}deg, #D1FAE5 0deg);">
-                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">${completionRate}%</div>
-              </div>
+            <div class="exec-card p-6 flex flex-col justify-between">
               <div>
-                <div class="text-xs font-bold text-slate-500 uppercase">Service Completion</div>
-                <div class="text-lg font-extrabold text-slate-900">${completedJobs} / ${totalJobs} Jobs</div>
-                <div class="text-[11px] text-emerald-700 font-semibold">Closed by Mohammed</div>
-              </div>
-            </div>
+                <div class="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 class="text-base font-extrabold text-slate-900">Service Centre Health</h3>
+                    <p class="text-xs text-slate-500">Mohammed's repair desk billing</p>
+                  </div>
+                  <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                </div>
 
-            <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-50/80 to-white border border-indigo-100 flex items-center gap-4">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-lg shrink-0 shadow-xs">
-                <i class="fa-solid fa-arrows-turn-right"></i>
+                <div class="flex items-center gap-5 my-4 p-4 rounded-2xl bg-gradient-to-br from-blue-50/70 to-slate-50 border border-blue-100">
+                  <div class="relative w-20 h-20 shrink-0 flex items-center justify-center">
+                    <svg class="w-20 h-20 -rotate-90" viewBox="0 0 36 36">
+                      <path class="text-slate-200" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path class="text-[#0F4C81]" stroke-dasharray="${completionRate}, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <span class="absolute text-sm font-extrabold text-[#0F4C81] tabular-nums">${completionRate}%</span>
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-slate-500">Total Service Value</div>
+                    <div class="text-xl font-extrabold text-slate-900 tabular-nums mt-0.5">${formatINR(totalRev)}</div>
+                    <div class="text-[11px] font-semibold text-emerald-700 mt-1">${completedJobs} Completed • ${pendingJobs} In Process</div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <div class="text-xs font-bold text-slate-500 uppercase">Sohail → Mohammed</div>
-                <div class="text-lg font-extrabold text-slate-900">${sohailServiceSent} Sent • ${sohailServiceLogged} Logged</div>
-                <div class="text-[11px] text-indigo-700 font-semibold">Cross-Dept Referral Sync</div>
+
+              <div class="space-y-2 text-xs">
+                <div class="flex justify-between py-1.5 border-b border-slate-100">
+                  <span class="text-slate-500">Direct Walk-in Jobs</span>
+                  <span class="font-bold text-slate-900">${totalJobs - sohailRefs}</span>
+                </div>
+                <div class="flex justify-between py-1.5">
+                  <span class="text-slate-500">Sohail Social Referrals</span>
+                  <span class="font-bold text-indigo-600">${sohailRefs}</span>
+                </div>
               </div>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="p-4 rounded-2xl bg-slate-50/70 border border-slate-200/70">
-              <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-                <i class="fa-solid fa-users-gear text-[#0F4C81]"></i> Staff Transfer Leaderboard
-              </h3>
-              ${renderBars(Object.entries(TRANSFER_LABELS).map(([k, label]) => [label, socialLeads.filter(r => r.transfer === k).length]))}
-            </div>
-
-            <div class="p-4 rounded-2xl bg-slate-50/70 border border-slate-200/70">
-              <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-                <i class="fa-solid fa-bullseye text-[#0F4C81]"></i> Lead Acquisition Channels
-              </h3>
-              ${renderBars(['Instagram', 'WhatsApp', 'Calling', 'Justdial', 'Not specified'].map(s => [s, socialLeads.filter(r => r.source === s).length]), 'bg-gradient-to-r from-indigo-600 to-blue-500')}
             </div>
           </div>
         </div>
@@ -954,6 +1240,137 @@
     }
 
     // 1. BOSS PANEL (JAGDISH)
+    function getFilteredDailyMetrics() {
+      const todayIso = getTodayISO();
+      const allEntries = Object.values(dailyMetricsMap).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+      if (bossMetricRange === 'today') {
+        return allEntries.filter(x => x.date === todayIso);
+      }
+      if (bossMetricRange === '7d') {
+        const cutoff = new Date();
+        cutoff.setDate(cutoff.getDate() - 7);
+        const cutoffIso = cutoff.toISOString().slice(0, 10);
+        return allEntries.filter(x => x.date >= cutoffIso);
+      }
+      if (bossMetricRange === '30d') {
+        const cutoff = new Date();
+        cutoff.setDate(cutoff.getDate() - 30);
+        const cutoffIso = cutoff.toISOString().slice(0, 10);
+        return allEntries.filter(x => x.date >= cutoffIso);
+      }
+      return allEntries;
+    }
+
+    function setBossMetricRange(range) {
+      bossMetricRange = range;
+      renderWorkspace();
+    }
+
+    function renderBossInquiryAnalyticsBlock() {
+      const entries = getFilteredDailyMetrics();
+      const sumCalls = entries.reduce((s, x) => s + Number(x.totalCalls || 0), 0);
+      const sumCallLeads = entries.reduce((s, x) => s + Number(x.callLeads || 0), 0);
+      const sumWhatsApp = entries.reduce((s, x) => s + Number(x.whatsappMsgs || 0), 0);
+      const sumInstagram = entries.reduce((s, x) => s + Number(x.instagramMsgs || 0), 0);
+      const sumJustdial = entries.reduce((s, x) => s + Number(x.justdialLeads || 0), 0);
+      const callConvPct = sumCalls ? Math.round((sumCallLeads / sumCalls) * 100) : 0;
+
+      return `
+        <div class="glass-panel p-6 mb-6 border-blue-200/80">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
+            <div>
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#0F4C81] bg-blue-50 px-2.5 py-1 rounded-full">Social Media & Call Tracking</span>
+              <h2 class="text-lg font-extrabold text-slate-900 mt-1.5">Total Calls, WhatsApp, Instagram & Justdial Report</h2>
+              <p class="text-xs text-slate-500">Live daily inquiry counts updated by Sayyed Sohail (${entries.length} day${entries.length === 1 ? '' : 's'} recorded)</p>
+            </div>
+            <div class="inline-flex rounded-xl bg-slate-100 p-1 gap-1 self-start">
+              <button onclick="setBossMetricRange('today')" class="px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition ${bossMetricRange === 'today' ? 'bg-[#0F4C81] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}">Today</button>
+              <button onclick="setBossMetricRange('7d')" class="px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition ${bossMetricRange === '7d' ? 'bg-[#0F4C81] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}">7 Days</button>
+              <button onclick="setBossMetricRange('30d')" class="px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition ${bossMetricRange === '30d' ? 'bg-[#0F4C81] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}">30 Days</button>
+              <button onclick="setBossMetricRange('all')" class="px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition ${bossMetricRange === 'all' ? 'bg-[#0F4C81] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}">Till Date</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3.5 mb-6">
+            <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-100">
+              <div class="flex items-center justify-between text-[11px] font-bold text-[#0F4C81] uppercase">
+                <span>Total Calls</span>
+                <i class="fa-solid fa-phone-volume"></i>
+              </div>
+              <div class="text-2xl font-extrabold text-slate-900 mt-1.5">${sumCalls}</div>
+              <div class="text-[11px] font-semibold text-[#0F4C81] mt-0.5">Incoming Calls</div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-100">
+              <div class="flex items-center justify-between text-[11px] font-bold text-indigo-700 uppercase">
+                <span>Call Leads</span>
+                <span class="px-1.5 py-0.5 rounded bg-indigo-100 text-[10px]">${callConvPct}%</span>
+              </div>
+              <div class="text-2xl font-extrabold text-indigo-700 mt-1.5">${sumCallLeads}</div>
+              <div class="text-[11px] font-semibold text-indigo-600 mt-0.5">Converted from Calls</div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100">
+              <div class="flex items-center justify-between text-[11px] font-bold text-emerald-700 uppercase">
+                <span>WhatsApp Msgs</span>
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+              </div>
+              <div class="text-2xl font-extrabold text-emerald-700 mt-1.5">${sumWhatsApp}</div>
+              <div class="text-[11px] font-semibold text-emerald-600 mt-0.5">Total WhatsApp</div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-pink-50/70 border border-pink-100">
+              <div class="flex items-center justify-between text-[11px] font-bold text-pink-700 uppercase">
+                <span>Instagram Msgs</span>
+                <i class="fa-brands fa-instagram text-sm"></i>
+              </div>
+              <div class="text-2xl font-extrabold text-pink-700 mt-1.5">${sumInstagram}</div>
+              <div class="text-[11px] font-semibold text-pink-600 mt-0.5">Total Instagram DMs</div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-100 col-span-2 sm:col-span-1">
+              <div class="flex items-center justify-between text-[11px] font-bold text-amber-700 uppercase">
+                <span>Justdial Leads</span>
+                <i class="fa-solid fa-address-book"></i>
+              </div>
+              <div class="text-2xl font-extrabold text-amber-700 mt-1.5">${sumJustdial}</div>
+              <div class="text-[11px] font-semibold text-amber-600 mt-0.5">Total Justdial</div>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
+                  <th class="py-2.5 px-3">Date</th>
+                  <th class="py-2.5 px-3">Total Calls</th>
+                  <th class="py-2.5 px-3">Call Leads (Conv %)</th>
+                  <th class="py-2.5 px-3">WhatsApp Msgs</th>
+                  <th class="py-2.5 px-3">Instagram Msgs</th>
+                  <th class="py-2.5 px-3">Justdial Leads</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-xs sm:text-sm">
+                ${entries.map(row => {
+                  const pct = row.totalCalls ? Math.round((row.callLeads / row.totalCalls) * 100) : 0;
+                  return `
+                    <tr class="hover:bg-slate-50/80">
+                      <td class="py-2.5 px-3 font-bold text-slate-900">${esc(formatDisplayDate(row.date))}</td>
+                      <td class="py-2.5 px-3 font-semibold text-slate-700">${row.totalCalls || 0}</td>
+                      <td class="py-2.5 px-3 font-bold text-indigo-700">${row.callLeads || 0} <span class="text-[11px] font-semibold text-slate-400">(${pct}%)</span></td>
+                      <td class="py-2.5 px-3 font-bold text-emerald-700">${row.whatsappMsgs || 0}</td>
+                      <td class="py-2.5 px-3 font-bold text-pink-700">${row.instagramMsgs || 0}</td>
+                      <td class="py-2.5 px-3 font-bold text-amber-700">${row.justdialLeads || 0}</td>
+                    </tr>
+                  `;
+                }).join('') || '<tr><td colspan="6" class="py-6 text-center text-slate-400 text-xs">No daily inquiry counts logged yet by Sayyed Sohail.</td></tr>'}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
     function renderBossPanel(container) {
       const completed = serviceJobs.filter(j => j.status === 'Completed').length;
       const inProcess = serviceJobs.length - completed;
@@ -1008,52 +1425,35 @@
             </div>
           </div>
 
-          ${renderAnalysisBlock()}
+          <!-- Daily Calls, WhatsApp, Instagram & Justdial Analytics on Boss Dashboard -->
+          ${renderBossInquiryAnalyticsBlock()}
 
-          <div class="glass-panel p-5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-              <div>
-                <h2 class="text-base font-bold text-slate-900">All Social Media Leads & Transfers (Live)</h2>
-                <p class="text-xs text-slate-500">Every customer entered by Sayyed Sohail updates here in real time</p>
-              </div>
-              <input id="bossDashSearch" oninput="filterBossDashTable()" placeholder="Search name, mobile, transfer..." class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
-                    <th class="py-3 px-3">Customer Name & Number</th>
-                    <th class="py-3 px-3">Requirement</th>
-                    <th class="py-3 px-3">Source</th>
-                    <th class="py-3 px-3">Transferred To</th>
-                  </tr>
-                </thead>
-                <tbody id="bossDashSocialBody" class="divide-y divide-slate-100 text-sm"></tbody>
-              </table>
-            </div>
-          </div>
+          <!-- Executive Analysis Section Directly Below Boss Dashboard KPIs -->
+          ${renderAnalysisBlock(true)}
         `;
-        filterBossDashTable();
       } else if (currentTab === 'analysis') {
-        container.innerHTML = renderAnalysisBlock();
+        container.innerHTML = `
+          ${renderBossInquiryAnalyticsBlock()}
+          ${renderAnalysisBlock(false)}
+        `;
       } else if (currentTab === 'social') {
         container.innerHTML = `
-          <div class="glass-panel p-5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div class="exec-card p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
               <div>
-                <h2 class="text-base font-bold text-slate-900">All Social Media Customers (Sayyed Sohail)</h2>
+                <h2 class="text-base font-extrabold text-slate-900">All Social Media Customers (Sayyed Sohail)</h2>
                 <p class="text-xs text-slate-500">Live feed of all customer inquiries and department routing</p>
               </div>
-              <input id="bossSocialSearch" oninput="filterBossSocial()" placeholder="Search name or mobile..." class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
+              <input id="bossSocialSearch" oninput="filterBossSocial()" placeholder="Search name or mobile..." class="px-4 py-2.5 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
             </div>
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse">
                 <thead>
-                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
-                    <th class="py-3 px-3">Customer</th>
-                    <th class="py-3 px-3">Requirement</th>
-                    <th class="py-3 px-3">Source</th>
-                    <th class="py-3 px-3">Transferred To</th>
+                  <tr class="border-b border-slate-200 bg-slate-50/80 text-[11px] font-extrabold uppercase text-slate-500">
+                    <th class="py-3.5 px-4 rounded-tl-xl">Customer</th>
+                    <th class="py-3.5 px-4">Requirement</th>
+                    <th class="py-3.5 px-4">Source</th>
+                    <th class="py-3.5 px-4 rounded-tr-xl">Transferred To</th>
                   </tr>
                 </thead>
                 <tbody id="bossSocialBody" class="divide-y divide-slate-100 text-sm"></tbody>
@@ -1064,23 +1464,23 @@
         filterBossSocial();
       } else if (currentTab === 'service') {
         container.innerHTML = `
-          <div class="glass-panel p-5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div class="exec-card p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
               <div>
-                <h2 class="text-base font-bold text-slate-900">All Service Centre Customers (Mohammed)</h2>
+                <h2 class="text-base font-extrabold text-slate-900">All Service Centre Customers (Mohammed)</h2>
                 <p class="text-xs text-slate-500">Live repair tickets, referral attribution & service billing</p>
               </div>
-              <input id="bossServiceSearch" oninput="filterBossService()" placeholder="Search customer or mobile..." class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
+              <input id="bossServiceSearch" oninput="filterBossService()" placeholder="Search customer or mobile..." class="px-4 py-2.5 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
             </div>
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse">
                 <thead>
-                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
-                    <th class="py-3 px-3">Customer</th>
-                    <th class="py-3 px-3">Repair / Service</th>
-                    <th class="py-3 px-3">Amount</th>
-                    <th class="py-3 px-3">Status</th>
-                    <th class="py-3 px-3">Referral</th>
+                  <tr class="border-b border-slate-200 bg-slate-50/80 text-[11px] font-extrabold uppercase text-slate-500">
+                    <th class="py-3.5 px-4 rounded-tl-xl">Customer</th>
+                    <th class="py-3.5 px-4">Repair / Service</th>
+                    <th class="py-3.5 px-4">Amount</th>
+                    <th class="py-3.5 px-4">Status</th>
+                    <th class="py-3.5 px-4 rounded-tr-xl">Referral</th>
                   </tr>
                 </thead>
                 <tbody id="bossServiceBody" class="divide-y divide-slate-100 text-sm"></tbody>
@@ -1092,34 +1492,17 @@
       }
     }
 
-    function filterBossDashTable() {
-      const q = (document.getElementById('bossDashSearch')?.value || '').toLowerCase();
-      const body = document.getElementById('bossDashSocialBody');
-      if (!body) return;
-      const rows = socialLeads.filter(x =>
-        (x.name + ' ' + x.phone + ' ' + x.requirement + ' ' + (TRANSFER_LABELS[x.transfer] || '')).toLowerCase().includes(q)
-      );
-      body.innerHTML = rows.map(x => `
-        <tr class="hover:bg-slate-50/80">
-          <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(x.name)}</div><div class="text-xs text-slate-500">${esc(x.phone)}</div></td>
-          <td class="py-3 px-3 text-slate-700">${esc(x.requirement)}</td>
-          <td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(x.source || 'Instagram')}</span></td>
-          <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">${esc(TRANSFER_LABELS[x.transfer] || 'By Me – Sohail')}</span></td>
-        </tr>
-      `).join('') || '<tr><td colspan="4" class="py-6 text-center text-slate-400 text-sm">No leads recorded yet.</td></tr>';
-    }
-
     function filterBossSocial() {
       const q = (document.getElementById('bossSocialSearch')?.value || '').toLowerCase();
       const body = document.getElementById('bossSocialBody');
       if (!body) return;
       const rows = socialLeads.filter(x => (x.name + ' ' + x.phone + ' ' + x.requirement).toLowerCase().includes(q));
       body.innerHTML = rows.map(x => `
-        <tr class="hover:bg-slate-50/80">
-          <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(x.name)}</div><div class="text-xs text-slate-500">${esc(x.phone)}</div></td>
-          <td class="py-3 px-3 text-slate-700">${esc(x.requirement)}</td>
-          <td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(x.source || 'Instagram')}</span></td>
-          <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">${esc(TRANSFER_LABELS[x.transfer] || 'By Me – Sohail')}</span></td>
+        <tr class="hover:bg-blue-50/40 transition">
+          <td class="py-3.5 px-4"><div class="font-bold text-slate-900">${esc(x.name)}</div><div class="text-xs font-mono text-slate-500">${esc(x.phone)}</div></td>
+          <td class="py-3.5 px-4 text-slate-700 font-medium">${esc(x.requirement)}</td>
+          <td class="py-3.5 px-4"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(x.source || 'Instagram')}</span></td>
+          <td class="py-3.5 px-4"><span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">${esc(TRANSFER_LABELS[x.transfer] || 'By Me – Sohail')}</span></td>
         </tr>
       `).join('') || '<tr><td colspan="4" class="py-6 text-center text-slate-400 text-sm">No matching customers found.</td></tr>';
     }
@@ -1130,12 +1513,12 @@
       if (!body) return;
       const rows = serviceJobs.filter(x => (x.name + ' ' + x.phone + ' ' + x.service).toLowerCase().includes(q));
       body.innerHTML = rows.map(x => `
-        <tr class="hover:bg-slate-50/80">
-          <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(x.name)}</div><div class="text-xs text-slate-500">${esc(x.phone)}</div></td>
-          <td class="py-3 px-3 text-slate-700">${esc(x.service)}</td>
-          <td class="py-3 px-3 font-bold text-[#0F4C81]">${formatINR(x.amount)}</td>
-          <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full ${x.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${esc(x.status)}</span></td>
-          <td class="py-3 px-3">${x.origin === 'Sohail' ? '<span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Transferred by Sohail</span>' : '<span class="text-xs text-slate-500">Direct</span>'}</td>
+        <tr class="hover:bg-blue-50/40 transition">
+          <td class="py-3.5 px-4"><div class="font-bold text-slate-900">${esc(x.name)}</div><div class="text-xs font-mono text-slate-500">${esc(x.phone)}</div></td>
+          <td class="py-3.5 px-4 text-slate-700 font-medium">${esc(x.service)}</td>
+          <td class="py-3.5 px-4 font-extrabold text-[#0F4C81] tabular-nums">${formatINR(x.amount)}</td>
+          <td class="py-3.5 px-4"><span class="text-xs font-bold px-2.5 py-1 rounded-full ${x.status === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">${esc(x.status)}</span></td>
+          <td class="py-3.5 px-4">${x.origin === 'Sohail' ? '<span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Transferred by Sohail</span>' : '<span class="text-xs text-slate-500">Direct</span>'}</td>
         </tr>
       `).join('') || '<tr><td colspan="5" class="py-6 text-center text-slate-400 text-sm">No matching service records found.</td></tr>';
     }
@@ -1145,122 +1528,56 @@
       const done = serviceJobs.filter(x => x.status === 'Completed').length;
       const totalAmt = serviceJobs.reduce((s, x) => s + Number(x.amount || 0), 0);
       const pct = serviceJobs.length ? Math.round((done / serviceJobs.length) * 100) : 0;
-      const receivedFromSohail = socialLeads.filter(l => l.transfer === 'service');
 
       if (currentTab === 'dashboard') {
         container.innerHTML = `
           <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Total Service Jobs</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${serviceJobs.length}</div></div>
-            <div onclick="switchTab('received')" class="kpi-card cursor-pointer border-indigo-200 bg-indigo-50/30">
-              <div class="text-xs font-bold text-indigo-600 uppercase">Received by Sohail</div>
-              <div class="text-2xl font-extrabold text-indigo-700 mt-1">${receivedFromSohail.length}</div>
-              <div class="text-[11px] font-semibold text-indigo-600 mt-0.5">Click to view inbox →</div>
-            </div>
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">In Process</div><div class="text-2xl font-extrabold text-amber-600 mt-1">${serviceJobs.length - done}</div></div>
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Completed</div><div class="text-2xl font-extrabold text-emerald-600 mt-1">${done}</div></div>
-            <div class="kpi-card col-span-2 lg:col-span-1"><div class="text-xs font-bold text-slate-400 uppercase">Total Service Value</div><div class="text-2xl font-extrabold text-[#0F4C81] mt-1">${formatINR(totalAmt)}</div></div>
+            <div class="exec-card p-5"><div class="text-[11px] font-extrabold text-slate-400 uppercase">Total Customers</div><div class="text-2xl font-extrabold text-slate-900 mt-1 tabular-nums">${serviceJobs.length}</div></div>
+            <div class="exec-card p-5"><div class="text-[11px] font-extrabold text-slate-400 uppercase">From Sohail</div><div class="text-2xl font-extrabold text-indigo-600 mt-1 tabular-nums">${serviceJobs.filter(x => x.origin === 'Sohail').length}</div></div>
+            <div class="exec-card p-5"><div class="text-[11px] font-extrabold text-slate-400 uppercase">In Process</div><div class="text-2xl font-extrabold text-amber-600 mt-1 tabular-nums">${serviceJobs.length - done}</div></div>
+            <div class="exec-card p-5"><div class="text-[11px] font-extrabold text-slate-400 uppercase">Completed</div><div class="text-2xl font-extrabold text-emerald-600 mt-1 tabular-nums">${done}</div></div>
+            <div class="exec-card p-5 col-span-2 lg:col-span-1"><div class="text-[11px] font-extrabold text-slate-400 uppercase">Service Value</div><div class="text-2xl font-extrabold text-[#0F4C81] mt-1 tabular-nums">${formatINR(totalAmt)}</div></div>
           </div>
 
-          <div class="glass-panel p-5 mb-6">
+          <div class="exec-card p-6 mb-6">
             <div class="flex justify-between text-xs font-bold text-slate-700 mb-2">
               <span>Repair Completion Rate</span>
-              <span class="text-[#0F4C81]">${pct}%</span>
+              <span class="text-[#0F4C81] font-extrabold">${pct}%</span>
             </div>
             <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-gradient-to-r from-[#0F4C81] to-[#2563EB] rounded-full transition-all duration-500" style="width:${pct}%"></div>
+              <div class="h-full bg-gradient-to-r from-[#0A3665] to-[#1D4ED8] rounded-full transition-all duration-500" style="width:${pct}%"></div>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="glass-panel p-5">
-              <div class="flex items-center justify-between mb-4">
-                <div>
-                  <h2 class="text-base font-bold text-slate-900">Received by Sohail (Transfers)</h2>
-                  <p class="text-xs text-slate-500">Customers sent to Service Centre by Sayyed Sohail</p>
-                </div>
-                <button onclick="switchTab('received')" class="text-xs font-bold text-indigo-600 hover:underline cursor-pointer">View All (${receivedFromSohail.length})</button>
-              </div>
-              <div class="divide-y divide-slate-100">
-                ${receivedFromSohail.slice(0, 5).map(lead => {
-                  const alreadyLogged = serviceJobs.some(j => j.phone === lead.phone);
-                  return `
-                    <div class="py-3 flex flex-wrap items-center justify-between gap-2 text-sm">
-                      <div>
-                        <span class="font-bold text-slate-900">${esc(lead.name)}</span>
-                        <span class="text-xs text-slate-500 ml-1.5">${esc(lead.phone)}</span>
-                        <span class="text-xs text-slate-500 block">${esc(lead.requirement)}</span>
-                      </div>
-                      ${alreadyLogged
-                        ? '<span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">✓ Job Created</span>'
-                        : `<button onclick="createJobFromSohail('${lead.id}')" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold cursor-pointer">+ Create Job</button>`
-                      }
-                    </div>
-                  `;
-                }).join('') || '<p class="text-sm text-slate-400">No customers transferred by Sohail yet.</p>'}
-              </div>
+          <div class="exec-card p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-base font-extrabold text-slate-900">Recent Service Jobs</h2>
+              <button onclick="quickAddService()" class="px-4 py-2 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold cursor-pointer">+ Add Service Job</button>
             </div>
-
-            <div class="glass-panel p-5">
-              <div class="flex items-center justify-between mb-4">
-                <h2 class="text-base font-bold text-slate-900">Recent Service Jobs</h2>
-                <button onclick="quickAddService()" class="px-3.5 py-2 rounded-xl bg-[#0F4C81] text-white text-xs font-bold cursor-pointer">+ Add Service Job</button>
-              </div>
-              <div class="divide-y divide-slate-100">
-                ${serviceJobs.slice(0, 5).map(r => `
-                  <div class="py-3 flex flex-wrap items-center justify-between gap-2 text-sm">
-                    <div>
-                      <span class="font-bold text-slate-900">${esc(r.name)}</span>
-                      <span class="text-xs text-slate-500 ml-2">${esc(r.service)}</span>
-                    </div>
-                    <div class="flex items-center gap-2.5">
-                      <span class="font-bold text-[#0F4C81]">${formatINR(r.amount)}</span>
-                      <span class="text-xs font-bold px-2.5 py-1 rounded-full ${r.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${esc(r.status)}</span>
-                    </div>
+            <div class="divide-y divide-slate-100">
+              ${serviceJobs.slice(0, 6).map(r => `
+                <div class="py-3.5 flex flex-wrap items-center justify-between gap-2 text-sm">
+                  <div>
+                    <span class="font-bold text-slate-900">${esc(r.name)}</span>
+                    <span class="text-xs text-slate-500 ml-2">${esc(r.service)}</span>
                   </div>
-                `).join('') || '<p class="text-sm text-slate-400">No service jobs recorded yet.</p>'}
-              </div>
-            </div>
-          </div>
-        `;
-      } else if (currentTab === 'received') {
-        container.innerHTML = `
-          <div class="glass-panel p-5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-              <div>
-                <div class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full mb-1">
-                  <i class="fa-solid fa-bullhorn"></i> Live Referral Inbox
+                  <div class="flex items-center gap-2.5">
+                    <span class="font-extrabold text-[#0F4C81] tabular-nums">${formatINR(r.amount)}</span>
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-full ${r.status === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">${esc(r.status)}</span>
+                  </div>
                 </div>
-                <h2 class="text-lg font-extrabold text-slate-900">Received by Sohail</h2>
-                <p class="text-xs text-slate-500">All customers transferred to Service Centre by Sayyed Sohail appear here automatically</p>
-              </div>
-              <input id="receivedSearch" oninput="renderReceivedRows()" placeholder="Search name, mobile, requirement..." class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
-            </div>
-
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
-                    <th class="py-3 px-3">Customer Name & Mobile</th>
-                    <th class="py-3 px-3">Requirement / Issue</th>
-                    <th class="py-3 px-3">Source</th>
-                    <th class="py-3 px-3">Date</th>
-                    <th class="py-3 px-3">Service Status / Action</th>
-                  </tr>
-                </thead>
-                <tbody id="receivedTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
-              </table>
+              `).join('') || '<p class="text-sm text-slate-400">No service jobs recorded yet.</p>'}
             </div>
           </div>
         `;
-        renderReceivedRows();
       } else {
         container.innerHTML = `
-          <div id="serviceFormCard" class="hidden bg-white rounded-2xl border-2 border-[#0F4C81] p-5 mb-6 shadow-md">
-            <h2 id="serviceFormTitle" class="text-base font-bold text-slate-900 mb-4">Add Service Customer</h2>
+          <div id="serviceFormCard" class="hidden exec-card border-2 border-[#0F4C81] p-6 mb-6">
+            <h2 id="serviceFormTitle" class="text-base font-extrabold text-slate-900 mb-4">Add Service Customer</h2>
             <form onsubmit="submitServiceForm(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number (10-Digit Referral Check)</label>
-                <input id="svcPhone" pattern="[0-9]{10}" maxlength="10" oninput="checkServiceReferralMatch()" required placeholder="e.g. 9823456710" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
+                <input id="svcPhone" pattern="[0-9]{10}" maxlength="10" oninput="checkServiceReferralMatch()" required placeholder="e.g. 9823456710" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-mono focus:outline-none focus:border-[#0F4C81]" />
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Customer Name</label>
@@ -1293,7 +1610,7 @@
                 </select>
               </div>
 
-              <div id="referralMatchBanner" class="sm:col-span-2 p-3 rounded-xl bg-blue-50 border border-blue-200 text-xs font-medium text-[#0F4C81]">
+              <div id="referralMatchBanner" class="sm:col-span-2 p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-xs font-medium text-[#0F4C81]">
                 Enter a 10-digit mobile number to automatically check Social Media CRM referrals.
               </div>
 
@@ -1308,17 +1625,17 @@
             </form>
           </div>
 
-          <div class="glass-panel p-5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-              <h2 class="text-base font-bold text-slate-900">Customer Service Records</h2>
+          <div class="exec-card p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+              <h2 class="text-base font-extrabold text-slate-900">Customer Service Records</h2>
               <button onclick="openServiceForm()" class="px-4 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs self-start cursor-pointer">
                 + Add Service Customer
               </button>
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 mb-4">
-              <input id="svcSearch" oninput="renderServiceRows()" placeholder="Search customer, mobile, service..." class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-[#0F4C81]" />
-              <select id="svcFilter" onchange="renderServiceRows()" class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs bg-white sm:w-44">
+              <input id="svcSearch" oninput="renderServiceRows()" placeholder="Search customer, mobile, service..." class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-[#0F4C81]" />
+              <select id="svcFilter" onchange="renderServiceRows()" class="px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs bg-white sm:w-44">
                 <option value="All">All Status</option>
                 <option value="In Process">In Process</option>
                 <option value="Completed">Completed</option>
@@ -1328,13 +1645,13 @@
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse">
                 <thead>
-                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
-                    <th class="py-3 px-3">Customer</th>
-                    <th class="py-3 px-3">Service</th>
-                    <th class="py-3 px-3">Amount</th>
-                    <th class="py-3 px-3">Referral</th>
-                    <th class="py-3 px-3">Status</th>
-                    <th class="py-3 px-3">Action</th>
+                  <tr class="border-b border-slate-200 bg-slate-50/80 text-[11px] font-extrabold uppercase text-slate-500">
+                    <th class="py-3.5 px-4 rounded-tl-xl">Customer</th>
+                    <th class="py-3.5 px-4">Service</th>
+                    <th class="py-3.5 px-4">Amount</th>
+                    <th class="py-3.5 px-4">Referral</th>
+                    <th class="py-3.5 px-4">Status</th>
+                    <th class="py-3.5 px-4 rounded-tr-xl">Action</th>
                   </tr>
                 </thead>
                 <tbody id="svcTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
@@ -1344,47 +1661,6 @@
         `;
         renderServiceRows();
       }
-    }
-
-    function renderReceivedRows() {
-      const q = (document.getElementById('receivedSearch')?.value || '').toLowerCase();
-      const body = document.getElementById('receivedTableBody');
-      if (!body) return;
-
-      const list = socialLeads.filter(l =>
-        l.transfer === 'service' &&
-        (l.name + ' ' + l.phone + ' ' + l.requirement).toLowerCase().includes(q)
-      );
-
-      body.innerHTML = list.map(lead => {
-        const job = serviceJobs.find(j => j.phone === lead.phone);
-        return `
-          <tr class="hover:bg-slate-50/80">
-            <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(lead.name)}</div><div class="text-xs text-slate-500">${esc(lead.phone)}</div></td>
-            <td class="py-3 px-3"><div class="font-medium text-slate-800">${esc(lead.requirement)}</div><div class="text-xs text-slate-400">${esc(lead.notes || '')}</div></td>
-            <td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(lead.source || 'Instagram')}</span></td>
-            <td class="py-3 px-3 text-xs text-slate-500">${esc(lead.date || '—')}</td>
-            <td class="py-3 px-3">
-              ${job
-                ? `<span class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">✓ Logged (${esc(job.status)})</span>`
-                : `<button onclick="createJobFromSohail('${lead.id}')" class="px-3 py-1.5 rounded-lg bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold cursor-pointer">+ Create Repair Job</button>`
-              }
-            </td>
-          </tr>
-        `;
-      }).join('') || '<tr><td colspan="5" class="py-8 text-center text-slate-400 text-sm">No customers transferred by Sayyed Sohail yet.</td></tr>';
-    }
-
-    function createJobFromSohail(leadId) {
-      const lead = socialLeads.find(x => x.id === leadId);
-      if (!lead) return;
-      quickAddService({
-        name: lead.name,
-        phone: lead.phone,
-        service: lead.requirement,
-        description: lead.notes || 'Transferred from Social Media CRM by Sayyed Sohail',
-        origin: 'Sohail'
-      });
     }
 
     function checkServiceReferralMatch() {
@@ -1398,29 +1674,29 @@
         if (!document.getElementById('svcName').value.trim()) {
           document.getElementById('svcName').value = leads[0].name;
         }
-        banner.className = 'sm:col-span-2 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800';
+        banner.className = 'sm:col-span-2 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800';
         banner.textContent = `✓ Verified Referral from Sayyed Sohail — ${leads[0].name} (${phone}). Attribution will print on the Service Bill.`;
       } else if (any.length) {
-        banner.className = 'sm:col-span-2 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs font-semibold text-amber-800';
+        banner.className = 'sm:col-span-2 p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs font-semibold text-amber-800';
         banner.textContent = `Social Media lead found (${any[0].name}), marked under "${TRANSFER_LABELS[any[0].transfer]}". Confirm referral manually if needed.`;
       } else {
-        banner.className = 'sm:col-span-2 p-3 rounded-xl bg-blue-50 border border-blue-200 text-xs font-medium text-[#0F4C81]';
+        banner.className = 'sm:col-span-2 p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-xs font-medium text-[#0F4C81]';
         banner.textContent = 'No matching Service Centre referral found. Proceeding as Direct Service Customer.';
       }
     }
 
-    function openServiceForm(id = null, prefill = null) {
+    function openServiceForm(id = null) {
       editServiceId = id;
       const r = serviceJobs.find(x => x.id === id);
       const card = document.getElementById('serviceFormCard');
       card.classList.remove('hidden');
       document.getElementById('serviceFormTitle').textContent = r ? 'Edit Service Customer' : 'Add Service Customer';
-      document.getElementById('svcName').value = prefill?.name || r?.name || '';
-      document.getElementById('svcPhone').value = prefill?.phone || r?.phone || '';
-      document.getElementById('svcRepair').value = prefill?.service || r?.service || '';
+      document.getElementById('svcName').value = r?.name || '';
+      document.getElementById('svcPhone').value = r?.phone || '';
+      document.getElementById('svcRepair').value = r?.service || '';
       document.getElementById('svcAmount').value = r?.amount ?? '';
-      document.getElementById('svcDesc').value = prefill?.description || r?.description || '';
-      document.getElementById('svcOrigin').value = prefill?.origin || r?.origin || 'Direct';
+      document.getElementById('svcDesc').value = r?.description || '';
+      document.getElementById('svcOrigin').value = r?.origin || 'Direct';
       document.getElementById('svcStatus').value = r?.status || 'In Process';
       if (!r) checkServiceReferralMatch();
       card.scrollIntoView({ behavior: 'smooth' });
@@ -1435,7 +1711,7 @@
       e.preventDefault();
       const existing = serviceJobs.find(x => x.id === editServiceId);
       const record = {
-        id: editServiceId || 'job_' + Date.now(),
+        id: editServiceId || 'job' + Date.now(),
         name: document.getElementById('svcName').value.trim(),
         phone: document.getElementById('svcPhone').value.trim(),
         service: document.getElementById('svcRepair').value.trim(),
@@ -1443,8 +1719,7 @@
         description: document.getElementById('svcDesc').value.trim(),
         origin: document.getElementById('svcOrigin').value,
         status: document.getElementById('svcStatus').value,
-        date: existing?.date || new Date().toLocaleDateString('en-IN'),
-        createdAt: existing?.createdAt || Date.now()
+        date: existing?.date || new Date().toLocaleDateString('en-IN')
       };
       await upsertServiceJob(record, Boolean(editServiceId));
       closeServiceForm();
@@ -1462,16 +1737,16 @@
       );
 
       body.innerHTML = filtered.map(r => `
-        <tr class="hover:bg-slate-50/80">
-          <td class="py-3 px-3"><div class="font-bold text-slate-900">${esc(r.name)}</div><div class="text-xs text-slate-500">${esc(r.phone)}</div></td>
-          <td class="py-3 px-3"><div class="font-medium text-slate-800">${esc(r.service)}</div><div class="text-xs text-slate-400">${esc(r.description)}</div></td>
-          <td class="py-3 px-3 font-bold text-[#0F4C81]">${formatINR(r.amount)}</td>
-          <td class="py-3 px-3">${r.origin === 'Sohail' ? '<span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Transferred by Sohail</span>' : '<span class="text-xs text-slate-500">Direct</span>'}</td>
-          <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full ${r.status === 'Completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${esc(r.status)}</span></td>
-          <td class="py-3 px-3">
+        <tr class="hover:bg-blue-50/40 transition">
+          <td class="py-3.5 px-4"><div class="font-bold text-slate-900">${esc(r.name)}</div><div class="text-xs font-mono text-slate-500">${esc(r.phone)}</div></td>
+          <td class="py-3.5 px-4"><div class="font-semibold text-slate-800">${esc(r.service)}</div><div class="text-xs text-slate-400">${esc(r.description)}</div></td>
+          <td class="py-3.5 px-4 font-extrabold text-[#0F4C81] tabular-nums">${formatINR(r.amount)}</td>
+          <td class="py-3.5 px-4">${r.origin === 'Sohail' ? '<span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Transferred by Sohail</span>' : '<span class="text-xs text-slate-500">Direct</span>'}</td>
+          <td class="py-3.5 px-4"><span class="text-xs font-bold px-2.5 py-1 rounded-full ${r.status === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">${esc(r.status)}</span></td>
+          <td class="py-3.5 px-4">
             <div class="flex items-center gap-1.5">
-              <button onclick="openServiceForm('${r.id}')" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-xs font-bold text-slate-700 cursor-pointer">Edit</button>
-              <button onclick="printServiceBill('${r.id}')" class="px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-xs font-bold text-[#0F4C81] cursor-pointer">Bill</button>
+              <button onclick="openServiceForm('${r.id}')" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-xs font-bold text-slate-700 cursor-pointer">Edit</button>
+              <button onclick="printServiceBill('${r.id}')" class="px-3 py-1.5 rounded-lg bg-[#0F4C81] hover:bg-[#1D4ED8] text-xs font-bold text-white cursor-pointer">Bill</button>
             </div>
           </td>
         </tr>
@@ -1483,7 +1758,7 @@
       if (!r) return;
       const w = window.open('', '_blank');
       if (!w) {
-        alert('Please allow pop-ups in your browser to preview the Service Bill.');
+        showToast('Please allow pop-ups in your browser to view the bill.');
         return;
       }
       w.document.write(`
@@ -1534,8 +1809,33 @@
     }
 
     // 3. SOCIAL MEDIA MANAGER PANEL (SAYYED SOHAIL)
+    function selectMetricDateAndRender(isoDate) {
+      selectedMetricDate = isoDate;
+      renderWorkspace();
+    }
+
+    async function submitDailyMetricsForm(e) {
+      e.preventDefault();
+      const dateIso = document.getElementById('metricDateSelect').value || getTodayISO();
+      await saveDailyInquiryMetrics(dateIso, {
+        totalCalls: document.getElementById('mTotalCalls').value,
+        callLeads: document.getElementById('mCallLeads').value,
+        whatsappMsgs: document.getElementById('mWhatsappMsgs').value,
+        instagramMsgs: document.getElementById('mInstagramMsgs').value,
+        justdialLeads: document.getElementById('mJustdialLeads').value
+      });
+      const banner = document.getElementById('metricSavedBanner');
+      if (banner) {
+        banner.classList.remove('hidden');
+        setTimeout(() => banner.classList.add('hidden'), 3000);
+      }
+    }
+
     function renderSocialPanel(container) {
       const transferred = socialLeads.filter(x => x.transfer !== 'sohail').length;
+      const todayIso = getTodayISO();
+      const todayM = dailyMetricsMap[todayIso] || { totalCalls: 0, callLeads: 0, whatsappMsgs: 0, instagramMsgs: 0, justdialLeads: 0 };
+      const todayConv = todayM.totalCalls ? Math.round((todayM.callLeads / todayM.totalCalls) * 100) : 0;
 
       if (currentTab === 'dashboard') {
         container.innerHTML = `
@@ -1549,6 +1849,47 @@
             <div class="kpi-card"><div class="text-[11px] font-bold text-slate-400 uppercase">Telecom – Gulsar</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.filter(x => x.transfer === 'telecom').length}</div></div>
           </div>
 
+          <!-- Today's Inquiry & Call-to-Lead Summary Section -->
+          <div class="glass-panel p-5 mb-6 border-blue-200/80">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div>
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#0F4C81] bg-blue-50 px-2.5 py-1 rounded-full">${esc(formatDisplayDate(todayIso))}</span>
+                <h2 class="text-base font-extrabold text-slate-900 mt-1">Today's Calls, WhatsApp, Instagram & Justdial Summary</h2>
+              </div>
+              <button onclick="switchTab('daily_update')" class="px-4 py-2 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs cursor-pointer">
+                <i class="fa-solid fa-pen-to-square mr-1.5"></i> Update Today's Counts
+              </button>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+              <div class="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-100">
+                <div class="text-[11px] font-bold text-[#0F4C81] uppercase">Total Calls Today</div>
+                <div class="text-2xl font-extrabold text-slate-900 mt-1">${todayM.totalCalls || 0}</div>
+                <div class="text-[11px] text-slate-500 mt-0.5">Incoming Calls</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-100">
+                <div class="text-[11px] font-bold text-indigo-700 uppercase">Leads from Calls</div>
+                <div class="text-2xl font-extrabold text-indigo-700 mt-1">${todayM.callLeads || 0}</div>
+                <div class="text-[11px] font-bold text-indigo-600 mt-0.5">${todayConv}% Conversion</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-100">
+                <div class="text-[11px] font-bold text-emerald-700 uppercase">WhatsApp Today</div>
+                <div class="text-2xl font-extrabold text-emerald-700 mt-1">${todayM.whatsappMsgs || 0}</div>
+                <div class="text-[11px] text-emerald-600 mt-0.5">Messages Received</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-pink-50/70 border border-pink-100">
+                <div class="text-[11px] font-bold text-pink-700 uppercase">Instagram Today</div>
+                <div class="text-2xl font-extrabold text-pink-700 mt-1">${todayM.instagramMsgs || 0}</div>
+                <div class="text-[11px] text-pink-600 mt-0.5">Messages / DMs</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-100 col-span-2 sm:col-span-1">
+                <div class="text-[11px] font-bold text-amber-700 uppercase">Justdial Today</div>
+                <div class="text-2xl font-extrabold text-amber-700 mt-1">${todayM.justdialLeads || 0}</div>
+                <div class="text-[11px] text-amber-600 mt-0.5">Justdial Leads</div>
+              </div>
+            </div>
+          </div>
+
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="glass-panel p-5">
               <h2 class="text-base font-bold text-slate-900 mb-4">Transfer Distribution</h2>
@@ -1558,7 +1899,7 @@
             <div class="glass-panel p-5">
               <div class="flex items-center justify-between mb-4">
                 <h2 class="text-base font-bold text-slate-900">Recent Customers</h2>
-                <button onclick="quickAddSocial()" class="px-3.5 py-2 rounded-xl bg-[#0F4C81] text-white text-xs font-bold cursor-pointer">+ Add Customer</button>
+                <button onclick="switchTab('customers')" class="text-xs font-bold text-[#0F4C81] hover:underline cursor-pointer">Open Customer Section →</button>
               </div>
               <div class="divide-y divide-slate-100">
                 ${socialLeads.slice(0, 6).map(r => `
@@ -1570,15 +1911,122 @@
                     </div>
                     <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81] shrink-0">${esc(TRANSFER_LABELS[r.transfer] || 'By Me – Sohail')}</span>
                   </div>
-                `).join('') || '<p class="text-sm text-slate-400">No customers added yet. Click "+ Add Customer" above.</p>'}
+                `).join('') || '<p class="text-sm text-slate-400">No customers added yet. Open Customer Section to add one.</p>'}
               </div>
+            </div>
+          </div>
+        `;
+      } else if (currentTab === 'daily_update') {
+        const last30 = getLast30DaysList();
+        const activeDate = selectedMetricDate || todayIso;
+        const cur = dailyMetricsMap[activeDate] || { totalCalls: '', callLeads: '', whatsappMsgs: '', instagramMsgs: '', justdialLeads: '' };
+
+        container.innerHTML = `
+          <div class="glass-panel p-6 mb-6 border-2 border-[#0F4C81]">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
+              <div>
+                <div class="inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-wider text-[#0F4C81] bg-blue-50 px-2.5 py-1 rounded-full mb-1">
+                  <i class="fa-solid fa-calendar-check"></i> Automatic Date Daily Tracker
+                </div>
+                <h2 class="text-lg font-extrabold text-slate-900">Total Todays Leads Update</h2>
+                <p class="text-xs text-slate-500">Date is automatically set to Today (view or edit up to last 30 days / 1 month)</p>
+              </div>
+
+              <div class="sm:w-64">
+                <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Active Date (Auto-Set)</label>
+                <select id="metricDateSelect" onchange="selectMetricDateAndRender(this.value)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-[#0F4C81] bg-blue-50/40">
+                  ${last30.map(d => `<option value="${d.iso}" ${d.iso === activeDate ? 'selected' : ''}>${esc(d.label)}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+
+            <form onsubmit="submitDailyMetricsForm(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <label class="block text-xs font-bold text-slate-700 mb-1.5"><i class="fa-solid fa-phone text-[#0F4C81] mr-1"></i> Total Call Today</label>
+                <input id="mTotalCalls" type="number" min="0" required value="${cur.totalCalls ?? 0}" placeholder="0" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-base font-extrabold text-slate-900 focus:outline-none focus:border-[#0F4C81]" />
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-indigo-50/50 border border-indigo-200">
+                <label class="block text-xs font-bold text-indigo-900 mb-1.5"><i class="fa-solid fa-user-check text-indigo-600 mr-1"></i> Leads From Calls</label>
+                <input id="mCallLeads" type="number" min="0" required value="${cur.callLeads ?? 0}" placeholder="0" class="w-full px-3 py-2.5 rounded-xl border border-indigo-300 bg-white text-base font-extrabold text-indigo-700 focus:outline-none focus:border-indigo-600" />
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-emerald-50/50 border border-emerald-200">
+                <label class="block text-xs font-bold text-emerald-900 mb-1.5"><i class="fa-brands fa-whatsapp text-emerald-600 mr-1"></i> WhatsApp Msg Today</label>
+                <input id="mWhatsappMsgs" type="number" min="0" required value="${cur.whatsappMsgs ?? 0}" placeholder="0" class="w-full px-3 py-2.5 rounded-xl border border-emerald-300 bg-white text-base font-extrabold text-emerald-700 focus:outline-none focus:border-emerald-600" />
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-pink-50/50 border border-pink-200">
+                <label class="block text-xs font-bold text-pink-900 mb-1.5"><i class="fa-brands fa-instagram text-pink-600 mr-1"></i> Instagram Msg Today</label>
+                <input id="mInstagramMsgs" type="number" min="0" required value="${cur.instagramMsgs ?? 0}" placeholder="0" class="w-full px-3 py-2.5 rounded-xl border border-pink-300 bg-white text-base font-extrabold text-pink-700 focus:outline-none focus:border-pink-600" />
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-amber-50/50 border border-amber-200">
+                <label class="block text-xs font-bold text-amber-900 mb-1.5"><i class="fa-solid fa-address-book text-amber-600 mr-1"></i> Justdial Leads Today</label>
+                <input id="mJustdialLeads" type="number" min="0" required value="${cur.justdialLeads ?? 0}" placeholder="0" class="w-full px-3 py-2.5 rounded-xl border border-amber-300 bg-white text-base font-extrabold text-amber-700 focus:outline-none focus:border-amber-600" />
+              </div>
+
+              <div class="sm:col-span-2 lg:col-span-5 flex flex-wrap items-center justify-between gap-3 pt-2">
+                <div id="metricSavedBanner" class="hidden text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3.5 py-2 rounded-xl">
+                  ✓ Saved & synced live to Boss Panel (Jagdish)!
+                </div>
+                <button type="submit" class="px-6 py-3 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-extrabold shadow-md cursor-pointer ml-auto">
+                  <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Save & Update Boss Dashboard
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Last 30 Days (1 Month) Date-Wise History Table -->
+          <div class="glass-panel p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Last 30 Days (1 Month) Daily Inquiry Log</h3>
+                <p class="text-xs text-slate-500">Click "Edit" on any day to update numbers — automatically syncs to Jagdish's Boss Dashboard</p>
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
+                    <th class="py-3 px-3">Date</th>
+                    <th class="py-3 px-3">Total Calls</th>
+                    <th class="py-3 px-3">Call Leads (Conv %)</th>
+                    <th class="py-3 px-3">WhatsApp Msgs</th>
+                    <th class="py-3 px-3">Instagram Msgs</th>
+                    <th class="py-3 px-3">Justdial Leads</th>
+                    <th class="py-3 px-3">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm">
+                  ${last30.map(d => {
+                    const row = dailyMetricsMap[d.iso];
+                    const calls = row?.totalCalls ?? 0;
+                    const leads = row?.callLeads ?? 0;
+                    const pct = calls ? Math.round((leads / calls) * 100) : 0;
+                    return `
+                      <tr class="${d.iso === activeDate ? 'bg-blue-50/50' : 'hover:bg-slate-50/80'}">
+                        <td class="py-3 px-3 font-bold text-slate-900">${esc(d.label)}</td>
+                        <td class="py-3 px-3 font-semibold">${calls}</td>
+                        <td class="py-3 px-3 font-bold text-indigo-700">${leads} <span class="text-xs font-normal text-slate-400">(${pct}%)</span></td>
+                        <td class="py-3 px-3 font-bold text-emerald-700">${row?.whatsappMsgs ?? 0}</td>
+                        <td class="py-3 px-3 font-bold text-pink-700">${row?.instagramMsgs ?? 0}</td>
+                        <td class="py-3 px-3 font-bold text-amber-700">${row?.justdialLeads ?? 0}</td>
+                        <td class="py-3 px-3">
+                          <button onclick="selectMetricDateAndRender('${d.iso}')" class="px-3 py-1 rounded-lg border border-slate-200 hover:bg-white text-xs font-bold text-[#0F4C81] cursor-pointer">Edit</button>
+                        </td>
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
             </div>
           </div>
         `;
       } else if (currentTab === 'customers') {
         container.innerHTML = `
-          <div id="socialFormCard" class="hidden bg-white rounded-2xl border-2 border-[#0F4C81] p-5 mb-6 shadow-md">
-            <h2 id="socialFormTitle" class="text-base font-bold text-slate-900 mb-4">Add Customer</h2>
+          <div id="socialFormCard" class="hidden exec-card border-2 border-[#0F4C81] p-6 mb-6">
+            <h2 id="socialFormTitle" class="text-base font-extrabold text-slate-900 mb-4">Add Customer</h2>
             <form onsubmit="submitSocialForm(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Customer Name</label>
@@ -1586,7 +2034,7 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number (10 Digits)</label>
-                <input id="socPhone" pattern="[0-9]{10}" maxlength="10" required placeholder="10-digit mobile number" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
+                <input id="socPhone" pattern="[0-9]{10}" maxlength="10" required placeholder="10-digit mobile number" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-mono focus:outline-none focus:border-[#0F4C81]" />
               </div>
               <div class="sm:col-span-2">
                 <label class="block text-xs font-bold text-slate-700 mb-1">Requirement</label>
@@ -1594,7 +2042,7 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Transfer To</label>
-                <select id="socTransfer" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-semibold bg-white">
+                <select id="socTransfer" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-bold bg-white">
                   <option value="sohail">By Me – Sohail</option>
                   <option value="new">New – Pravin</option>
                   <option value="used">Used – Ashok</option>
@@ -1627,28 +2075,28 @@
             </form>
           </div>
 
-          <div class="glass-panel p-5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div class="exec-card p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
               <div>
-                <h2 class="text-base font-bold text-slate-900">Customer Section</h2>
-                <p class="text-xs text-slate-500">All added customers sync live to Boss Panel (Jagdish) & Service Centre (Mohammed)</p>
+                <h2 class="text-base font-extrabold text-slate-900">Customer Section</h2>
+                <p class="text-xs text-slate-500">All added customers sync live to Boss Panel (Jagdish)</p>
               </div>
               <button onclick="openSocialForm()" class="px-4 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs self-start cursor-pointer">
                 + Add Customer
               </button>
             </div>
 
-            <input id="socSearch" oninput="renderSocialRows()" placeholder="Search customer name, mobile, requirement, or transfer..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs mb-4 focus:outline-none focus:border-[#0F4C81]" />
+            <input id="socSearch" oninput="renderSocialRows()" placeholder="Search customer name, mobile, requirement, or transfer..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-xs mb-4 focus:outline-none focus:border-[#0F4C81]" />
 
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse">
                 <thead>
-                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
-                    <th class="py-3 px-3">Name & Number</th>
-                    <th class="py-3 px-3">Requirement</th>
-                    <th class="py-3 px-3">Transfer</th>
-                    <th class="py-3 px-3">Source</th>
-                    <th class="py-3 px-3">Action</th>
+                  <tr class="border-b border-slate-200 bg-slate-50/80 text-[11px] font-extrabold uppercase text-slate-500">
+                    <th class="py-3.5 px-4 rounded-tl-xl">Name & Number</th>
+                    <th class="py-3.5 px-4">Requirement</th>
+                    <th class="py-3.5 px-4">Transfer</th>
+                    <th class="py-3.5 px-4">Source</th>
+                    <th class="py-3.5 px-4 rounded-tr-xl">Action</th>
                   </tr>
                 </thead>
                 <tbody id="socTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
@@ -1661,19 +2109,19 @@
         const rate = socialLeads.length ? Math.round((transferred / socialLeads.length) * 100) + '%' : '0%';
         container.innerHTML = `
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Total Leads</div><div class="text-2xl font-extrabold text-slate-900 mt-1">${socialLeads.length}</div></div>
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Transferred Leads</div><div class="text-2xl font-extrabold text-[#0F4C81] mt-1">${transferred}</div></div>
-            <div class="kpi-card"><div class="text-xs font-bold text-slate-400 uppercase">Transfer Rate</div><div class="text-2xl font-extrabold text-emerald-600 mt-1">${rate}</div></div>
+            <div class="exec-card p-5"><div class="text-xs font-bold text-slate-400 uppercase">Total Leads</div><div class="text-2xl font-extrabold text-slate-900 mt-1 tabular-nums">${socialLeads.length}</div></div>
+            <div class="exec-card p-5"><div class="text-xs font-bold text-slate-400 uppercase">Transferred Leads</div><div class="text-2xl font-extrabold text-[#0F4C81] mt-1 tabular-nums">${transferred}</div></div>
+            <div class="exec-card p-5"><div class="text-xs font-bold text-slate-400 uppercase">Transfer Rate</div><div class="text-2xl font-extrabold text-emerald-600 mt-1 tabular-nums">${rate}</div></div>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="glass-panel p-5">
-              <h2 class="text-base font-bold text-slate-900 mb-4">Channel Performance</h2>
+            <div class="exec-card p-6">
+              <h2 class="text-base font-extrabold text-slate-900 mb-4">Channel Performance</h2>
               ${renderBars(['Instagram', 'WhatsApp', 'Calling', 'Justdial', 'Not specified'].map(s => [s, socialLeads.filter(r => r.source === s).length]))}
             </div>
-            <div class="glass-panel p-5">
-              <h2 class="text-base font-bold text-slate-900 mb-4">Department Transfers</h2>
-              ${renderBars(Object.entries(TRANSFER_LABELS).map(([k, label]) => [label, socialLeads.filter(r => r.transfer === k).length]), 'bg-indigo-600')}
+            <div class="exec-card p-6">
+              <h2 class="text-base font-extrabold text-slate-900 mb-4">Department Transfers</h2>
+              ${renderBars(Object.entries(TRANSFER_LABELS).map(([k, label]) => [label, socialLeads.filter(r => r.transfer === k).length]), 'from-indigo-600 to-blue-600')}
             </div>
           </div>
         `;
@@ -1704,15 +2152,14 @@
       e.preventDefault();
       const existing = socialLeads.find(x => x.id === editSocialId);
       const record = {
-        id: editSocialId || 'lead_' + Date.now(),
+        id: editSocialId || 'lead' + Date.now(),
         name: document.getElementById('socName').value.trim(),
         phone: document.getElementById('socPhone').value.trim(),
         requirement: document.getElementById('socReq').value.trim(),
         notes: document.getElementById('socNotes').value.trim(),
         source: document.getElementById('socSource').value,
         transfer: document.getElementById('socTransfer').value,
-        date: existing?.date || new Date().toLocaleDateString('en-IN'),
-        createdAt: existing?.createdAt || Date.now()
+        date: existing?.date || new Date().toLocaleDateString('en-IN')
       };
       await upsertSocialLead(record, Boolean(editSocialId));
       closeSocialForm();
@@ -1733,7 +2180,10 @@
           <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">${esc(TRANSFER_LABELS[r.transfer] || 'By Me – Sohail')}</span></td>
           <td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(r.source)}</span></td>
           <td class="py-3 px-3">
-            <button onclick="openSocialForm('${r.id}')" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-xs font-bold text-slate-700 cursor-pointer">Edit</button>
+            <div class="flex items-center gap-1.5">
+              <button onclick="openSocialForm('${r.id}')" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-xs font-bold text-slate-700 cursor-pointer">Edit</button>
+              <button onclick="askDeleteSocialLead('${r.id}')" class="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 border border-red-200 text-xs font-bold text-red-600 cursor-pointer">Delete</button>
+            </div>
           </td>
         </tr>
       `).join('') || '<tr><td colspan="5" class="py-6 text-center text-slate-400 text-sm">No customers found. Click "+ Add Customer" to add one.</td></tr>';
