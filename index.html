@@ -441,6 +441,9 @@
 
         <div class="flex flex-wrap items-center gap-2.5">
           <div id="headerQuickActions" class="flex items-center gap-2"></div>
+          <button onclick="manualRecoverAllData()" class="px-3.5 py-2.5 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 border border-amber-300/40 text-xs font-bold text-amber-100 flex items-center gap-1.5 transition cursor-pointer" title="Recover & Sync All Saved Customers">
+            <i class="fa-solid fa-rotate"></i> Sync / Recover
+          </button>
           <button onclick="logout()" class="px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-xs font-bold text-white flex items-center gap-1.5 transition cursor-pointer">
             <i class="fa-solid fa-arrow-left"></i> Switch Account
           </button>
@@ -627,30 +630,60 @@
       let currentService = JSON.parse(localStorage.getItem(PERMANENT_SERVICE_KEY) || '[]');
       dailyMetricsMap = JSON.parse(localStorage.getItem(PERMANENT_METRICS_KEY) || '{}');
 
-      LEGACY_SOCIAL_KEYS.forEach(oldKey => {
+      // Scan ALL localStorage keys for any saved Galaxy Point customer records without deleting them
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key || key === DELETED_SOCIAL_IDS_KEY || key === PERMANENT_METRICS_KEY) continue;
         try {
-          const oldData = JSON.parse(localStorage.getItem(oldKey) || '[]');
-          if (Array.isArray(oldData) && oldData.length) {
-            currentSocial = mergeUniqueRecords(currentSocial, oldData);
+          const parsed = JSON.parse(localStorage.getItem(key) || 'null');
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            if (parsed[0].requirement !== undefined || parsed[0].transfer !== undefined) {
+              currentSocial = mergeUniqueRecords(currentSocial, parsed);
+            } else if (parsed[0].service !== undefined || parsed[0].amount !== undefined) {
+              currentService = mergeUniqueRecords(currentService, parsed);
+            }
           }
-          localStorage.removeItem(oldKey);
         } catch (e) {}
-      });
-
-      LEGACY_SERVICE_KEYS.forEach(oldKey => {
-        try {
-          const oldData = JSON.parse(localStorage.getItem(oldKey) || '[]');
-          if (Array.isArray(oldData) && oldData.length) {
-            currentService = mergeUniqueRecords(currentService, oldData);
-          }
-          localStorage.removeItem(oldKey);
-        } catch (e) {}
-      });
+      }
 
       socialLeads = currentSocial;
       serviceJobs = currentService;
       if (!selectedMetricDate) selectedMetricDate = getTodayISO();
       savePermanentLocalData();
+    }
+
+    async function manualRecoverAllData() {
+      recoverAndLoadPermanentData();
+      if (isFirebaseLive && db) {
+        try {
+          const socialSnap = await db.collection(SOCIAL_COLLECTION).get();
+          const cloudSocial = socialSnap.docs
+            .map(doc => ({ id: doc.id, ...doc.data() }))
+            .filter(item => !deletedSocialIds.has(item.id));
+          socialLeads = mergeUniqueRecords(socialLeads, cloudSocial);
+
+          const serviceSnap = await db.collection(SERVICE_COLLECTION).get();
+          const cloudService = serviceSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          serviceJobs = mergeUniqueRecords(serviceJobs, cloudService);
+
+          for (const item of socialLeads) {
+            const { id, ...payload } = item;
+            await db.collection(SOCIAL_COLLECTION).doc(id).set({ ...payload, createdAt: item.createdAt || Date.now() }, { merge: true });
+          }
+          for (const item of serviceJobs) {
+            const { id, ...payload } = item;
+            await db.collection(SERVICE_COLLECTION).doc(id).set({ ...payload, createdAt: item.createdAt || Date.now() }, { merge: true });
+          }
+          savePermanentLocalData();
+        } catch (err) {
+          console.error('Manual sync error:', err);
+        }
+      }
+      if (currentUserRole) {
+        setupSidebarForRole(DEPARTMENTS[currentUserRole]);
+        renderWorkspace();
+      }
+      showToast(`Refreshed! ${socialLeads.length} leads & ${serviceJobs.length} service jobs synced.`);
     }
 
     function savePermanentLocalData() {
@@ -820,16 +853,22 @@
             .map(doc => ({ id: doc.id, ...doc.data() }))
             .filter(item => !deletedSocialIds.has(item.id));
 
-          if (!snap.metadata.hasPendingWrites) {
-            if (snap.empty && socialLeads.length > 0 && deletedSocialIds.size === 0) {
-              for (const item of socialLeads) {
-                const { id, ...payload } = item;
-                await db.collection(SOCIAL_COLLECTION).doc(id).set({ ...payload, createdAt: item.createdAt || Date.now() }, { merge: true });
-              }
-            } else {
-              socialLeads = cloudDocs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-              savePermanentLocalData();
+          // Never wipe local records if cloud is empty or lagging
+          if (cloudDocs.length === 0 && socialLeads.length > 0) {
+            for (const item of socialLeads) {
+              const { id, ...payload } = item;
+              await db.collection(SOCIAL_COLLECTION).doc(id).set({ ...payload, createdAt: item.createdAt || Date.now() }, { merge: true });
             }
+          } else if (cloudDocs.length > 0) {
+            // Merge cloud docs with any unsynced local docs, respecting deletedSocialIds
+            const cloudIds = new Set(cloudDocs.map(d => d.id));
+            const unsyncedLocal = socialLeads.filter(l => !cloudIds.has(l.id) && !deletedSocialIds.has(l.id));
+            for (const item of unsyncedLocal) {
+              const { id, ...payload } = item;
+              await db.collection(SOCIAL_COLLECTION).doc(id).set({ ...payload, createdAt: item.createdAt || Date.now() }, { merge: true });
+            }
+            socialLeads = [...unsyncedLocal, ...cloudDocs].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+            savePermanentLocalData();
           }
           setSyncStatus(true);
           if (currentUserRole) {
@@ -2094,9 +2133,14 @@
                 <h2 class="text-base font-extrabold text-slate-900">Customer Section</h2>
                 <p class="text-xs text-slate-500">All added customers sync live to Boss Panel (Jagdish)</p>
               </div>
-              <button onclick="openSocialForm()" class="px-4 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs self-start cursor-pointer">
-                + Add Customer
-              </button>
+              <div class="flex items-center gap-2 self-start">
+                <button type="button" onclick="manualRecoverAllData()" class="px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-xs cursor-pointer flex items-center gap-1.5 transition">
+                  <i class="fa-solid fa-arrows-rotate text-[#0F4C81]"></i> Refresh
+                </button>
+                <button type="button" onclick="openSocialForm()" class="px-4 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs cursor-pointer">
+                  + Add Customer
+                </button>
+              </div>
             </div>
 
             <input id="socSearch" oninput="renderSocialRows()" placeholder="Search customer name, mobile, requirement, date, or transfer..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-xs mb-4 focus:outline-none focus:border-[#0F4C81]" />
