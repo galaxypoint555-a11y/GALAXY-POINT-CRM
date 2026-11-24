@@ -154,6 +154,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       width: 100%;
       padding: 12px 15px;
       border-radius: 14px;
@@ -185,25 +186,12 @@
       box-shadow: 0 14px 30px -10px rgba(15, 76, 129, 0.35);
     }
 
-    .kpi-card {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      border-radius: 18px;
-      padding: 18px 20px;
-      box-shadow: 0 4px 14px -4px rgba(15, 23, 42, 0.04);
-      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
-    }
-    .kpi-card:hover {
-      transform: translateY(-2px);
-      border-color: #BFDBFE;
-      box-shadow: 0 12px 24px -8px rgba(15, 76, 129, 0.14);
-    }
-
-    .glass-panel {
+    .kpi-card, .glass-panel {
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
       border-radius: 20px;
-      box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.04);
+      padding: 20px;
+      box-shadow: 0 4px 20px -4px rgba(15, 76, 129, 0.06);
     }
 
     @keyframes shake {
@@ -468,7 +456,7 @@
     </main>
   </div>
 
-  <!-- Custom Delete Confirmation Modal (No browser confirm()) -->
+  <!-- Custom Delete Confirmation Modal -->
   <div id="deleteConfirmModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl border border-slate-200 max-w-sm w-full p-6 shadow-2xl">
       <div class="w-11 h-11 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-lg mb-4">
@@ -506,6 +494,7 @@
     const PERMANENT_SOCIAL_KEY = 'gp_crm_social_permanent';
     const PERMANENT_SERVICE_KEY = 'gp_crm_service_permanent';
     const PERMANENT_METRICS_KEY = 'gp_crm_daily_metrics_permanent';
+    const DELETED_SOCIAL_IDS_KEY = 'gp_crm_deleted_social_ids';
     const LEGACY_SOCIAL_KEYS = ['gp_crm_social_v1', 'gp_crm_social_v2', 'gp_crm_social_v3', 'gp_crm_social_v4', 'gp_social_leads'];
     const LEGACY_SERVICE_KEYS = ['gp_crm_service_v1', 'gp_crm_service_v2', 'gp_crm_service_v3', 'gp_crm_service_v4', 'gp_service_jobs'];
 
@@ -572,6 +561,7 @@
     let socialLeads = [];
     let serviceJobs = [];
     let dailyMetricsMap = {};
+    let deletedSocialIds = new Set();
     let db = null;
     let isFirebaseLive = false;
 
@@ -623,6 +613,7 @@
       const map = new Map();
       [...baseList, ...incomingList].forEach(item => {
         if (!item) return;
+        if (item.id && deletedSocialIds.has(item.id)) return;
         const uniqueKey = item[keyField] || `${item.name}_${item.phone}_${item.requirement || item.service}`;
         map.set(uniqueKey, { ...map.get(uniqueKey), ...item });
       });
@@ -630,7 +621,9 @@
     }
 
     function recoverAndLoadPermanentData() {
-      let currentSocial = JSON.parse(localStorage.getItem(PERMANENT_SOCIAL_KEY) || '[]');
+      deletedSocialIds = new Set(JSON.parse(localStorage.getItem(DELETED_SOCIAL_IDS_KEY) || '[]'));
+      let currentSocial = JSON.parse(localStorage.getItem(PERMANENT_SOCIAL_KEY) || '[]')
+        .filter(item => item && !deletedSocialIds.has(item.id));
       let currentService = JSON.parse(localStorage.getItem(PERMANENT_SERVICE_KEY) || '[]');
       dailyMetricsMap = JSON.parse(localStorage.getItem(PERMANENT_METRICS_KEY) || '{}');
 
@@ -640,6 +633,7 @@
           if (Array.isArray(oldData) && oldData.length) {
             currentSocial = mergeUniqueRecords(currentSocial, oldData);
           }
+          localStorage.removeItem(oldKey);
         } catch (e) {}
       });
 
@@ -649,6 +643,7 @@
           if (Array.isArray(oldData) && oldData.length) {
             currentService = mergeUniqueRecords(currentService, oldData);
           }
+          localStorage.removeItem(oldKey);
         } catch (e) {}
       });
 
@@ -662,6 +657,7 @@
       localStorage.setItem(PERMANENT_SOCIAL_KEY, JSON.stringify(socialLeads));
       localStorage.setItem(PERMANENT_SERVICE_KEY, JSON.stringify(serviceJobs));
       localStorage.setItem(PERMANENT_METRICS_KEY, JSON.stringify(dailyMetricsMap));
+      localStorage.setItem(DELETED_SOCIAL_IDS_KEY, JSON.stringify(Array.from(deletedSocialIds)));
     }
 
     function getTimeGreeting() {
@@ -820,15 +816,20 @@
         db = firebase.firestore();
 
         db.collection(SOCIAL_COLLECTION).onSnapshot(async snap => {
-          const cloudDocs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          if (socialLeads.length && cloudDocs.length === 0) {
-            for (const item of socialLeads) {
-              const { id, ...payload } = item;
-              await db.collection(SOCIAL_COLLECTION).doc(id).set({ ...payload, createdAt: item.createdAt || Date.now() }, { merge: true });
+          const cloudDocs = snap.docs
+            .map(doc => ({ id: doc.id, ...doc.data() }))
+            .filter(item => !deletedSocialIds.has(item.id));
+
+          if (!snap.metadata.hasPendingWrites) {
+            if (snap.empty && socialLeads.length > 0 && deletedSocialIds.size === 0) {
+              for (const item of socialLeads) {
+                const { id, ...payload } = item;
+                await db.collection(SOCIAL_COLLECTION).doc(id).set({ ...payload, createdAt: item.createdAt || Date.now() }, { merge: true });
+              }
+            } else {
+              socialLeads = cloudDocs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+              savePermanentLocalData();
             }
-          } else {
-            socialLeads = mergeUniqueRecords(socialLeads, cloudDocs);
-            savePermanentLocalData();
           }
           setSyncStatus(true);
           if (currentUserRole) {
@@ -911,6 +912,7 @@
       const targetId = pendingDeleteId;
       closeDeleteModal();
 
+      deletedSocialIds.add(targetId);
       socialLeads = socialLeads.filter(x => x.id !== targetId);
       savePermanentLocalData();
 
@@ -925,6 +927,7 @@
         setupSidebarForRole(DEPARTMENTS[currentUserRole]);
         renderWorkspace();
       }
+      showToast('Customer permanently removed.');
     }
 
     async function saveDailyInquiryMetrics(dateIso, metricsObj) {
@@ -1070,7 +1073,7 @@
       }).join('');
     }
 
-    function renderAnalysisBlock(compact = false) {
+    function buildAnalysisHTML(compact = false) {
       const totalLeads = socialLeads.length;
       const totalJobs = serviceJobs.length;
       const completedJobs = serviceJobs.filter(j => j.status === 'Completed').length;
@@ -1096,6 +1099,7 @@
 
       return `
         <div class="space-y-6">
+          <!-- Section Header -->
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
               <div class="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wider text-[#0F4C81] bg-blue-50 px-3 py-1 rounded-full border border-blue-200 mb-1">
@@ -1106,6 +1110,7 @@
             ${compact ? `<button onclick="switchTab('analysis')" class="px-4 py-2 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-xs cursor-pointer transition">Open Full Analysis Page →</button>` : ''}
           </div>
 
+          <!-- Top 4 Analytical Insight Cards -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="exec-card p-5 border-l-4 border-l-[#0F4C81]">
               <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase">
@@ -1144,7 +1149,9 @@
             </div>
           </div>
 
+          <!-- 3-Column Visual Charts Grid -->
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Staff Transfer Leaderboard -->
             <div class="exec-card p-6">
               <div class="flex items-center justify-between mb-4">
                 <div>
@@ -1172,6 +1179,7 @@
               </div>
             </div>
 
+            <!-- Acquisition Channel Mix -->
             <div class="exec-card p-6 flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-4">
@@ -1189,6 +1197,7 @@
               </div>
             </div>
 
+            <!-- Service Revenue & Efficiency Gauge -->
             <div class="exec-card p-6 flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-4">
@@ -1199,6 +1208,7 @@
                   <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-screwdriver-wrench"></i></span>
                 </div>
 
+                <!-- Visual Progress Donut Ring -->
                 <div class="flex items-center gap-5 my-4 p-4 rounded-2xl bg-gradient-to-br from-blue-50/70 to-slate-50 border border-blue-100">
                   <div class="relative w-20 h-20 shrink-0 flex items-center justify-center">
                     <svg class="w-20 h-20 -rotate-90" viewBox="0 0 36 36">
@@ -1425,16 +1435,13 @@
             </div>
           </div>
 
-          <!-- Daily Calls, WhatsApp, Instagram & Justdial Analytics on Boss Dashboard -->
           ${renderBossInquiryAnalyticsBlock()}
-
-          <!-- Executive Analysis Section Directly Below Boss Dashboard KPIs -->
-          ${renderAnalysisBlock(true)}
+          ${buildAnalysisHTML(true)}
         `;
       } else if (currentTab === 'analysis') {
         container.innerHTML = `
           ${renderBossInquiryAnalyticsBlock()}
-          ${renderAnalysisBlock(false)}
+          ${buildAnalysisHTML(false)}
         `;
       } else if (currentTab === 'social') {
         container.innerHTML = `
@@ -1444,7 +1451,7 @@
                 <h2 class="text-base font-extrabold text-slate-900">All Social Media Customers (Sayyed Sohail)</h2>
                 <p class="text-xs text-slate-500">Live feed of all customer inquiries and department routing</p>
               </div>
-              <input id="bossSocialSearch" oninput="filterBossSocial()" placeholder="Search name or mobile..." class="px-4 py-2.5 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
+              <input id="bossSocialSearch" oninput="filterBossSocial()" placeholder="Search name, mobile, or date..." class="px-4 py-2.5 rounded-xl border border-slate-300 text-xs w-full sm:w-64 focus:outline-none focus:border-[#0F4C81]" />
             </div>
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse">
@@ -1453,6 +1460,7 @@
                     <th class="py-3.5 px-4 rounded-tl-xl">Customer</th>
                     <th class="py-3.5 px-4">Requirement</th>
                     <th class="py-3.5 px-4">Source</th>
+                    <th class="py-3.5 px-4">Date</th>
                     <th class="py-3.5 px-4 rounded-tr-xl">Transferred To</th>
                   </tr>
                 </thead>
@@ -1496,15 +1504,16 @@
       const q = (document.getElementById('bossSocialSearch')?.value || '').toLowerCase();
       const body = document.getElementById('bossSocialBody');
       if (!body) return;
-      const rows = socialLeads.filter(x => (x.name + ' ' + x.phone + ' ' + x.requirement).toLowerCase().includes(q));
+      const rows = socialLeads.filter(x => (x.name + ' ' + x.phone + ' ' + x.requirement + ' ' + (x.date || '')).toLowerCase().includes(q));
       body.innerHTML = rows.map(x => `
         <tr class="hover:bg-blue-50/40 transition">
           <td class="py-3.5 px-4"><div class="font-bold text-slate-900">${esc(x.name)}</div><div class="text-xs font-mono text-slate-500">${esc(x.phone)}</div></td>
           <td class="py-3.5 px-4 text-slate-700 font-medium">${esc(x.requirement)}</td>
           <td class="py-3.5 px-4"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(x.source || 'Instagram')}</span></td>
+          <td class="py-3.5 px-4 text-xs font-semibold text-slate-600 whitespace-nowrap">${esc(x.date || '—')}</td>
           <td class="py-3.5 px-4"><span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">${esc(TRANSFER_LABELS[x.transfer] || 'By Me – Sohail')}</span></td>
         </tr>
-      `).join('') || '<tr><td colspan="4" class="py-6 text-center text-slate-400 text-sm">No matching customers found.</td></tr>';
+      `).join('') || '<tr><td colspan="5" class="py-6 text-center text-slate-400 text-sm">No matching customers found.</td></tr>';
     }
 
     function filterBossService() {
@@ -1899,7 +1908,7 @@
             <div class="glass-panel p-5">
               <div class="flex items-center justify-between mb-4">
                 <h2 class="text-base font-bold text-slate-900">Recent Customers</h2>
-                <button onclick="switchTab('customers')" class="text-xs font-bold text-[#0F4C81] hover:underline cursor-pointer">Open Customer Section →</button>
+                <button onclick="quickAddSocial()" class="px-3.5 py-2 rounded-xl bg-[#0F4C81] text-white text-xs font-bold cursor-pointer">+ Add Customer</button>
               </div>
               <div class="divide-y divide-slate-100">
                 ${socialLeads.slice(0, 6).map(r => `
@@ -1911,7 +1920,7 @@
                     </div>
                     <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81] shrink-0">${esc(TRANSFER_LABELS[r.transfer] || 'By Me – Sohail')}</span>
                   </div>
-                `).join('') || '<p class="text-sm text-slate-400">No customers added yet. Open Customer Section to add one.</p>'}
+                `).join('') || '<p class="text-sm text-slate-400">No customers added yet. Click "+ Add Customer" above.</p>'}
               </div>
             </div>
           </div>
@@ -2060,9 +2069,13 @@
                   <option>Not specified</option>
                 </select>
               </div>
-              <div class="sm:col-span-2">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Date (Auto-Set)</label>
+                <input id="socDate" type="date" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-semibold text-[#0F4C81] bg-blue-50/40 focus:outline-none focus:border-[#0F4C81]" />
+              </div>
+              <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Notes (Optional)</label>
-                <input id="socNotes" placeholder="Follow-up details..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
+                <input id="socNotes" placeholder="Follow-up details..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0F4C81]" />
               </div>
               <div class="sm:col-span-2 flex items-center gap-2.5 pt-1">
                 <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#0F4C81] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-sm cursor-pointer">
@@ -2086,7 +2099,7 @@
               </button>
             </div>
 
-            <input id="socSearch" oninput="renderSocialRows()" placeholder="Search customer name, mobile, requirement, or transfer..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-xs mb-4 focus:outline-none focus:border-[#0F4C81]" />
+            <input id="socSearch" oninput="renderSocialRows()" placeholder="Search customer name, mobile, requirement, date, or transfer..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-xs mb-4 focus:outline-none focus:border-[#0F4C81]" />
 
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse">
@@ -2096,6 +2109,7 @@
                     <th class="py-3.5 px-4">Requirement</th>
                     <th class="py-3.5 px-4">Transfer</th>
                     <th class="py-3.5 px-4">Source</th>
+                    <th class="py-3.5 px-4">Date</th>
                     <th class="py-3.5 px-4 rounded-tr-xl">Action</th>
                   </tr>
                 </thead>
@@ -2140,6 +2154,7 @@
       document.getElementById('socNotes').value = r?.notes || '';
       document.getElementById('socSource').value = r?.source || 'Instagram';
       document.getElementById('socTransfer').value = r?.transfer || 'sohail';
+      document.getElementById('socDate').value = r?.dateIso || getTodayISO();
       card.scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -2151,6 +2166,7 @@
     async function submitSocialForm(e) {
       e.preventDefault();
       const existing = socialLeads.find(x => x.id === editSocialId);
+      const pickedIso = document.getElementById('socDate').value || getTodayISO();
       const record = {
         id: editSocialId || 'lead' + Date.now(),
         name: document.getElementById('socName').value.trim(),
@@ -2159,10 +2175,12 @@
         notes: document.getElementById('socNotes').value.trim(),
         source: document.getElementById('socSource').value,
         transfer: document.getElementById('socTransfer').value,
-        date: existing?.date || new Date().toLocaleDateString('en-IN')
+        dateIso: pickedIso,
+        date: formatDisplayDate(pickedIso) || existing?.date || new Date().toLocaleDateString('en-IN')
       };
       await upsertSocialLead(record, Boolean(editSocialId));
       closeSocialForm();
+      showToast(editSocialId ? 'Customer updated!' : 'Customer added with date!');
     }
 
     function renderSocialRows() {
@@ -2171,7 +2189,7 @@
       if (!body) return;
 
       const filtered = socialLeads.filter(r =>
-        (r.name + ' ' + r.phone + ' ' + r.requirement + ' ' + (TRANSFER_LABELS[r.transfer] || '')).toLowerCase().includes(q)
+        (r.name + ' ' + r.phone + ' ' + r.requirement + ' ' + (r.date || '') + ' ' + (TRANSFER_LABELS[r.transfer] || '')).toLowerCase().includes(q)
       );
       body.innerHTML = filtered.map(r => `
         <tr class="hover:bg-slate-50/80">
@@ -2179,6 +2197,7 @@
           <td class="py-3 px-3"><div class="font-medium text-slate-800">${esc(r.requirement)}</div><div class="text-xs text-slate-400">${esc(r.notes)}</div></td>
           <td class="py-3 px-3"><span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">${esc(TRANSFER_LABELS[r.transfer] || 'By Me – Sohail')}</span></td>
           <td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#0F4C81]">${esc(r.source)}</span></td>
+          <td class="py-3 px-3 text-xs font-semibold text-slate-600 whitespace-nowrap">${esc(r.date || '—')}</td>
           <td class="py-3 px-3">
             <div class="flex items-center gap-1.5">
               <button onclick="openSocialForm('${r.id}')" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-xs font-bold text-slate-700 cursor-pointer">Edit</button>
@@ -2186,7 +2205,7 @@
             </div>
           </td>
         </tr>
-      `).join('') || '<tr><td colspan="5" class="py-6 text-center text-slate-400 text-sm">No customers found. Click "+ Add Customer" to add one.</td></tr>';
+      `).join('') || '<tr><td colspan="6" class="py-6 text-center text-slate-400 text-sm">No customers found. Click "+ Add Customer" to add one.</td></tr>';
     }
 
     // ==================== BOOTSTRAP ====================
